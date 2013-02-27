@@ -1,0 +1,21 @@
+//
+// Prefix header for all source files of the 'Vocational Guidance' target in the 'Vocational Guidance' project
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_4_0
+#warning "This project uses features only available in iOS SDK 4.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+#endif
+
+#define VG_Table_Screen                             @"User's Data"
+#define VG_Search_Screen                            @"Search"
+#define VG_Select_Operator_Screen                   @"Select Operator"
+#define VG_Present_Screen                           @"Present Screen"
+
+#define PO_NAV_OPTIONS                              1001
