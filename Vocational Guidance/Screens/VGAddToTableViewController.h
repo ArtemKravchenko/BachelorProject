@@ -10,4 +10,7 @@
 
 @interface VGAddToTableViewController : UIViewController
 
+@property (nonatomic, assign) id target;
+@property (nonatomic, assign) SEL method;
+
 @end

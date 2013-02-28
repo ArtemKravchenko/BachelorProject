@@ -37,6 +37,9 @@
 		841AF51716DD038D008FCA42 /* VGMessageHandlerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841AF51616DD038D008FCA42 /* VGMessageHandlerViewController.m */; };
 		84A47E3A16DE308A00A78089 /* VGSelectOperatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A47E3816DE308A00A78089 /* VGSelectOperatorViewController.m */; };
 		84A47E3B16DE308A00A78089 /* VGSelectOperatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A47E3916DE308A00A78089 /* VGSelectOperatorViewController.xib */; };
+		84A47E4A16DE39D100A78089 /* VGTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A47E4916DE39D100A78089 /* VGTableView.m */; };
+		84A47E5316DE5ABB00A78089 /* VGAddToTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A47E5116DE5ABB00A78089 /* VGAddToTableViewController.m */; };
+		84A47E5416DE5ABB00A78089 /* VGAddToTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A47E5216DE5ABB00A78089 /* VGAddToTableViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +89,11 @@
 		84A47E3716DE308A00A78089 /* VGSelectOperatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGSelectOperatorViewController.h; path = Screens/VGSelectOperatorViewController.h; sourceTree = "<group>"; };
 		84A47E3816DE308A00A78089 /* VGSelectOperatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGSelectOperatorViewController.m; path = Screens/VGSelectOperatorViewController.m; sourceTree = "<group>"; };
 		84A47E3916DE308A00A78089 /* VGSelectOperatorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VGSelectOperatorViewController.xib; path = Screens/VGSelectOperatorViewController.xib; sourceTree = "<group>"; };
+		84A47E4816DE39D100A78089 /* VGTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGTableView.h; path = "Custom Controls/VGTableView.h"; sourceTree = "<group>"; };
+		84A47E4916DE39D100A78089 /* VGTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGTableView.m; path = "Custom Controls/VGTableView.m"; sourceTree = "<group>"; };
+		84A47E5016DE5ABB00A78089 /* VGAddToTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGAddToTableViewController.h; path = Screens/VGAddToTableViewController.h; sourceTree = "<group>"; };
+		84A47E5116DE5ABB00A78089 /* VGAddToTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGAddToTableViewController.m; path = Screens/VGAddToTableViewController.m; sourceTree = "<group>"; };
+		84A47E5216DE5ABB00A78089 /* VGAddToTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VGAddToTableViewController.xib; path = Screens/VGAddToTableViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +226,9 @@
 				84A47E3716DE308A00A78089 /* VGSelectOperatorViewController.h */,
 				84A47E3816DE308A00A78089 /* VGSelectOperatorViewController.m */,
 				84A47E3916DE308A00A78089 /* VGSelectOperatorViewController.xib */,
+				84A47E5016DE5ABB00A78089 /* VGAddToTableViewController.h */,
+				84A47E5116DE5ABB00A78089 /* VGAddToTableViewController.m */,
+				84A47E5216DE5ABB00A78089 /* VGAddToTableViewController.xib */,
 			);
 			name = Screens;
 			sourceTree = "<group>";
@@ -232,6 +243,8 @@
 		84A47E3C16DE332600A78089 /* Custom Controls */ = {
 			isa = PBXGroup;
 			children = (
+				84A47E4816DE39D100A78089 /* VGTableView.h */,
+				84A47E4916DE39D100A78089 /* VGTableView.m */,
 			);
 			name = "Custom Controls";
 			sourceTree = "<group>";
@@ -300,6 +313,7 @@
 				841AF50F16DCFA1D008FCA42 /* VGDetailViewController.xib in Resources */,
 				841AF51416DD0117008FCA42 /* VGOptionsViewController.xib in Resources */,
 				84A47E3B16DE308A00A78089 /* VGSelectOperatorViewController.xib in Resources */,
+				84A47E5416DE5ABB00A78089 /* VGAddToTableViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,6 +338,8 @@
 				841AF51316DD0117008FCA42 /* VGOptionsViewController.m in Sources */,
 				841AF51716DD038D008FCA42 /* VGMessageHandlerViewController.m in Sources */,
 				84A47E3A16DE308A00A78089 /* VGSelectOperatorViewController.m in Sources */,
+				84A47E4A16DE39D100A78089 /* VGTableView.m in Sources */,
+				84A47E5316DE5ABB00A78089 /* VGAddToTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

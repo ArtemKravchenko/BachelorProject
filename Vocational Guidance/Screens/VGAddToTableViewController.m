@@ -10,13 +10,15 @@
 
 @interface VGAddToTableViewController ()
 
+@property (retain, nonatomic) IBOutlet UITextField *txtName;
+
 @end
 
 @implementation VGAddToTableViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)init
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithNibName:@"VGAddToTableViewController" bundle:[NSBundle mainBundle]];
     if (self) {
         // Custom initialization
     }
@@ -26,13 +28,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
 }
 
+#pragma mark - Actions
+
+- (IBAction)clickAdd:(id)sender {
+    if (![self.txtName.text isEqualToString:@""] && ![self.txtName.text isEqualToString:@"\n" ] && ![self.txtName.text isEqualToString:@"\t"] && self.target != nil && self.method != nil) {
+        [self.target performSelector:self.method withObject:self.txtName.text];
+    }
+}
+
+- (void)dealloc {
+    [_txtName release];
+    [super dealloc];
+}
 @end
