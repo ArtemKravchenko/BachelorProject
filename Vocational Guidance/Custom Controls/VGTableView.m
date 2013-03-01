@@ -38,9 +38,7 @@ static const NSInteger viewBoundY       = 488;
     return self;
 }
 
-
-- (void)drawRect:(CGRect)rect
-{
+- (void) reloadData {
     self.backgroundColor = [UIColor whiteColor];
     NSInteger offsetX = 2;
     NSInteger offsetY = 2;
@@ -110,7 +108,11 @@ static const NSInteger viewBoundY       = 488;
         offsetY += 2;
     }
     self.contentSize = CGSizeMake(cellWidth + cellWidth * [VGAppDelegate getInstance].columns.count + offsetX , cellHeight * [VGAppDelegate getInstance].rows.count + offsetY + cellHeight);
-    
+}
+
+- (void)drawRect:(CGRect)rect
+{
+    [self reloadData];
 }
 
 - (void)dealloc
@@ -139,6 +141,10 @@ static const NSInteger viewBoundY       = 488;
     NSInteger tmpvalue = keyHeight - (textField.frame.origin.y + textField.frame.size.height) + differece;
     if (tmpvalue < 0) {
         [self animateChangeOriginYView:self forValue: -(tmpvalue - textField.frame.size.height)];
+    }
+    
+    if ([textField.text floatValue] > 1) {
+        textField.text = [NSString stringWithFormat:@"%.2f", [textField.text floatValue] / 100];
     }
     if (self.tableDetegate != nil) {
         NSInteger rowIndex = textField.tag / [VGAppDelegate getInstance].columns.count;

@@ -55,7 +55,6 @@
 						<string key="NSFrame">{{27, 69}, {970, 610}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -203,7 +202,10 @@
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="149194371"/>
-				<reference key="IBUIBackgroundColor" ref="134987909"/>
+				<object class="NSColor" key="IBUIBackgroundColor">
+					<int key="NSColorSpace">3</int>
+					<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
+				</object>
 				<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics">
 					<int key="IBUIStatusBarStyle">2</int>
@@ -401,9 +403,7 @@
 					<string key="superclassName">VGBaseViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="clickEdit:">id</string>
-						<string key="clickGraph:">id</string>
 						<string key="clickSave:">id</string>
-						<string key="clickTable:">id</string>
 						<string key="clickViewTransition:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -411,16 +411,8 @@
 							<string key="name">clickEdit:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="clickGraph:">
-							<string key="name">clickGraph:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="clickSave:">
 							<string key="name">clickSave:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="clickTable:">
-							<string key="name">clickTable:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="clickViewTransition:">

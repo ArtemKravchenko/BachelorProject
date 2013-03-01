@@ -28,6 +28,7 @@ enum VGButtonClickedType : NSInteger {
 
 @interface VGTableView : UIScrollView <UITextFieldDelegate>
 
+- (void) reloadData;
 @property (nonatomic, assign) id<VGTableAddDelegate> tableDetegate;
 
 - (void) edtiMode:(BOOL)canEdit;

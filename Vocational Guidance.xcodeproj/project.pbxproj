@@ -91,6 +91,7 @@
 		841AF51216DD0117008FCA42 /* VGOptionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VGOptionsViewController.xib; path = Screens/VGOptionsViewController.xib; sourceTree = "<group>"; };
 		841AF51516DD038D008FCA42 /* VGMessageHandlerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGMessageHandlerViewController.h; path = "Vocational Guidance/Base/VGMessageHandlerViewController.h"; sourceTree = "<group>"; };
 		841AF51616DD038D008FCA42 /* VGMessageHandlerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGMessageHandlerViewController.m; path = "Vocational Guidance/Base/VGMessageHandlerViewController.m"; sourceTree = "<group>"; };
+		849C761916E1031400054D17 /* Constant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
 		849E569D16DF6450009E9AB6 /* graph-badge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "graph-badge.png"; path = "Imges/graph-badge.png"; sourceTree = "<group>"; };
 		849E569E16DF6450009E9AB6 /* graph-badge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "graph-badge@2x.png"; path = "Imges/graph-badge@2x.png"; sourceTree = "<group>"; };
 		849E56A516DF8FC1009E9AB6 /* VGGraphViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGGraphViewController.h; path = Screens/VGGraphViewController.h; sourceTree = "<group>"; };
@@ -174,6 +175,7 @@
 				841AF4C916DCAC90008FCA42 /* Default.png */,
 				841AF4CB16DCAC90008FCA42 /* Default@2x.png */,
 				841AF4CD16DCAC90008FCA42 /* Default-568h@2x.png */,
+				849C761916E1031400054D17 /* Constant.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";

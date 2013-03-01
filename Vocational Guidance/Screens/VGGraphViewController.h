@@ -14,12 +14,23 @@
 @property (nonatomic, retain) NSMutableArray *tableData;
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 
+- (void) reloadData;
+
 @end
 
 @interface VGGraphItem : UIView
 
 @end
 
+@interface VGGraphDesktopLines : UIView
+
+- (void) reloadData;
+
+@end
+
 @interface VGGraphDesktop : UIScrollView
+
+@property (nonatomic, retain) VGGraphDesktopLines *gdl;
+- (void) reloadItems;
 
 @end

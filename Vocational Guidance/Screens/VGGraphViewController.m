@@ -8,8 +8,9 @@
 
 #import "VGGraphViewController.h"
 
-static const NSInteger graphItemWidth = 89;
-static const NSInteger graphItemHeight = 89;
+static const NSInteger graphItemWidth   = 89;
+static const NSInteger graphItemHeight  = 89;
+static const NSInteger deltaX           = 200;
 
 static NSString * CellIdentifier = @"GraphCell";
 
@@ -33,12 +34,6 @@ static NSString * CellIdentifier = @"GraphCell";
 - (void) viewDidLoad
 {
     [super viewDidLoad];
-    self.tableData = [VGAppDelegate getInstance].values;
-    [self.tableView reloadData];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
 }
 
 - (void) dealloc {
@@ -47,6 +42,12 @@ static NSString * CellIdentifier = @"GraphCell";
     [_tableView release];
     [_txtSearch release];
     [super dealloc];
+}
+
+- (void) reloadData {
+    self.tableData = [VGAppDelegate getInstance].values;
+    [self.tableView reloadData];
+    [self.graphDesktop reloadItems];
 }
 
 #pragma mark Table data souce
@@ -85,18 +86,27 @@ static NSString * CellIdentifier = @"GraphCell";
 
 @implementation VGGraphDesktop
 
--(void)drawRect:(CGRect)rect {
+- (void) drawRect:(CGRect)rect {
+    [self reloadItems];
+}
+
+- (void) reloadItems {
     NSInteger originX = 0;
     NSInteger originY = 0;
     
     NSInteger offsetX = 20;
     NSInteger offsetY = 20;
     
+    [self.gdl removeFromSuperview];
+    self.gdl = [[[VGGraphDesktopLines alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)] autorelease];
+    self.gdl.backgroundColor = [UIColor clearColor];
+    [self addSubview:self.gdl];
+    
     for (NSInteger i = 0; i < [VGAppDelegate getInstance].columns.count; i++) {
         originX = offsetX + graphItemWidth  * i;
         originY = offsetY;
         [self addItemWithOriginX:originX andOriginY:originY andValue: ((NSString*)[VGAppDelegate getInstance].columns[i])];
-        offsetX += 20;
+        offsetX += deltaX;
     }
     
     offsetX = 20;
@@ -105,30 +115,12 @@ static NSString * CellIdentifier = @"GraphCell";
         originX = offsetX + graphItemWidth  * i;
         originY = offsetY;
         
-        [self addItemWithOriginX:originX andOriginY:originY andValue: ((NSString*)[VGAppDelegate getInstance].columns[i])];
-        offsetX += 20;
-    }
-    
-    for (NSInteger i = 0; i < [VGAppDelegate getInstance].columns.count; i++) {
-        for (NSInteger j = 0; j < [VGAppDelegate getInstance].rows.count; j++) {
-            
-            
-            CGContextRef context = UIGraphicsGetCurrentContext();
-            CGContextBeginPath(context);
-            
-            CGContextMoveToPoint(context, 150,0);
-            CGContextAddLineToPoint(context, 300, 300);
-            
-            // Set line width
-            CGContextSetLineWidth(context, 2.0);
-            CGContextSetRGBStrokeColor(context, 0.0, 1.0, 0.0, 1.0);
-            
-            //Draw on the screen
-            CGContextDrawPath(context, kCGPathFillStroke);
-        }
+        [self addItemWithOriginX:originX andOriginY:originY andValue: ((NSString*)[VGAppDelegate getInstance].rows[i])];
+        offsetX += deltaX;
     }
     
     self.contentSize = CGSizeMake(offsetX + MAX([VGAppDelegate getInstance].columns.count * graphItemWidth, [VGAppDelegate getInstance].rows.count), self.frame.size.height);
+    self.gdl.frame = CGRectMake(0, 0, self.contentSize.width, self.contentSize.height);
 }
 
 - (void) addItemWithOriginX:(NSInteger)originX andOriginY:(NSInteger)originY andValue:(NSString*)value {
@@ -139,6 +131,46 @@ static NSString * CellIdentifier = @"GraphCell";
     ((UILabel*)[tmpItem viewWithTag:11]).text = value;
     tmpItem.frame = CGRectMake(originX, originY, tmpItem.frame.size.width, tmpItem.frame.size.height);
     [self addSubview:tmpItem];
+}
+
+@end
+
+@implementation VGGraphDesktopLines
+
+
+-(void)drawRect:(CGRect)rect {
+    [self reloadData];
+}
+
+- (void) reloadData {
+    NSInteger offsetX = 0;
+    NSInteger offsetY = 0;
+    
+    for (NSInteger i = 0; i < [VGAppDelegate getInstance].rows.count; i++) {
+        offsetX = 20;
+        offsetY = 20;
+        for (NSInteger j = 0; j < [VGAppDelegate getInstance].columns.count; j++) {
+            NSPredicate* predicate = [NSPredicate predicateWithFormat:@"%K == %d && %K == %d", @"rowIndex", i, @"colIndex", j];
+            NSMutableArray *tmpArray = [NSMutableArray arrayWithArray: [VGAppDelegate getInstance].values];
+            [tmpArray filterUsingPredicate:predicate];
+            if (![((VGTableCell*)tmpArray[0]).value isEqualToString: @"0"]) {
+                CGContextRef context = UIGraphicsGetCurrentContext();
+                CGContextBeginPath(context);
+                
+                CGContextMoveToPoint(context, offsetX + graphItemWidth  * j + graphItemWidth / 2, offsetY + graphItemHeight/ 2);
+                CGContextAddLineToPoint(context, 20 + (deltaX * i) + graphItemWidth  * i + graphItemWidth / 2, offsetY + graphItemHeight * 4.5);
+                
+                // Set line width
+                CGContextSetLineWidth(context, 0.5);
+                CGContextSetRGBStrokeColor(context, 0.0, 1.0, 0.0, 1.0);
+                
+                //Draw on the screen
+                CGContextDrawPath(context, kCGPathFillStroke);
+                
+            }
+            offsetX += deltaX;
+        }
+    }
 }
 
 @end
