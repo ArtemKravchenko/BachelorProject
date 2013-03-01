@@ -7,7 +7,12 @@
 //
 
 #import "VGBaseViewController.h"
+#import "VGTableView.h"
+#import "VGGraphViewController.h"
 
-@interface VGTableViewController : VGBaseViewController
+@interface VGTableViewController : VGBaseViewController <VGTableAddDelegate>
+
+@property (nonatomic, retain) VGTableView *tableView;
+@property (nonatomic, retain) VGGraphViewController *graphView;
 
 @end

@@ -32,3 +32,12 @@
     return (VGAppDelegate*)[[UIApplication sharedApplication] delegate];
 }
 @end
+
+@implementation VGTableCell
+
+@synthesize value;
+@synthesize colIndex;
+@synthesize rowIndex;
+
+
+@end

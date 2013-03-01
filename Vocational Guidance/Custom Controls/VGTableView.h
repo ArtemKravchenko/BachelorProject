@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "VGAppDelegate.h"
 
 typedef void (^addToTableBlockType)(NSString*, UIPopoverController* popover);
 
@@ -21,22 +22,14 @@ enum VGButtonClickedType : NSInteger {
 @optional
 - (void) rowDidAddWithName:(NSString*)name;
 - (void) colDidAddWithName:(NSString*)name;
+- (void) cellDidChangedAtRow:(NSInteger)rowIndex andColIndex:(NSInteger)colIdex withValue:(NSString*)value;
 
 @end
 
-@interface VGTableView : UIScrollView
+@interface VGTableView : UIScrollView <UITextFieldDelegate>
 
-@property (nonatomic, retain) NSMutableArray *rows;
-@property (nonatomic, retain) NSMutableArray *columns;
-@property (nonatomic, retain) NSMutableArray *values;
 @property (nonatomic, assign) id<VGTableAddDelegate> tableDetegate;
 
-@end
-
-@interface VGTableCell : NSObject
-
-@property (nonatomic, assign) NSInteger rowIndex;
-@property (nonatomic, assign) NSInteger colIndex;
-@property (nonatomic, retain) NSString  *value;
+- (void) edtiMode:(BOOL)canEdit;
 
 @end
