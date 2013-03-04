@@ -14,9 +14,11 @@ static const NSInteger deltaX           = 200;
 
 static NSString * CellIdentifier = @"GraphCell";
 
+@class VGTableType;
+
 @interface VGGraphViewController ()
+
 @property (retain, nonatomic) IBOutlet VGGraphDesktop *graphDesktop;
-@property (retain, nonatomic) IBOutlet UITextField *txtSearch;
 
 @end
 
@@ -40,13 +42,19 @@ static NSString * CellIdentifier = @"GraphCell";
     self.tableData = nil;
     [_graphDesktop release];
     [_tableView release];
-    [_txtSearch release];
     [super dealloc];
 }
 
-- (void) reloadData {
-    self.tableData = [VGAppDelegate getInstance].values;
+- (void) reloadDataWithArray:(NSMutableArray*)array {
+    // Reload table
+    self.tableData = [NSMutableArray arrayWithArray: array]; // [VGAppDelegate getInstance].values
     [self.tableView reloadData];
+    
+    // Reload desktop
+    for (UIView* view in self.graphDesktop.subviews) {
+        [view removeFromSuperview];
+    }
+    self.graphDesktop.tableValues = [NSMutableArray arrayWithArray:array];
     [self.graphDesktop reloadItems];
 }
 
@@ -68,15 +76,44 @@ static NSString * CellIdentifier = @"GraphCell";
                       ((NSString*)[VGAppDelegate getInstance].rows[tmpCell.rowIndex]),
                       ((NSString*)[VGAppDelegate getInstance].columns[tmpCell.colIndex]),
                       tmpCell.value];
+    
     cell.textLabel.text = text;
     
     return cell;
 }
 
-#pragma mark - Actions
+#pragma mark - Search field delegate
 
-- (IBAction)clickSearch:(id)sender {
+- (BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if (![[searchBar.text stringByReplacingCharactersInRange:range withString:text] isEqualToString:@""]) {
+        NSPredicate* predicate = nil;
+        NSMutableArray* tmpArray = [VGAppDelegate getInstance].stringValues;
+        predicate = [NSPredicate predicateWithFormat:@" %K CONTAINS %@", @"value" ,[searchBar.text stringByReplacingCharactersInRange:range withString:text]];
+        [tmpArray filterUsingPredicate:predicate];
+        
+        [self.tableData removeAllObjects];
+        NSMutableArray* tmpTableData = [NSMutableArray array];
+        for (VGTableType* type in tmpArray) {
+            [tmpTableData addObject:[[VGAppDelegate getInstance].values objectAtIndex:type.key]];
+        }
+        [self reloadDataWithArray:tmpTableData];
+    } else {
+        [self reloadDataWithArray:[VGAppDelegate getInstance].values];
+    }
+    return YES;
 }
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar {
+    [searchBar resignFirstResponder];
+    [self reloadDataWithArray:[VGAppDelegate getInstance].values];
+}
+
+-(void)searchDisplayController:(UISearchDisplayController *)controller didShowSearchResultsTableView:(UITableView *)tableView {
+    tableView.frame = CGRectMake(0, 88, self.tableView.frame.size.width, self.tableView.frame.size.height);
+}
+
+
+#pragma mark - Actions
 
 @end
 
@@ -86,8 +123,14 @@ static NSString * CellIdentifier = @"GraphCell";
 
 @implementation VGGraphDesktop
 
+- (void)dealloc
+{
+    self.tableValues = nil;
+    [super dealloc];
+}
+
 - (void) drawRect:(CGRect)rect {
-    [self reloadItems];
+    //[self reloadItems];
 }
 
 - (void) reloadItems {
@@ -97,18 +140,20 @@ static NSString * CellIdentifier = @"GraphCell";
     NSInteger offsetX = 20;
     NSInteger offsetY = 20;
     
+    // Add lines
     [self.gdl removeFromSuperview];
     self.gdl = [[[VGGraphDesktopLines alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)] autorelease];
+    self.gdl.tableValues = self.tableValues;
     self.gdl.backgroundColor = [UIColor clearColor];
     [self addSubview:self.gdl];
-    
+    // Add columns
     for (NSInteger i = 0; i < [VGAppDelegate getInstance].columns.count; i++) {
         originX = offsetX + graphItemWidth  * i;
         originY = offsetY;
         [self addItemWithOriginX:originX andOriginY:originY andValue: ((NSString*)[VGAppDelegate getInstance].columns[i])];
         offsetX += deltaX;
     }
-    
+    // Add rows
     offsetX = 20;
     offsetY += graphItemHeight * 4;
     for (NSInteger i = 0; i < [VGAppDelegate getInstance].rows.count; i++) {
@@ -137,7 +182,6 @@ static NSString * CellIdentifier = @"GraphCell";
 
 @implementation VGGraphDesktopLines
 
-
 -(void)drawRect:(CGRect)rect {
     [self reloadData];
 }
@@ -145,32 +189,41 @@ static NSString * CellIdentifier = @"GraphCell";
 - (void) reloadData {
     NSInteger offsetX = 0;
     NSInteger offsetY = 0;
-    
-    for (NSInteger i = 0; i < [VGAppDelegate getInstance].rows.count; i++) {
-        offsetX = 20;
-        offsetY = 20;
-        for (NSInteger j = 0; j < [VGAppDelegate getInstance].columns.count; j++) {
-            NSPredicate* predicate = [NSPredicate predicateWithFormat:@"%K == %d && %K == %d", @"rowIndex", i, @"colIndex", j];
-            NSMutableArray *tmpArray = [NSMutableArray arrayWithArray: [VGAppDelegate getInstance].values];
-            [tmpArray filterUsingPredicate:predicate];
-            if (![((VGTableCell*)tmpArray[0]).value isEqualToString: @"0"]) {
-                CGContextRef context = UIGraphicsGetCurrentContext();
-                CGContextBeginPath(context);
-                
-                CGContextMoveToPoint(context, offsetX + graphItemWidth  * j + graphItemWidth / 2, offsetY + graphItemHeight/ 2);
-                CGContextAddLineToPoint(context, 20 + (deltaX * i) + graphItemWidth  * i + graphItemWidth / 2, offsetY + graphItemHeight * 4.5);
-                
-                // Set line width
-                CGContextSetLineWidth(context, 0.5);
-                CGContextSetRGBStrokeColor(context, 0.0, 1.0, 0.0, 1.0);
-                
-                //Draw on the screen
-                CGContextDrawPath(context, kCGPathFillStroke);
-                
+    if (self.tableValues != nil) {
+        for (NSInteger i = 0; i < [VGAppDelegate getInstance].rows.count; i++) {
+            offsetX = 20;
+            offsetY = 20;
+            for (NSInteger j = 0; j < [VGAppDelegate getInstance].columns.count; j++) {
+                NSPredicate* predicate = [NSPredicate predicateWithFormat:@"%K == %d && %K == %d", @"rowIndex", i, @"colIndex", j];
+                NSMutableArray *tmpArray = [NSMutableArray arrayWithArray: self.tableValues];
+                [tmpArray filterUsingPredicate:predicate];
+                if (tmpArray.count) {
+                    
+                    if (![((VGTableCell*)tmpArray[0]).value isEqualToString: @"0"]) {
+                        CGContextRef context = UIGraphicsGetCurrentContext();
+                        CGContextBeginPath(context);
+                        
+                        CGContextMoveToPoint(context, offsetX + graphItemWidth  * j + graphItemWidth / 2, offsetY + graphItemHeight/ 2);
+                        CGContextAddLineToPoint(context, 20 + (deltaX * i) + graphItemWidth  * i + graphItemWidth / 2, offsetY + graphItemHeight * 4.5);
+                        
+                        // Set line width
+                        CGContextSetLineWidth(context, 0.5);
+                        CGContextSetRGBStrokeColor(context, 0.0, 1.0, 0.0, 1.0);
+                        
+                        //Draw on the screen
+                        CGContextDrawPath(context, kCGPathFillStroke);
+                        
+                    }
+                }
+                offsetX += deltaX;
             }
-            offsetX += deltaX;
         }
     }
+}
+- (void)dealloc
+{
+    self.tableValues = nil;
+    [super dealloc];
 }
 
 @end

@@ -22,7 +22,9 @@ enum VGButtonClickedType : NSInteger {
 @optional
 - (void) rowDidAddWithName:(NSString*)name;
 - (void) colDidAddWithName:(NSString*)name;
-- (void) cellDidChangedAtRow:(NSInteger)rowIndex andColIndex:(NSInteger)colIdex withValue:(NSString*)value;
+- (void) cellDidChangedAtRow:(NSInteger)rowIndex andColIndex:(NSInteger)colIdex withValue:(NSString*)value  andWithOldValue:(NSString*)oldValue;
+- (void) cellWillChanging;
+- (void) objectWillAdding;
 
 @end
 

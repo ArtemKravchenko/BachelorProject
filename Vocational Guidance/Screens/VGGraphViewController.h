@@ -9,12 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "VGAppDelegate.h"
 
-@interface VGGraphViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface VGGraphViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
 @property (nonatomic, retain) NSMutableArray *tableData;
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 
-- (void) reloadData;
+- (void) reloadDataWithArray:(NSMutableArray*)array;
 
 @end
 
@@ -24,12 +24,14 @@
 
 @interface VGGraphDesktopLines : UIView
 
+@property (nonatomic, retain) NSMutableArray* tableValues;
 - (void) reloadData;
 
 @end
 
 @interface VGGraphDesktop : UIScrollView
 
+@property (nonatomic, retain) NSMutableArray* tableValues;
 @property (nonatomic, retain) VGGraphDesktopLines *gdl;
 - (void) reloadItems;
 

@@ -8,21 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-//
-// Transactions States
-//
-
-static NSString* TS_TRANSACTION_TYPE                = @"transaction_type";
-
-//
-// Transactions Prameters
-//
-
-static NSString* TP_COL_INDEX                       = @"column_index";
-static NSString* TP_CELL_VALUE                      = @"cell_value";
-static NSString* TP_OBJ_NAME                        = @"obj_name";
-static NSString* TP_ROW_INDEX                       = @"row_index";
-
 @interface VGAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
@@ -37,9 +22,11 @@ static NSString* TP_ROW_INDEX                       = @"row_index";
 @property (nonatomic, retain) NSMutableArray *columns;
 @property (nonatomic, retain) NSMutableArray *values;
 @property (nonatomic, retain) NSMutableArray *transactionsList;
+@property (nonatomic, retain) NSMutableArray *stringValues;
 
 + (VGAppDelegate*) getInstance;
 - (void) executingTransation;
+- (void) cancelTransaction;
 
 @end
 
@@ -48,6 +35,14 @@ static NSString* TP_ROW_INDEX                       = @"row_index";
 @property (nonatomic, assign) NSInteger rowIndex;
 @property (nonatomic, assign) NSInteger colIndex;
 @property (nonatomic, retain) NSString  *value;
+
+@end
+
+
+@interface VGTableType : NSObject
+
+@property (nonatomic, retain) NSString* value;
+@property (nonatomic, assign) NSInteger key;
 
 @end
 

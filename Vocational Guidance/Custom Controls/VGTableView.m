@@ -21,6 +21,7 @@ static const NSInteger viewBoundY       = 488;
     UIButton *btnAddRow;
     UIButton *btnAddCol;
     BOOL canEdit;
+    NSString *tmpString;
 }
 
 @property (nonatomic, retain) UIPopoverController *popover;
@@ -38,26 +39,40 @@ static const NSInteger viewBoundY       = 488;
     return self;
 }
 
+- (void) removeAllFromView {
+    for (UIView* view in self.subviews) {
+        if (![view isKindOfClass:[UIButton class]]) {
+            [view removeFromSuperview];
+        }
+    }
+}
+
 - (void) reloadData {
+    [self removeAllFromView];
+    
     self.backgroundColor = [UIColor whiteColor];
     NSInteger offsetX = 2;
     NSInteger offsetY = 2;
     
-    btnAddRow = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [btnAddRow addTarget:self action:@selector(clickAddRow) forControlEvents:UIControlEventTouchUpInside];
-    btnAddRow.enabled = NO;
-    [btnAddRow setTitle:@"+" forState:UIControlStateNormal];
-    //btnAddRow.titleLabel.backgroundColor = [UIColor grayColor];
-    btnAddRow.frame = CGRectMake(1, cellHeight / 2 , cellWidth / 2, cellHeight / 2);
-    [self addSubview:btnAddRow];
+    if (btnAddRow == nil) {
+        btnAddRow = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [btnAddRow addTarget:self action:@selector(clickAddRow) forControlEvents:UIControlEventTouchUpInside];
+        btnAddRow.enabled = NO;
+        [btnAddRow setTitle:@"+" forState:UIControlStateNormal];
+        //btnAddRow.titleLabel.backgroundColor = [UIColor grayColor];
+        btnAddRow.frame = CGRectMake(1, cellHeight / 2 , cellWidth / 2, cellHeight / 2);
+        [self addSubview:btnAddRow];
+    }
     
-    btnAddCol = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [btnAddCol addTarget:self action:@selector(clickAddCol) forControlEvents:UIControlEventTouchUpInside];
-    btnAddCol.enabled = NO;
-    //btnAddCol.titleLabel.backgroundColor = [UIColor grayColor];
-    [btnAddCol setTitle:@"+" forState:UIControlStateNormal];
-    btnAddCol.frame = CGRectMake(cellWidth / 2 , 1 , cellWidth / 2, cellHeight / 2);
-    [self addSubview:btnAddCol];
+    if (btnAddCol == nil) {
+        btnAddCol = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [btnAddCol addTarget:self action:@selector(clickAddCol) forControlEvents:UIControlEventTouchUpInside];
+        btnAddCol.enabled = NO;
+        //btnAddCol.titleLabel.backgroundColor = [UIColor grayColor];
+        [btnAddCol setTitle:@"+" forState:UIControlStateNormal];
+        btnAddCol.frame = CGRectMake(cellWidth / 2 , 1 , cellWidth / 2, cellHeight / 2);
+        [self addSubview:btnAddCol];
+    }
     
     // init columns headers
     for (int i  = 0; i < [VGAppDelegate getInstance].columns.count; i++) {
@@ -117,6 +132,7 @@ static const NSInteger viewBoundY       = 488;
 
 - (void)dealloc
 {
+    tmpString = nil;
     btnAddCol = nil;
     btnAddRow = nil;
     self.popover = nil;
@@ -127,10 +143,13 @@ static const NSInteger viewBoundY       = 488;
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     NSInteger differece = (textField.frame.origin.y - viewFrameOffsetY > viewBoundY) ? textField.frame.origin.y - viewFrameOffsetY - viewBoundY : 0;
-    
+    tmpString = textField.text;
     NSInteger tmpvalue = keyHeight - (textField.frame.origin.y + textField.frame.size.height) + differece;
     if (tmpvalue < 0) {
         [self animateChangeOriginYView:self forValue: (tmpvalue - textField.frame.size.height)];
+    }
+    if (self.tableDetegate != nil) {
+        [self.tableDetegate objectWillAdding];
     }
     return YES;
 }
@@ -143,13 +162,16 @@ static const NSInteger viewBoundY       = 488;
         [self animateChangeOriginYView:self forValue: -(tmpvalue - textField.frame.size.height)];
     }
     
-    if ([textField.text floatValue] > 1) {
+    if ([textField.text floatValue] > 100) {
+        textField.text = tmpString;
+    } else if ([textField.text floatValue] > 1) {
         textField.text = [NSString stringWithFormat:@"%.2f", [textField.text floatValue] / 100];
     }
+    
     if (self.tableDetegate != nil) {
         NSInteger rowIndex = textField.tag / [VGAppDelegate getInstance].columns.count;
         NSInteger colIndex = textField.tag % [VGAppDelegate getInstance].columns.count;
-        [self.tableDetegate cellDidChangedAtRow:rowIndex andColIndex:colIndex withValue:textField.text];
+        [self.tableDetegate cellDidChangedAtRow:rowIndex andColIndex:colIndex withValue:textField.text andWithOldValue: tmpString];
         
     }
     return YES;
@@ -196,12 +218,15 @@ static const NSInteger viewBoundY       = 488;
             [self.tableDetegate colDidAddWithName:name];
         }
     }
-    [self drawRect:self.frame];
+    [self reloadData];
     [self.popover dismissPopoverAnimated:YES];
     self.popover = nil;
 }
 
 - (void) clickAddRow {
+    if (self.tableDetegate != nil) {
+        [self.tableDetegate cellWillChanging];
+    }
     buttonClickedType = VGButtonClickedTypeRow;
     insideViewController = [[VGAddToTableViewController new] autorelease];
     insideViewController.method = @selector(addToTableMethod:);
@@ -216,6 +241,9 @@ static const NSInteger viewBoundY       = 488;
 }
 
 - (void) clickAddCol {
+    if (self.tableDetegate != nil) {
+        [self.tableDetegate cellWillChanging];
+    }
     buttonClickedType = VGButtonClickedTypeCol;
     insideViewController = [[VGAddToTableViewController new] autorelease];
     insideViewController.method = @selector(addToTableMethod:);
