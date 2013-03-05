@@ -11,5 +11,6 @@
 @interface VGSavedScreenInfo : NSObject
 
 @property (nonatomic, assign) Class classValue;
+@property (nonatomic, retain) NSString* title;
 
 @end

@@ -10,6 +10,7 @@
 #import "VGSavedScreenInfo.h"
 #import "VGAppDelegate.h"
 #import "VGOptionsViewController.h"
+#import "VGScreenNavigator.h"
 
 @interface VGBaseViewController ()
 
@@ -49,7 +50,11 @@
     UIPopoverController *popover = nil;
     NSMutableArray *options = nil;
     
-    options = [NSMutableArray arrayWithObjects: @"User's Data", @"Search", @"Select Operator", nil];
+    options = [NSMutableArray array];
+    for (NSString* key in VGScreenNavigator.screenMapping) {
+        VGSavedScreenInfo* screenInfo = [VGScreenNavigator.screenMapping objectForKey:key];
+        [options addObject:screenInfo.title];
+    }
     
     popover = [VGOptionsViewController newPopoverWithTitle:@"Main Menu" options:options delegate:self tag:PO_NAV_OPTIONS];
     [popover presentPopoverFromRect: CGRectMake(990, 54, 1, 1)

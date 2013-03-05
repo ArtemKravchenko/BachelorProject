@@ -40,7 +40,7 @@
 
 - (IBAction)clickLogin:(id)sender {
     [self.btnLogin setSelected:YES];
-    [self.delegate popupDidClose];
+    [self.delegate popupDidCloseWithLogin:self.txtLogin.text andPassword:self.txtPassword.text];
 }
 
 
@@ -62,7 +62,7 @@
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     
     if (viewFrameIsChanged == 0) {
-        [self animateChangeOriginYView:self.view.superview forValue:-100];
+        [self animateChangeOriginYView:self.view.superview forValue:100];
         viewFrameIsChanged = 1;
     } else if (viewFrameIsChanged >= 1) {
         viewFrameIsChanged = 2;
@@ -74,7 +74,7 @@
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
     
     if (viewFrameIsChanged == 1 && !self.btnLogin.isSelected) {
-        [self animateChangeOriginYView:self.view.superview forValue:+100];
+        [self animateChangeOriginYView:self.view.superview forValue:-100];
         viewFrameIsChanged = 0;
     } else if(viewFrameIsChanged == 2){
         viewFrameIsChanged = 1;

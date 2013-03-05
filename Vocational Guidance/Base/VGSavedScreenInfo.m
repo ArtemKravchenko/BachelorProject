@@ -10,6 +10,12 @@
 
 @implementation VGSavedScreenInfo
 
+@synthesize title = _title;
 
+- (void)dealloc
+{
+    [_title release];
+    [super dealloc];
+}
 
 @end

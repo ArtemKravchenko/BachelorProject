@@ -21,6 +21,7 @@
 @implementation VGAppDelegate
 
 - (void)dealloc {
+    [_currentUser release];
     [_values release];
     [_transactionsList release];
     [_rows release];
@@ -37,7 +38,6 @@
     self.navigationController = [[[UINavigationController alloc] initWithRootViewController:loginView] autorelease];
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
-    [VGScreenNavigator initStartScreenMapping];
     self.transactionsList = [NSMutableArray array];
     return YES;
 }

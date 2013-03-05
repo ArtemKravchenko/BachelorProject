@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "VGUser.h"
+
+@class VGUser;
 
 @interface VGAppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -18,6 +21,7 @@
 @property (strong, nonatomic) NSString* currentScreen;
 
 
+@property (nonatomic, retain) VGUser* currentUser;
 @property (nonatomic, retain) NSMutableArray *rows;
 @property (nonatomic, retain) NSMutableArray *columns;
 @property (nonatomic, retain) NSMutableArray *values;
@@ -29,6 +33,9 @@
 - (void) cancelTransaction;
 
 @end
+
+// -------------------------------------------- Another types --------------------------------------------
+
 
 @interface VGTableCell : NSObject
 

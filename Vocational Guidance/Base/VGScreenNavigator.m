@@ -14,7 +14,8 @@
 #import "VGTableViewController.h"
 #import "VGSearchViewController.h"
 #import "VGPresentViewController.h"
-#import "VGSelectOperatorViewController.h"
+#import "VGUser.h"
+#import "VGDetailViewController.h"
 
 static NSMutableDictionary *screenMapping = nil;
 
@@ -24,26 +25,86 @@ static NSMutableDictionary *screenMapping = nil;
 
 @implementation VGScreenNavigator
 
+- (void)dealloc
+{
+    [super dealloc];
+}
+
++ (NSMutableDictionary*) screenMapping {
+    return screenMapping;
+}
+
+#pragma mark - Init functions
+
 + (void) initStartScreenMapping {
     screenMapping = [[NSMutableDictionary alloc] init];
+    
+    VGCredentilasType credential = [VGAppDelegate getInstance].currentUser.credential;
+    
+    switch (credential) {
+        case VGCredentilasTypeExpert:
+            [self fillScreenMappingWithCredentialTypeExpert];
+            break;
+        
+        case VGCredentilasTypeManager:
+            [self fillScreenMappingWithCredentialTypeManager];
+            break;
+            
+        case VGCredentilasTypeSecretar:
+            [self fillScreenMappingWithCredentialTypeSecretar];
+            break;
+            
+        default:
+            break;
+    }
+}
+
++ (void) fillScreenMappingWithCredentialTypeExpert {
     
     VGSavedScreenInfo *screenInfo = nil;
     
     screenInfo = [VGSavedScreenInfo new];
-    screenInfo.classValue = [VGTableViewController class];
-    [screenMapping setObject:screenInfo forKey: VG_Table_Screen];
+    screenInfo.classValue = [VGDetailViewController class];
+    screenInfo.title = @"My Detail's";
+    [screenMapping setObject:screenInfo forKey: @"My Detail's"];
+    [screenInfo release];
+}
+
++ (void) fillScreenMappingWithCredentialTypeManager {
+    
+    VGSavedScreenInfo *screenInfo = nil;
+    
+    screenInfo = [VGSavedScreenInfo new];
+    screenInfo.classValue = [VGSearchViewController class];
+    screenInfo.title = @"Users list";
+    [screenMapping setObject:screenInfo forKey: @"Users list"];
+    [screenInfo release];
+}
+
++ (void) fillScreenMappingWithCredentialTypeSecretar {
+    
+    VGSavedScreenInfo *screenInfo = nil;
+    
+    screenInfo = [VGSavedScreenInfo new];
+    screenInfo.classValue = [VGSearchViewController class];
+    screenInfo.title = @"Expert List";
+    [screenMapping setObject:screenInfo forKey: @"Expert List"];
     [screenInfo release];
     
     screenInfo = [VGSavedScreenInfo new];
     screenInfo.classValue = [VGSearchViewController class];
-    [screenMapping setObject:screenInfo forKey: VG_Search_Screen];
+    screenInfo.title = @"Employers list";
+    [screenMapping setObject:screenInfo forKey: @"Employers list"];
     [screenInfo release];
     
     screenInfo = [VGSavedScreenInfo new];
-    screenInfo.classValue = [VGSelectOperatorViewController class];
-    [screenMapping setObject:screenInfo forKey: VG_Select_Operator_Screen];
-    [screenInfo release]; 
+    screenInfo.classValue = [VGTableViewController class];
+    screenInfo.title = @"My Table";
+    [screenMapping setObject:screenInfo forKey: @"My Table"];
+    [screenInfo release];
 }
+
+#pragma mark - Navigate functions
 
 + (void) navigateToScreen : (NSString*)name {
     VGSavedScreenInfo *screenInfo = nil;
@@ -77,11 +138,6 @@ static NSMutableDictionary *screenMapping = nil;
     
     [navController.view.layer addAnimation: transition forKey: nil];
     [navController setViewControllers: navigationStack animated: NO];
-}
-
-- (void)dealloc
-{
-    [super dealloc];
 }
 
 @end

@@ -35,9 +35,24 @@
 
 #pragma mark - Login popup delegate
 
-- (void) popupDidClose {
+- (void) popupDidCloseWithLogin:(NSString *)login andPassword:(NSString *)password {
     [popup dismissViewControllerAnimated:YES completion:nil];
     [VGAppDelegate getInstance].isLogin = YES;
+    
+    [VGAppDelegate getInstance].currentUser = [VGUser new];
+    
+    if ([login isEqualToString:@"S"]) {
+        [VGAppDelegate getInstance].currentUser.credential = VGCredentilasTypeSecretar;
+    } else if ([login isEqualToString:@"M"]) {
+        [VGAppDelegate getInstance].currentUser.credential = VGCredentilasTypeManager;
+    } else if ([login isEqualToString:@"E"]){
+        [VGAppDelegate getInstance].currentUser.credential = VGCredentilasTypeExpert;
+    } else {
+        return;
+    }
+    
+    [VGScreenNavigator initStartScreenMapping];
+    
     //[VGScreenNavigator navigateToScreen:VG_Present_Screen];
     VGPresentViewController *presentVC = [[VGPresentViewController new] autorelease];
     [[VGAppDelegate getInstance].navigationController pushViewController:presentVC animated:YES];

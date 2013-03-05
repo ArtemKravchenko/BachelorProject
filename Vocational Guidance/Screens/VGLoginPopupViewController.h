@@ -10,7 +10,7 @@
 
 @protocol LoginPopupDelegate <NSObject>
 
-- (void) popupDidClose;
+- (void) popupDidCloseWithLogin:(NSString*) login andPassword:(NSString*) password ;
 
 @end
 

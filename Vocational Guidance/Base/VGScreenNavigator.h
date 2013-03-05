@@ -15,4 +15,6 @@
 
 + (void) navigateToScreen : (NSString*)name;
 
++ (NSMutableDictionary*) screenMapping;
+
 @end
