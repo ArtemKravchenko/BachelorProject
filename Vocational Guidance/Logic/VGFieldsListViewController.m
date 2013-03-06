@@ -8,8 +8,10 @@
 
 #import "VGFieldsListViewController.h"
 
-static const NSInteger cellHeight            = 44;
-static const NSInteger cellLabelWidth    = 130;
+static const NSInteger cellHeight               = 44;
+static const NSInteger cellLabelWidth           = 130;
+static const NSInteger cellValueFieldWidth      = 226;
+static const NSInteger cellValueFieldOriginX    = 131;
 
 @interface VGFieldsListViewController ()
 
@@ -48,12 +50,18 @@ static const NSInteger cellLabelWidth    = 130;
     return newCellView;
 }
 
-- (UILabel*) cellLabelWithValue:(NSString*)value andOriginX:(NSInteger)originX andOriginY:(NSInteger)originY {
+- (UILabel*) cellLabelWithValue:(NSString*)value andWidth:(NSInteger)width andOriginX:(NSInteger)originX andOriginY:(NSInteger)originY {
     UILabel* newCellLabel = [[UILabel new] autorelease];
-    [newCellLabel setFrame:CGRectMake(originX, originY, cellLabelWidth, cellHeight)];
+    [newCellLabel setFrame:CGRectMake(originX, originY, width, cellHeight)];
     [newCellLabel setText:value];
     [newCellLabel setFont:[UIFont systemFontOfSize:17]];
     return newCellLabel;
+}
+
+- (UITextField*) cellEmptyTextFieldWithOriginY:(NSInteger)originY {
+    UITextField* newCellEmptyTextField = [[UITextField new] autorelease];
+    [newCellEmptyTextField setFrame:CGRectMake(cellValueFieldOriginX, originY, cellValueFieldWidth, cellHeight)];
+    return newCellEmptyTextField;
 }
 
 @end
