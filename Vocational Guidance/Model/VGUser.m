@@ -18,8 +18,9 @@
     [_login release];
     [_password release];
     [_user_id release];
-    [_dataSet release];
     [super dealloc];
 }
+
+
 
 @end

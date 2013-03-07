@@ -48,6 +48,13 @@
 		849E56A816DF8FC4009E9AB6 /* VGGraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 849E56A616DF8FC3009E9AB6 /* VGGraphViewController.m */; };
 		849E56A916DF8FC4009E9AB6 /* VGGraphViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849E56A716DF8FC3009E9AB6 /* VGGraphViewController.xib */; };
 		849E56AB16DFA354009E9AB6 /* VGGraphItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849E56AA16DFA354009E9AB6 /* VGGraphItem.xib */; };
+		849FF17516E88D35006984AC /* VGStudent.m in Sources */ = {isa = PBXBuildFile; fileRef = 849FF17416E88D35006984AC /* VGStudent.m */; };
+		849FF17816E88DD6006984AC /* VGSubject.m in Sources */ = {isa = PBXBuildFile; fileRef = 849FF17716E88DD5006984AC /* VGSubject.m */; };
+		849FF17B16E88EA4006984AC /* VGSkill.m in Sources */ = {isa = PBXBuildFile; fileRef = 849FF17A16E88EA3006984AC /* VGSkill.m */; };
+		849FF17E16E88F08006984AC /* VGJob.m in Sources */ = {isa = PBXBuildFile; fileRef = 849FF17D16E88F08006984AC /* VGJob.m */; };
+		849FF18116E8907E006984AC /* VGEmploerData.m in Sources */ = {isa = PBXBuildFile; fileRef = 849FF18016E8907E006984AC /* VGEmploerData.m */; };
+		849FF18416E89223006984AC /* VGExpertData.m in Sources */ = {isa = PBXBuildFile; fileRef = 849FF18316E89222006984AC /* VGExpertData.m */; };
+		849FF18716E892FE006984AC /* VGSecretarData.m in Sources */ = {isa = PBXBuildFile; fileRef = 849FF18616E892FC006984AC /* VGSecretarData.m */; };
 		84A47E4A16DE39D100A78089 /* VGTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A47E4916DE39D100A78089 /* VGTableView.m */; };
 		84A47E5316DE5ABB00A78089 /* VGAddToTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A47E5116DE5ABB00A78089 /* VGAddToTableViewController.m */; };
 		84A47E5416DE5ABB00A78089 /* VGAddToTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A47E5216DE5ABB00A78089 /* VGAddToTableViewController.xib */; };
@@ -114,6 +121,20 @@
 		849E56A616DF8FC3009E9AB6 /* VGGraphViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGGraphViewController.m; path = Screens/VGGraphViewController.m; sourceTree = "<group>"; };
 		849E56A716DF8FC3009E9AB6 /* VGGraphViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VGGraphViewController.xib; path = Screens/VGGraphViewController.xib; sourceTree = "<group>"; };
 		849E56AA16DFA354009E9AB6 /* VGGraphItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VGGraphItem.xib; sourceTree = "<group>"; };
+		849FF17316E88D35006984AC /* VGStudent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGStudent.h; path = Model/VGStudent.h; sourceTree = "<group>"; };
+		849FF17416E88D35006984AC /* VGStudent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGStudent.m; path = Model/VGStudent.m; sourceTree = "<group>"; };
+		849FF17616E88DD5006984AC /* VGSubject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGSubject.h; path = Model/VGSubject.h; sourceTree = "<group>"; };
+		849FF17716E88DD5006984AC /* VGSubject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGSubject.m; path = Model/VGSubject.m; sourceTree = "<group>"; };
+		849FF17916E88EA3006984AC /* VGSkill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGSkill.h; path = Model/VGSkill.h; sourceTree = "<group>"; };
+		849FF17A16E88EA3006984AC /* VGSkill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGSkill.m; path = Model/VGSkill.m; sourceTree = "<group>"; };
+		849FF17C16E88F08006984AC /* VGJob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGJob.h; path = Model/VGJob.h; sourceTree = "<group>"; };
+		849FF17D16E88F08006984AC /* VGJob.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGJob.m; path = Model/VGJob.m; sourceTree = "<group>"; };
+		849FF17F16E8907D006984AC /* VGEmploerData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGEmploerData.h; path = Model/VGEmploerData.h; sourceTree = "<group>"; };
+		849FF18016E8907E006984AC /* VGEmploerData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGEmploerData.m; path = Model/VGEmploerData.m; sourceTree = "<group>"; };
+		849FF18216E89221006984AC /* VGExpertData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGExpertData.h; path = Model/VGExpertData.h; sourceTree = "<group>"; };
+		849FF18316E89222006984AC /* VGExpertData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGExpertData.m; path = Model/VGExpertData.m; sourceTree = "<group>"; };
+		849FF18516E892FB006984AC /* VGSecretarData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGSecretarData.h; path = Model/VGSecretarData.h; sourceTree = "<group>"; };
+		849FF18616E892FC006984AC /* VGSecretarData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGSecretarData.m; path = Model/VGSecretarData.m; sourceTree = "<group>"; };
 		84A47E4816DE39D100A78089 /* VGTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGTableView.h; path = "Custom Controls/VGTableView.h"; sourceTree = "<group>"; };
 		84A47E4916DE39D100A78089 /* VGTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGTableView.m; path = "Custom Controls/VGTableView.m"; sourceTree = "<group>"; };
 		84A47E5016DE5ABB00A78089 /* VGAddToTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGAddToTableViewController.h; path = Screens/VGAddToTableViewController.h; sourceTree = "<group>"; };
@@ -141,6 +162,20 @@
 			children = (
 				8413303C16E619FC0098D7F8 /* VGUser.h */,
 				8413303D16E619FC0098D7F8 /* VGUser.m */,
+				849FF17316E88D35006984AC /* VGStudent.h */,
+				849FF17416E88D35006984AC /* VGStudent.m */,
+				849FF17616E88DD5006984AC /* VGSubject.h */,
+				849FF17716E88DD5006984AC /* VGSubject.m */,
+				849FF17916E88EA3006984AC /* VGSkill.h */,
+				849FF17A16E88EA3006984AC /* VGSkill.m */,
+				849FF17C16E88F08006984AC /* VGJob.h */,
+				849FF17D16E88F08006984AC /* VGJob.m */,
+				849FF17F16E8907D006984AC /* VGEmploerData.h */,
+				849FF18016E8907E006984AC /* VGEmploerData.m */,
+				849FF18216E89221006984AC /* VGExpertData.h */,
+				849FF18316E89222006984AC /* VGExpertData.m */,
+				849FF18516E892FB006984AC /* VGSecretarData.h */,
+				849FF18616E892FC006984AC /* VGSecretarData.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -398,6 +433,13 @@
 				849E56A816DF8FC4009E9AB6 /* VGGraphViewController.m in Sources */,
 				8413303E16E619FC0098D7F8 /* VGUser.m in Sources */,
 				8413304B16E63C5E0098D7F8 /* VGFieldsListViewController.m in Sources */,
+				849FF17516E88D35006984AC /* VGStudent.m in Sources */,
+				849FF17816E88DD6006984AC /* VGSubject.m in Sources */,
+				849FF17B16E88EA4006984AC /* VGSkill.m in Sources */,
+				849FF17E16E88F08006984AC /* VGJob.m in Sources */,
+				849FF18116E8907E006984AC /* VGEmploerData.m in Sources */,
+				849FF18416E89223006984AC /* VGExpertData.m in Sources */,
+				849FF18716E892FE006984AC /* VGSecretarData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

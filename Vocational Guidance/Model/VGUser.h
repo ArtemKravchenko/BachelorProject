@@ -13,7 +13,8 @@ typedef enum
 {
     VGCredentilasTypeManager = 1,
     VGCredentilasTypeExpert = 2,
-    VGCredentilasTypeSecretar = 3
+    VGCredentilasTypeSecretar = 3,
+    VGCredentilasTypeAnonymous = 4
 } VGCredentilasType;
 
 @interface VGUser : NSObject
@@ -24,7 +25,6 @@ typedef enum
 @property (nonatomic, retain) NSString* login;
 @property (nonatomic, retain) NSString* password;
 @property (nonatomic, retain) NSString* user_id;
-@property (nonatomic, retain) NSString* dataSet;
 @property (nonatomic, assign) VGCredentilasType credential;
 
 @end
