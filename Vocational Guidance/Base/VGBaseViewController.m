@@ -11,6 +11,7 @@
 #import "VGAppDelegate.h"
 #import "VGOptionsViewController.h"
 #import "VGScreenNavigator.h"
+#import "VGDetailViewController.h"
 
 @interface VGBaseViewController ()
 
@@ -79,6 +80,12 @@
     [controllers addObject: [navController.viewControllers objectAtIndex: 0]]; // login controller
     
     VGBaseViewController *secondController = (VGBaseViewController*)[screenInfo.classValue new];
+    
+    if (screenInfo.classValue == [VGDetailViewController class]) {
+        ((VGDetailViewController*)secondController).object = [screenInfo.params objectForKey:@"object"];
+        NSMutableArray* tmpFields = [screenInfo.params objectForKey:@"fields"];
+        ((VGDetailViewController*)secondController).fields = [NSMutableArray arrayWithArray:tmpFields];
+    }
     
     [controllers addObject: secondController];
     

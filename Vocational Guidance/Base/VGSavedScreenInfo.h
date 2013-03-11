@@ -12,5 +12,6 @@
 
 @property (nonatomic, assign) Class classValue;
 @property (nonatomic, retain) NSString* title;
+@property (nonatomic, retain) NSMutableDictionary* params;
 
 @end

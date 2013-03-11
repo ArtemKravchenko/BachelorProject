@@ -7,16 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "VGBaseDataModel.h"
 #import "VGJob.h"
 #import "VGSkill.h"
 
-@interface VGEmploerData : NSObject
+@interface VGEmploerData : VGBaseDataModel
 
-@property (nonatomic, assign) NSInteger employerDataId;
 @property (nonatomic, assign) NSInteger employerJobId;
 @property (nonatomic, retain) VGJob* employerJob;
 @property (nonatomic, assign) NSInteger employerSkillId;
 @property (nonatomic, retain) VGSkill* employerSkill;
-@property (nonatomic, retain) NSString* employerDataValue;
 
 @end

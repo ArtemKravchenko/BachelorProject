@@ -14,6 +14,7 @@
 
 - (void)dealloc
 {
+    [_params release];
     [_title release];
     [super dealloc];
 }

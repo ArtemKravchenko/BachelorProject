@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "VGObject.h"
 
-@interface VGJob : NSObject
+@interface VGJob : VGObject
 
 @property (nonatomic, assign) NSInteger jobId;
 @property (nonatomic, retain) NSString* jobName;

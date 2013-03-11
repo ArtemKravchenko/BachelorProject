@@ -39,14 +39,14 @@
     [popup dismissViewControllerAnimated:YES completion:nil];
     [VGAppDelegate getInstance].isLogin = YES;
     
-    [VGAppDelegate getInstance].currentUser = [VGUser new];
-    
     if ([login isEqualToString:@"S"]) {
         [VGAppDelegate getInstance].currentUser.credential = VGCredentilasTypeSecretar;
     } else if ([login isEqualToString:@"M"]) {
         [VGAppDelegate getInstance].currentUser.credential = VGCredentilasTypeManager;
-    } else if ([login isEqualToString:@"E"]){
+    } else if ([login isEqualToString:@"Ex"]){
         [VGAppDelegate getInstance].currentUser.credential = VGCredentilasTypeExpert;
+    } else if ([login isEqualToString:@"Em"]){
+        [VGAppDelegate getInstance].currentUser.credential = VGCredentilasTypeEmployer;
     } else {
         return;
     }

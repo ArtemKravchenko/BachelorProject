@@ -14,7 +14,6 @@
 {
     [_employerJob release];
     [_employerSkill release];
-    [_employerDataValue release];
     [super dealloc];
 }
 

@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "VGObject.h"
 
-@interface VGSubject : NSObject
+@interface VGSubject : VGObject
 
 @property (nonatomic, assign) NSInteger subjectId;
 @property (nonatomic, retain) NSString* subjectName;

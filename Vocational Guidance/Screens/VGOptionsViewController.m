@@ -8,6 +8,7 @@
 
 #import "VGOptionsViewController.h"
 #import "VGScreenNavigator.h"
+#import "VGSavedScreenInfo.h"
 
 @interface VGOptionsViewController ()
 

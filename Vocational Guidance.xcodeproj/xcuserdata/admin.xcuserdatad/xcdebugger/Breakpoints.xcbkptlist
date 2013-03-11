@@ -7,38 +7,12 @@
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Vocational Guidance/Base/VGScreenNavigator.m"
-         timestampString = "384186721.300662"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "114"
-         endingLineNumber = "114"
-         landmarkName = "+navigateToScreen:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Vocational Guidance/Base/VGScreenNavigator.m"
-         timestampString = "384186721.300662"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "126"
-         endingLineNumber = "126"
-         landmarkName = "+navigateToScreen:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
          filePath = "Vocational Guidance/Base/VGBaseViewController.m"
-         timestampString = "384184620.890227"
+         timestampString = "384356651.328049"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "89"
-         endingLineNumber = "89"
+         startingLineNumber = "96"
+         endingLineNumber = "96"
          landmarkName = "-sendNewNavigationStack:toObject:action:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -47,38 +21,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Vocational Guidance/Base/VGBaseViewController.m"
-         timestampString = "384184620.890227"
+         timestampString = "384356651.328049"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "77"
-         endingLineNumber = "77"
+         startingLineNumber = "78"
+         endingLineNumber = "78"
          landmarkName = "-newNavigationStack:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Vocational Guidance/Base/VGScreenNavigator.m"
-         timestampString = "384186721.300662"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "132"
-         endingLineNumber = "132"
-         landmarkName = "+presentNewScreen:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Vocational Guidance/Base/VGScreenNavigator.m"
-         timestampString = "384186721.300662"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "140"
-         endingLineNumber = "140"
-         landmarkName = "+presentNewScreen:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -255,11 +203,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Vocational Guidance/VGAppDelegate.m"
-         timestampString = "384100486.594416"
+         timestampString = "384358612.190091"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "88"
-         endingLineNumber = "88"
+         startingLineNumber = "90"
+         endingLineNumber = "90"
          landmarkName = "-changeValue:forRowIndex:andColIndex:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -320,11 +268,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Vocational Guidance/VGAppDelegate.m"
-         timestampString = "384102527.317997"
+         timestampString = "384358612.190091"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "129"
-         endingLineNumber = "129"
+         startingLineNumber = "131"
+         endingLineNumber = "131"
          landmarkName = "-returnOldValue:forRowIndex:andColIndex:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -346,11 +294,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Vocational Guidance/VGAppDelegate.m"
-         timestampString = "384100668.411027"
+         timestampString = "384358612.190091"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "95"
-         endingLineNumber = "95"
+         startingLineNumber = "97"
+         endingLineNumber = "97"
          landmarkName = "-cancelTransaction"
          landmarkType = "5">
       </FileBreakpoint>
@@ -359,11 +307,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Vocational Guidance/VGAppDelegate.m"
-         timestampString = "384102527.317997"
+         timestampString = "384358612.190091"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "123"
-         endingLineNumber = "123"
+         startingLineNumber = "125"
+         endingLineNumber = "125"
          landmarkName = "-removeObject:withObject:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -410,26 +358,52 @@
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Vocational Guidance/Screens/VGOptionsViewController.m"
-         timestampString = "384184779.621399"
+         filePath = "Vocational Guidance/VGLoginViewController.m"
+         timestampString = "384355326.620071"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "90"
-         endingLineNumber = "90"
-         landmarkName = "-tableView:didSelectRowAtIndexPath:"
+         startingLineNumber = "42"
+         endingLineNumber = "42"
+         landmarkName = "-popupDidCloseWithLogin:andPassword:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Vocational Guidance/VGLoginViewController.m"
-         timestampString = "384186834.32078"
+         filePath = "Vocational Guidance/Base/VGScreenNavigator.m"
+         timestampString = "384355426.424497"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "44"
-         endingLineNumber = "44"
-         landmarkName = "-popupDidCloseWithLogin:andPassword:"
+         startingLineNumber = "70"
+         endingLineNumber = "70"
+         landmarkName = "+fieldsForCredentialType:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Vocational Guidance/Logic/VGFieldsListViewController.m"
+         timestampString = "384360050.489475"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "85"
+         endingLineNumber = "85"
+         landmarkName = "-initFieldsWithFrame:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Vocational Guidance/Model/VGUser.m"
+         timestampString = "384360008.021139"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "14"
+         endingLineNumber = "14"
+         landmarkName = "-credentialToString"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

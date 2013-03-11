@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "VGObject.h"
 
-@interface VGSkill : NSObject
+@interface VGSkill : VGObject
 
 @property (nonatomic, assign) NSInteger skillId;
 @property (nonatomic, retain) NSString* skillName;

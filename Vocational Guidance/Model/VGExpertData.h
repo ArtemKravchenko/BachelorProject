@@ -7,16 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "VGBaseDataModel.h"
 #import "VGSkill.h"
 #import "VGSubject.h"
 
-@interface VGExpertData : NSObject
+@interface VGExpertData : VGBaseDataModel
 
-@property (nonatomic, assign) NSInteger expertDataId;
 @property (nonatomic, assign) NSInteger expertDataSkillId;
 @property (nonatomic, retain) VGSkill* expertDataSkill;
 @property (nonatomic, assign) NSInteger expertDataSubjectId;
 @property (nonatomic, retain) VGSubject* expertDataSubject;
-@property (nonatomic, retain) NSString* expertDataValue;
 
 @end

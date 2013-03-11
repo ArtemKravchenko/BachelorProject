@@ -12,7 +12,8 @@
 
 - (void)dealloc
 {
-    
+    [_expertDataSkill release];
+    [_expertDataSubject release];
     [super dealloc];
 }
 

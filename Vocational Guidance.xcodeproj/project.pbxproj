@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		8413303E16E619FC0098D7F8 /* VGUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8413303D16E619FC0098D7F8 /* VGUser.m */; };
 		8413304016E6330D0098D7F8 /* vacational_guideline.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8413303F16E6330D0098D7F8 /* vacational_guideline.jpg */; };
-		8413304216E637E90098D7F8 /* user-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8413304116E637E90098D7F8 /* user-icon.png */; };
-		8413304416E63B0B0098D7F8 /* Manager_fields.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8413304316E63B0B0098D7F8 /* Manager_fields.plist */; };
-		8413304616E63B260098D7F8 /* Expert_fields.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8413304516E63B260098D7F8 /* Expert_fields.plist */; };
-		8413304816E63B460098D7F8 /* Secretat_fields.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8413304716E63B450098D7F8 /* Secretat_fields.plist */; };
+		8413304216E637E90098D7F8 /* employer-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8413304116E637E90098D7F8 /* employer-icon.png */; };
+		8413304416E63B0B0098D7F8 /* Manager.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8413304316E63B0B0098D7F8 /* Manager.plist */; };
+		8413304616E63B260098D7F8 /* Expert.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8413304516E63B260098D7F8 /* Expert.plist */; };
+		8413304816E63B460098D7F8 /* Secretar.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8413304716E63B450098D7F8 /* Secretar.plist */; };
 		8413304B16E63C5E0098D7F8 /* VGFieldsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8413304A16E63C5E0098D7F8 /* VGFieldsListViewController.m */; };
 		8413304D16E63C7C0098D7F8 /* VGFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8413304C16E63C7C0098D7F8 /* VGFieldView.xib */; };
 		841AF4B816DCAC90008FCA42 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 841AF4B716DCAC90008FCA42 /* UIKit.framework */; };
@@ -55,6 +55,21 @@
 		849FF18116E8907E006984AC /* VGEmploerData.m in Sources */ = {isa = PBXBuildFile; fileRef = 849FF18016E8907E006984AC /* VGEmploerData.m */; };
 		849FF18416E89223006984AC /* VGExpertData.m in Sources */ = {isa = PBXBuildFile; fileRef = 849FF18316E89222006984AC /* VGExpertData.m */; };
 		849FF18716E892FE006984AC /* VGSecretarData.m in Sources */ = {isa = PBXBuildFile; fileRef = 849FF18616E892FC006984AC /* VGSecretarData.m */; };
+		849FF18A16E8959F006984AC /* VGBaseDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 849FF18916E8959E006984AC /* VGBaseDataModel.m */; };
+		849FF18C16E8974B006984AC /* secretar-icon.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 849FF18B16E8974A006984AC /* secretar-icon.jpeg */; };
+		849FF18F16E89759006984AC /* expert-icon.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 849FF18D16E89758006984AC /* expert-icon.jpeg */; };
+		849FF19016E89759006984AC /* skill-icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 849FF18E16E89758006984AC /* skill-icon.jpg */; };
+		849FF19616E89909006984AC /* anonumous-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 849FF19116E89908006984AC /* anonumous-icon.png */; };
+		849FF19716E89909006984AC /* job-icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 849FF19216E89908006984AC /* job-icon.jpg */; };
+		849FF19816E89909006984AC /* manager-icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 849FF19316E89908006984AC /* manager-icon.jpg */; };
+		849FF19916E89909006984AC /* student-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 849FF19416E89909006984AC /* student-icon.png */; };
+		849FF19A16E89909006984AC /* subject-icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 849FF19516E89909006984AC /* subject-icon.jpg */; };
+		849FF19C16E89ADA006984AC /* Subject.plist in Resources */ = {isa = PBXBuildFile; fileRef = 849FF19B16E89ADA006984AC /* Subject.plist */; };
+		849FF19E16E89B2E006984AC /* Skill.plist in Resources */ = {isa = PBXBuildFile; fileRef = 849FF19D16E89B2E006984AC /* Skill.plist */; };
+		849FF1A016E89BD0006984AC /* Job.plist in Resources */ = {isa = PBXBuildFile; fileRef = 849FF19F16E89BD0006984AC /* Job.plist */; };
+		849FF1A216E89CB1006984AC /* Student.plist in Resources */ = {isa = PBXBuildFile; fileRef = 849FF1A116E89CB1006984AC /* Student.plist */; };
+		849FF1A516E8A425006984AC /* VGObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 849FF1A416E8A423006984AC /* VGObject.m */; };
+		849FF1A716E8DBFA006984AC /* User.plist in Resources */ = {isa = PBXBuildFile; fileRef = 849FF1A616E8DBFA006984AC /* User.plist */; };
 		84A47E4A16DE39D100A78089 /* VGTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A47E4916DE39D100A78089 /* VGTableView.m */; };
 		84A47E5316DE5ABB00A78089 /* VGAddToTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A47E5116DE5ABB00A78089 /* VGAddToTableViewController.m */; };
 		84A47E5416DE5ABB00A78089 /* VGAddToTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A47E5216DE5ABB00A78089 /* VGAddToTableViewController.xib */; };
@@ -64,10 +79,10 @@
 		8413303C16E619FC0098D7F8 /* VGUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGUser.h; path = Model/VGUser.h; sourceTree = "<group>"; };
 		8413303D16E619FC0098D7F8 /* VGUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGUser.m; path = Model/VGUser.m; sourceTree = "<group>"; };
 		8413303F16E6330D0098D7F8 /* vacational_guideline.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = vacational_guideline.jpg; path = Imges/vacational_guideline.jpg; sourceTree = "<group>"; };
-		8413304116E637E90098D7F8 /* user-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "user-icon.png"; path = "Imges/user-icon.png"; sourceTree = "<group>"; };
-		8413304316E63B0B0098D7F8 /* Manager_fields.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Manager_fields.plist; sourceTree = "<group>"; };
-		8413304516E63B260098D7F8 /* Expert_fields.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expert_fields.plist; sourceTree = "<group>"; };
-		8413304716E63B450098D7F8 /* Secretat_fields.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Secretat_fields.plist; sourceTree = "<group>"; };
+		8413304116E637E90098D7F8 /* employer-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "employer-icon.png"; path = "Imges/employer-icon.png"; sourceTree = "<group>"; };
+		8413304316E63B0B0098D7F8 /* Manager.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Manager.plist; sourceTree = "<group>"; };
+		8413304516E63B260098D7F8 /* Expert.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expert.plist; sourceTree = "<group>"; };
+		8413304716E63B450098D7F8 /* Secretar.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Secretar.plist; sourceTree = "<group>"; };
 		8413304916E63C5E0098D7F8 /* VGFieldsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGFieldsListViewController.h; path = Logic/VGFieldsListViewController.h; sourceTree = "<group>"; };
 		8413304A16E63C5E0098D7F8 /* VGFieldsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGFieldsListViewController.m; path = Logic/VGFieldsListViewController.m; sourceTree = "<group>"; };
 		8413304C16E63C7C0098D7F8 /* VGFieldView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VGFieldView.xib; path = "Custom Controls/VGFieldView.xib"; sourceTree = "<group>"; };
@@ -135,6 +150,23 @@
 		849FF18316E89222006984AC /* VGExpertData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGExpertData.m; path = Model/VGExpertData.m; sourceTree = "<group>"; };
 		849FF18516E892FB006984AC /* VGSecretarData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGSecretarData.h; path = Model/VGSecretarData.h; sourceTree = "<group>"; };
 		849FF18616E892FC006984AC /* VGSecretarData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGSecretarData.m; path = Model/VGSecretarData.m; sourceTree = "<group>"; };
+		849FF18816E8959D006984AC /* VGBaseDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGBaseDataModel.h; path = Model/VGBaseDataModel.h; sourceTree = "<group>"; };
+		849FF18916E8959E006984AC /* VGBaseDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGBaseDataModel.m; path = Model/VGBaseDataModel.m; sourceTree = "<group>"; };
+		849FF18B16E8974A006984AC /* secretar-icon.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "secretar-icon.jpeg"; path = "Imges/secretar-icon.jpeg"; sourceTree = "<group>"; };
+		849FF18D16E89758006984AC /* expert-icon.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "expert-icon.jpeg"; path = "Imges/expert-icon.jpeg"; sourceTree = "<group>"; };
+		849FF18E16E89758006984AC /* skill-icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "skill-icon.jpg"; path = "Imges/skill-icon.jpg"; sourceTree = "<group>"; };
+		849FF19116E89908006984AC /* anonumous-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "anonumous-icon.png"; path = "Imges/anonumous-icon.png"; sourceTree = "<group>"; };
+		849FF19216E89908006984AC /* job-icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "job-icon.jpg"; path = "Imges/job-icon.jpg"; sourceTree = "<group>"; };
+		849FF19316E89908006984AC /* manager-icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "manager-icon.jpg"; path = "Imges/manager-icon.jpg"; sourceTree = "<group>"; };
+		849FF19416E89909006984AC /* student-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "student-icon.png"; path = "Imges/student-icon.png"; sourceTree = "<group>"; };
+		849FF19516E89909006984AC /* subject-icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "subject-icon.jpg"; path = "Imges/subject-icon.jpg"; sourceTree = "<group>"; };
+		849FF19B16E89ADA006984AC /* Subject.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Subject.plist; sourceTree = "<group>"; };
+		849FF19D16E89B2E006984AC /* Skill.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Skill.plist; sourceTree = "<group>"; };
+		849FF19F16E89BD0006984AC /* Job.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Job.plist; sourceTree = "<group>"; };
+		849FF1A116E89CB1006984AC /* Student.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Student.plist; sourceTree = "<group>"; };
+		849FF1A316E8A422006984AC /* VGObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGObject.h; path = Model/VGObject.h; sourceTree = "<group>"; };
+		849FF1A416E8A423006984AC /* VGObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGObject.m; path = Model/VGObject.m; sourceTree = "<group>"; };
+		849FF1A616E8DBFA006984AC /* User.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = User.plist; sourceTree = "<group>"; };
 		84A47E4816DE39D100A78089 /* VGTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGTableView.h; path = "Custom Controls/VGTableView.h"; sourceTree = "<group>"; };
 		84A47E4916DE39D100A78089 /* VGTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGTableView.m; path = "Custom Controls/VGTableView.m"; sourceTree = "<group>"; };
 		84A47E5016DE5ABB00A78089 /* VGAddToTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGAddToTableViewController.h; path = Screens/VGAddToTableViewController.h; sourceTree = "<group>"; };
@@ -160,6 +192,8 @@
 		8413303B16E619D10098D7F8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				849FF1A316E8A422006984AC /* VGObject.h */,
+				849FF1A416E8A423006984AC /* VGObject.m */,
 				8413303C16E619FC0098D7F8 /* VGUser.h */,
 				8413303D16E619FC0098D7F8 /* VGUser.m */,
 				849FF17316E88D35006984AC /* VGStudent.h */,
@@ -176,6 +210,8 @@
 				849FF18316E89222006984AC /* VGExpertData.m */,
 				849FF18516E892FB006984AC /* VGSecretarData.h */,
 				849FF18616E892FC006984AC /* VGSecretarData.m */,
+				849FF18816E8959D006984AC /* VGBaseDataModel.h */,
+				849FF18916E8959E006984AC /* VGBaseDataModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -234,9 +270,14 @@
 				841AF4CB16DCAC90008FCA42 /* Default@2x.png */,
 				841AF4CD16DCAC90008FCA42 /* Default-568h@2x.png */,
 				849C761916E1031400054D17 /* Constant.h */,
-				8413304316E63B0B0098D7F8 /* Manager_fields.plist */,
-				8413304516E63B260098D7F8 /* Expert_fields.plist */,
-				8413304716E63B450098D7F8 /* Secretat_fields.plist */,
+				8413304316E63B0B0098D7F8 /* Manager.plist */,
+				8413304516E63B260098D7F8 /* Expert.plist */,
+				8413304716E63B450098D7F8 /* Secretar.plist */,
+				849FF19B16E89ADA006984AC /* Subject.plist */,
+				849FF19D16E89B2E006984AC /* Skill.plist */,
+				849FF19F16E89BD0006984AC /* Job.plist */,
+				849FF1A116E89CB1006984AC /* Student.plist */,
+				849FF1A616E8DBFA006984AC /* User.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -244,7 +285,15 @@
 		841AF4DA16DCAF23008FCA42 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				8413304116E637E90098D7F8 /* user-icon.png */,
+				849FF19116E89908006984AC /* anonumous-icon.png */,
+				849FF19216E89908006984AC /* job-icon.jpg */,
+				849FF19316E89908006984AC /* manager-icon.jpg */,
+				849FF19416E89909006984AC /* student-icon.png */,
+				849FF19516E89909006984AC /* subject-icon.jpg */,
+				849FF18D16E89758006984AC /* expert-icon.jpeg */,
+				849FF18E16E89758006984AC /* skill-icon.jpg */,
+				849FF18B16E8974A006984AC /* secretar-icon.jpeg */,
+				8413304116E637E90098D7F8 /* employer-icon.png */,
 				8413303F16E6330D0098D7F8 /* vacational_guideline.jpg */,
 				849E569D16DF6450009E9AB6 /* graph-badge.png */,
 				849E569E16DF6450009E9AB6 /* graph-badge@2x.png */,
@@ -400,11 +449,24 @@
 				849E56A916DF8FC4009E9AB6 /* VGGraphViewController.xib in Resources */,
 				849E56AB16DFA354009E9AB6 /* VGGraphItem.xib in Resources */,
 				8413304016E6330D0098D7F8 /* vacational_guideline.jpg in Resources */,
-				8413304216E637E90098D7F8 /* user-icon.png in Resources */,
-				8413304416E63B0B0098D7F8 /* Manager_fields.plist in Resources */,
-				8413304616E63B260098D7F8 /* Expert_fields.plist in Resources */,
-				8413304816E63B460098D7F8 /* Secretat_fields.plist in Resources */,
+				8413304216E637E90098D7F8 /* employer-icon.png in Resources */,
+				8413304416E63B0B0098D7F8 /* Manager.plist in Resources */,
+				8413304616E63B260098D7F8 /* Expert.plist in Resources */,
+				8413304816E63B460098D7F8 /* Secretar.plist in Resources */,
 				8413304D16E63C7C0098D7F8 /* VGFieldView.xib in Resources */,
+				849FF18C16E8974B006984AC /* secretar-icon.jpeg in Resources */,
+				849FF18F16E89759006984AC /* expert-icon.jpeg in Resources */,
+				849FF19016E89759006984AC /* skill-icon.jpg in Resources */,
+				849FF19616E89909006984AC /* anonumous-icon.png in Resources */,
+				849FF19716E89909006984AC /* job-icon.jpg in Resources */,
+				849FF19816E89909006984AC /* manager-icon.jpg in Resources */,
+				849FF19916E89909006984AC /* student-icon.png in Resources */,
+				849FF19A16E89909006984AC /* subject-icon.jpg in Resources */,
+				849FF19C16E89ADA006984AC /* Subject.plist in Resources */,
+				849FF19E16E89B2E006984AC /* Skill.plist in Resources */,
+				849FF1A016E89BD0006984AC /* Job.plist in Resources */,
+				849FF1A216E89CB1006984AC /* Student.plist in Resources */,
+				849FF1A716E8DBFA006984AC /* User.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,6 +502,8 @@
 				849FF18116E8907E006984AC /* VGEmploerData.m in Sources */,
 				849FF18416E89223006984AC /* VGExpertData.m in Sources */,
 				849FF18716E892FE006984AC /* VGSecretarData.m in Sources */,
+				849FF18A16E8959F006984AC /* VGBaseDataModel.m in Sources */,
+				849FF1A516E8A425006984AC /* VGObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
