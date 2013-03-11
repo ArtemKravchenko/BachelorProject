@@ -33,7 +33,7 @@
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     VGLoginViewController *loginView = [[[VGLoginViewController alloc] init] autorelease];
     self.currentScreen = @"Login";
-    self.currentUser = [VGUser new];
+    self.currentUser = [[VGUser new] autorelease];
     self.currentUser.side = @"National Aerospace University";
     self.navigationController = [[[UINavigationController alloc] initWithRootViewController:loginView] autorelease];
     self.window.rootViewController = self.navigationController;

@@ -87,6 +87,7 @@ static NSMutableDictionary *screenMapping = nil;
             break;
             
         default:
+            credentialName = @"Student";
             break;
     }
     
@@ -97,7 +98,6 @@ static NSMutableDictionary *screenMapping = nil;
         NSDictionary* iconDictionary = [contentDictionary objectForKey:@"Icons"];
         [VGAppDelegate getInstance].iconName = [iconDictionary objectForKey:[VGAppDelegate getInstance].currentUser.credentialToString];
     }
-    
     return fields;
 }
 
@@ -169,22 +169,47 @@ static NSMutableDictionary *screenMapping = nil;
 + (void) fillScreenMappingWithCredentialTypeAnonymous {
     
     VGSavedScreenInfo *screenInfo = nil;
+    NSMutableDictionary* autoblankFields = nil;
     
     screenInfo = [VGSavedScreenInfo new];
     screenInfo.classValue = [VGSearchViewController class];
     screenInfo.title = @"Students List";
+    NSMutableDictionary* params = [NSMutableDictionary dictionary];
+    NSArray* fields = [self fieldsForCredentialType:VGCredentilasTypeStudent];
+    [params setObject:fields forKey:@"fields"];
+    screenInfo.params = params;
     [screenMapping setObject:screenInfo forKey: @"Students List"];
     [screenInfo release];
     
     screenInfo = [VGSavedScreenInfo new];
     screenInfo.classValue = [VGSearchViewController class];
     screenInfo.title = @"Experts List";
+    params = [NSMutableDictionary dictionary];
+    fields = [self fieldsForCredentialType:VGCredentilasTypeExpert];
+    [params setObject:fields forKey:@"fields"];
+    
+    // Set autoblank fields
+    autoblankFields = [NSMutableDictionary dictionary];
+    [autoblankFields setObject:@"Expert" forKey:@"credential"];
+    [params setObject:autoblankFields forKey:@"autoblank"];
+    
+    screenInfo.params = params;
     [screenMapping setObject:screenInfo forKey: @"Experts List"];
     [screenInfo release];
     
     screenInfo = [VGSavedScreenInfo new];
     screenInfo.classValue = [VGSearchViewController class];
     screenInfo.title = @"Employers List";
+    params = [NSMutableDictionary dictionary];
+    fields = [self fieldsForCredentialType:VGCredentilasTypeEmployer];
+    [params setObject:fields forKey:@"fields"];
+    
+    // Set autoblank fields
+    autoblankFields = [NSMutableDictionary dictionary];
+    [autoblankFields setObject:@"Emploer" forKey:@"credential"];
+    [params setObject:autoblankFields forKey:@"autoblank"];
+    
+    screenInfo.params = params;
     [screenMapping setObject:screenInfo forKey: @"Employers List"];
     [screenInfo release];
 }

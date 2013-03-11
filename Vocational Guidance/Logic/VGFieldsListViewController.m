@@ -38,6 +38,7 @@ static const NSInteger cellValueFieldOriginX    = 131;
 
 - (void)dealloc
 {
+    [_autoBlankFields release];
     [_fieldsView release];
     [_fields release];
     [super dealloc];
@@ -57,7 +58,7 @@ static const NSInteger cellValueFieldOriginX    = 131;
     if (self.fieldsView != nil) {
         [self clearFieldsView];
     } else {
-        self.fieldsView = [[UIScrollView alloc] initWithFrame:frame];
+        self.fieldsView = [[[UIScrollView alloc] initWithFrame:frame] autorelease];
         self.view.frame = frame;
     }
     
@@ -68,36 +69,51 @@ static const NSInteger cellValueFieldOriginX    = 131;
     
     
     NSInteger originY = 0;
+    NSInteger indexConsiderAutoblank = 0;
     for (NSInteger i = 0; i < self.fields.count; i++) {
-        originY = cellHeight * i + 1 * i;
+        originY = cellHeight * indexConsiderAutoblank + 1 * indexConsiderAutoblank;
         NSString* property = ((NSString*)[self.fields objectAtIndex:i]);
-        // Create cell view
-        UIView* cellView = [self cellViewWithWidth:self.cellWidth andOriginY:originY];
-        cellView.tag = 100 + i;
-        // Create cell label
-        UILabel* cellPropertyLabel = [self cellLabelWithValue:property andWidth:cellLabelWidth andOriginX:cellLabelOriginX andOriginY:0];
-        cellPropertyLabel.tag  = 200 + i;
-        // Create cell value
-        UITextField* cellValue = nil;
-        if (self.object != nil) {
-            if ([self.object respondsToSelector:NSSelectorFromString([property lowercaseString])]) {
-                if ([property isEqualToString:@"credential"]) {
-                    property = [NSString stringWithFormat:@"%@ToString",property];
-                    cellValue = [self cellTextFieldWithOriginY:0 withValue:[self.object performSelector:NSSelectorFromString(property)]];
-                } else {
-                    cellValue = [self cellTextFieldWithOriginY:0 withValue:[self.object performSelector:NSSelectorFromString([property lowercaseString])]];
+        
+        if (![self isFieldExistInAutoblantList:property]) {
+            // Create cell view
+            UIView* cellView = [self cellViewWithWidth:self.cellWidth andOriginY:originY];
+            cellView.tag = 100 + i;
+            // Create cell label
+            UILabel* cellPropertyLabel = [self cellLabelWithValue:property andWidth:cellLabelWidth andOriginX:cellLabelOriginX andOriginY:0];
+            cellPropertyLabel.tag  = 200 + i;
+            // Create cell value
+            UITextField* cellValue = nil;
+            if (self.object != nil) {
+                if ([self.object respondsToSelector:NSSelectorFromString([property lowercaseString])]) {
+                    if ([property isEqualToString:@"credential"]) {
+                        property = [NSString stringWithFormat:@"%@ToString",property];
+                        cellValue = [self cellTextFieldWithOriginY:0 withValue:[self.object performSelector:NSSelectorFromString(property)]];
+                    } else {
+                        cellValue = [self cellTextFieldWithOriginY:0 withValue:[self.object performSelector:NSSelectorFromString([property lowercaseString])]];
+                    }
                 }
+            } else {
+                cellValue = [self cellTextFieldWithOriginY:0 withValue:nil];
             }
+            cellValue.enabled = self.editMode;
+            cellValue.tag = 300 + i;
+            [cellView addSubview:cellValue];
+            [cellView addSubview:cellPropertyLabel];
+            [self.fieldsView addSubview:cellView];
+            indexConsiderAutoblank++;
         } else {
-            cellValue = [self cellTextFieldWithOriginY:0 withValue:nil];
+            NSLog(@"%@ is autoblank", property);
         }
-        cellValue.enabled = self.editMode;
-        cellValue.tag = 300 + i;
-        [cellView addSubview:cellValue];
-        [cellView addSubview:cellPropertyLabel];
-        [self.fieldsView addSubview:cellView];
     }
     [self.view addSubview:self.fieldsView];
+}
+- (BOOL) isFieldExistInAutoblantList:(NSString*)field {
+    for (NSString* key in self.autoBlankFields) {
+        if ([key isEqualToString:field]) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 #pragma mark - get view functions

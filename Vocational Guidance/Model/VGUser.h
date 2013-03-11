@@ -15,7 +15,8 @@ typedef enum
     VGCredentilasTypeManager = 1,
     VGCredentilasTypeExpert = 2,
     VGCredentilasTypeSecretar = 3,
-    VGCredentilasTypeEmployer = 4
+    VGCredentilasTypeEmployer = 4,
+    VGCredentilasTypeStudent = 5
 } VGCredentilasType;
 
 @interface VGUser : VGObject

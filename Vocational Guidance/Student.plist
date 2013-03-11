@@ -10,7 +10,10 @@
 		<string>side</string>
 		<string>age</string>
 	</array>
-	<key>Icon</key>
-	<string>student-icon.png</string>
+	<key>Icons</key>
+	<dict>
+		<key>Student</key>
+		<string>student-icon.png</string>
+	</dict>
 </dict>
 </plist>

@@ -10,4 +10,7 @@
 
 @interface VGSearchViewController : VGBaseViewController
 
+@property (nonatomic, retain) NSMutableArray* fieldsList;
+@property (nonatomic, retain) NSMutableDictionary* autoblank;
+
 @end

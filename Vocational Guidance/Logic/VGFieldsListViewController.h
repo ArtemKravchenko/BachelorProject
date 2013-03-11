@@ -16,6 +16,7 @@
 @property (nonatomic, retain) UIScrollView* fieldsView;
 @property (nonatomic, assign) NSInteger cellWidth;
 @property (nonatomic, assign) BOOL editMode;
+@property (nonatomic, retain) NSMutableDictionary* autoBlankFields;
 
 - (void) initFieldsWithFrame:(CGRect)frame ;
 

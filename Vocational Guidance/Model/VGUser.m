@@ -30,6 +30,7 @@
             break;
             
         default:
+            stringCredential = @"Student";
             break;
     }
     return stringCredential;

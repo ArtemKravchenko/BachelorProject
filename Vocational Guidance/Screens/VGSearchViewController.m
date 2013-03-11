@@ -7,18 +7,21 @@
 //
 
 #import "VGSearchViewController.h"
+#import "VGFieldsListViewController.h"
 
 @interface VGSearchViewController ()
+
+@property (nonatomic, retain) VGFieldsListViewController* fieldsViewController;
+@property (retain, nonatomic) IBOutlet UIView *fieldsView;
 
 @end
 
 @implementation VGSearchViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)init
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithNibName:@"VGSearchViewController" bundle:[NSBundle mainBundle]];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
@@ -26,13 +29,24 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    // init fields view controller
+    self.fieldsViewController = [[VGFieldsListViewController new] autorelease];
+    self.fieldsViewController.fields = self.fieldsList;
+    self.fieldsViewController.autoBlankFields = self.autoblank;
+    self.fieldsViewController.editMode = YES;
+    self.fieldsViewController.cellWidth = self.fieldsView.frame.size.width;
+    CGRect frame = CGRectMake(0, 0, self.fieldsView.frame.size.width, self.fieldsView.frame.size.height);
+    [self.fieldsViewController initFieldsWithFrame:frame];
+    [self.fieldsView addSubview:self.fieldsViewController.view];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)dealloc
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self.fieldsViewController = nil;
+    [_autoblank release];
+    [_fieldsList release];
+    [_fieldsView release];
+    [super dealloc];
 }
 
 @end
