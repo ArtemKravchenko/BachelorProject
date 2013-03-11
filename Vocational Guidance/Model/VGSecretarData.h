@@ -13,9 +13,7 @@
 
 @interface VGSecretarData : NSObject
 
-@property (nonatomic, assign) NSInteger secretarDataSubjectId;
 @property (nonatomic, retain) VGSubject* secretarDataSubject;
-@property (nonatomic, assign) NSInteger secretarDataStudentId;
 @property (nonatomic, retain) VGStudent* secretarDataStudent;
 
 @end

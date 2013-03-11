@@ -10,9 +10,6 @@
 		8413303E16E619FC0098D7F8 /* VGUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8413303D16E619FC0098D7F8 /* VGUser.m */; };
 		8413304016E6330D0098D7F8 /* vacational_guideline.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8413303F16E6330D0098D7F8 /* vacational_guideline.jpg */; };
 		8413304216E637E90098D7F8 /* employer-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8413304116E637E90098D7F8 /* employer-icon.png */; };
-		8413304416E63B0B0098D7F8 /* Manager.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8413304316E63B0B0098D7F8 /* Manager.plist */; };
-		8413304616E63B260098D7F8 /* Expert.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8413304516E63B260098D7F8 /* Expert.plist */; };
-		8413304816E63B460098D7F8 /* Secretar.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8413304716E63B450098D7F8 /* Secretar.plist */; };
 		8413304B16E63C5E0098D7F8 /* VGFieldsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8413304A16E63C5E0098D7F8 /* VGFieldsListViewController.m */; };
 		8413304D16E63C7C0098D7F8 /* VGFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8413304C16E63C7C0098D7F8 /* VGFieldView.xib */; };
 		841AF4B816DCAC90008FCA42 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 841AF4B716DCAC90008FCA42 /* UIKit.framework */; };
@@ -80,9 +77,6 @@
 		8413303D16E619FC0098D7F8 /* VGUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGUser.m; path = Model/VGUser.m; sourceTree = "<group>"; };
 		8413303F16E6330D0098D7F8 /* vacational_guideline.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = vacational_guideline.jpg; path = Imges/vacational_guideline.jpg; sourceTree = "<group>"; };
 		8413304116E637E90098D7F8 /* employer-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "employer-icon.png"; path = "Imges/employer-icon.png"; sourceTree = "<group>"; };
-		8413304316E63B0B0098D7F8 /* Manager.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Manager.plist; sourceTree = "<group>"; };
-		8413304516E63B260098D7F8 /* Expert.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expert.plist; sourceTree = "<group>"; };
-		8413304716E63B450098D7F8 /* Secretar.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Secretar.plist; sourceTree = "<group>"; };
 		8413304916E63C5E0098D7F8 /* VGFieldsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGFieldsListViewController.h; path = Logic/VGFieldsListViewController.h; sourceTree = "<group>"; };
 		8413304A16E63C5E0098D7F8 /* VGFieldsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGFieldsListViewController.m; path = Logic/VGFieldsListViewController.m; sourceTree = "<group>"; };
 		8413304C16E63C7C0098D7F8 /* VGFieldView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VGFieldView.xib; path = "Custom Controls/VGFieldView.xib"; sourceTree = "<group>"; };
@@ -270,9 +264,6 @@
 				841AF4CB16DCAC90008FCA42 /* Default@2x.png */,
 				841AF4CD16DCAC90008FCA42 /* Default-568h@2x.png */,
 				849C761916E1031400054D17 /* Constant.h */,
-				8413304316E63B0B0098D7F8 /* Manager.plist */,
-				8413304516E63B260098D7F8 /* Expert.plist */,
-				8413304716E63B450098D7F8 /* Secretar.plist */,
 				849FF19B16E89ADA006984AC /* Subject.plist */,
 				849FF19D16E89B2E006984AC /* Skill.plist */,
 				849FF19F16E89BD0006984AC /* Job.plist */,
@@ -450,9 +441,6 @@
 				849E56AB16DFA354009E9AB6 /* VGGraphItem.xib in Resources */,
 				8413304016E6330D0098D7F8 /* vacational_guideline.jpg in Resources */,
 				8413304216E637E90098D7F8 /* employer-icon.png in Resources */,
-				8413304416E63B0B0098D7F8 /* Manager.plist in Resources */,
-				8413304616E63B260098D7F8 /* Expert.plist in Resources */,
-				8413304816E63B460098D7F8 /* Secretar.plist in Resources */,
 				8413304D16E63C7C0098D7F8 /* VGFieldView.xib in Resources */,
 				849FF18C16E8974B006984AC /* secretar-icon.jpeg in Resources */,
 				849FF18F16E89759006984AC /* expert-icon.jpeg in Resources */,

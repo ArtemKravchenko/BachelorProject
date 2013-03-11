@@ -13,9 +13,7 @@
 
 @interface VGEmploerData : VGBaseDataModel
 
-@property (nonatomic, assign) NSInteger employerJobId;
 @property (nonatomic, retain) VGJob* employerJob;
-@property (nonatomic, assign) NSInteger employerSkillId;
 @property (nonatomic, retain) VGSkill* employerSkill;
 
 @end

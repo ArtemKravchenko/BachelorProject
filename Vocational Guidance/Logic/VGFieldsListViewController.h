@@ -15,6 +15,7 @@
 @property (nonatomic, retain) NSMutableArray* fields;
 @property (nonatomic, retain) UIScrollView* fieldsView;
 @property (nonatomic, assign) NSInteger cellWidth;
+@property (nonatomic, assign) BOOL editMode;
 
 - (void) initFieldsWithFrame:(CGRect)frame ;
 

@@ -78,21 +78,20 @@ static const NSInteger cellValueFieldOriginX    = 131;
         UILabel* cellPropertyLabel = [self cellLabelWithValue:property andWidth:cellLabelWidth andOriginX:cellLabelOriginX andOriginY:0];
         cellPropertyLabel.tag  = 200 + i;
         // Create cell value
-        UIView* cellValue = nil;
+        UITextField* cellValue = nil;
         if (self.object != nil) {
             if ([self.object respondsToSelector:NSSelectorFromString([property lowercaseString])]) {
                 if ([property isEqualToString:@"credential"]) {
                     property = [NSString stringWithFormat:@"%@ToString",property];
-                    //cellValue = [self cellTextFieldWithOriginY:0 withValue:[self.object performSelector:NSSelectorFromString(property)]];
-                    cellValue = [self cellLabelWithValue:[self.object performSelector:NSSelectorFromString(property)] andWidth:self.cellWidth - cellLabelWidth andOriginX:cellLabelWidth andOriginY:0];
+                    cellValue = [self cellTextFieldWithOriginY:0 withValue:[self.object performSelector:NSSelectorFromString(property)]];
                 } else {
-                    cellValue = [self cellLabelWithValue:[self.object performSelector:NSSelectorFromString(property)] andWidth:self.cellWidth - cellLabelWidth andOriginX:cellLabelWidth andOriginY:0];
-                    //cellValue = [self cellTextFieldWithOriginY:0 withValue:[self.object performSelector:NSSelectorFromString([property lowercaseString])]];
+                    cellValue = [self cellTextFieldWithOriginY:0 withValue:[self.object performSelector:NSSelectorFromString([property lowercaseString])]];
                 }
             }
         } else {
             cellValue = [self cellTextFieldWithOriginY:0 withValue:nil];
         }
+        cellValue.enabled = self.editMode;
         cellValue.tag = 300 + i;
         [cellView addSubview:cellValue];
         [cellView addSubview:cellPropertyLabel];

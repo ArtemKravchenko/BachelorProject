@@ -13,8 +13,10 @@
 
 @property (nonatomic, retain) NSMutableArray *tableData;
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
+@property (retain, nonatomic) VGUser* user;
 
 - (void) reloadDataWithArray:(NSMutableArray*)array;
+- (id) initWIthUser:(VGUser*)user;
 
 @end
 
@@ -25,6 +27,8 @@
 @interface VGGraphDesktopLines : UIView
 
 @property (nonatomic, retain) NSMutableArray* tableValues;
+@property (retain, nonatomic) VGUser* user;
+
 - (void) reloadData;
 
 @end
@@ -33,6 +37,8 @@
 
 @property (nonatomic, retain) NSMutableArray* tableValues;
 @property (nonatomic, retain) VGGraphDesktopLines *gdl;
+@property (retain, nonatomic) VGUser* user;
+
 - (void) reloadItems;
 
 @end

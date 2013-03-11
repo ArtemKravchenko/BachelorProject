@@ -12,6 +12,8 @@
 
 - (void)dealloc
 {
+    [_cardNumber release];
+    [_description release];
     [_studentName release];
     [_studentSurname release];
     [_studentEmail release];

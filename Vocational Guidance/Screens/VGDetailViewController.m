@@ -29,6 +29,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // init self view
+    self.imgIcon.image = [UIImage imageNamed:[VGAppDelegate getInstance].iconName];
+    // init fields view controller
     self.fieldsViewController = [[VGFieldsListViewController new] autorelease];
     self.fieldsViewController.fields = self.fields;
     self.fieldsViewController.object = self.object;

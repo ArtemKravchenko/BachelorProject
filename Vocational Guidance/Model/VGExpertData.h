@@ -13,9 +13,7 @@
 
 @interface VGExpertData : VGBaseDataModel
 
-@property (nonatomic, assign) NSInteger expertDataSkillId;
 @property (nonatomic, retain) VGSkill* expertDataSkill;
-@property (nonatomic, assign) NSInteger expertDataSubjectId;
 @property (nonatomic, retain) VGSubject* expertDataSubject;
 
 @end

@@ -25,11 +25,12 @@ static NSInteger TS_CHANGED_CELL                    = 3;
 
 @implementation VGTableViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithUser:(VGUser*)user
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithNibName:@"VGTableViewController" bundle:[NSBundle mainBundle]];
     if (self) {
         isSomethingWasChanged = NO;
+        self.user = user;
     }
     return self;
 }
@@ -37,50 +38,24 @@ static NSInteger TS_CHANGED_CELL                    = 3;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tableView = [[[VGTableView alloc] initWithFrame: CGRectMake(0, 0, self.presentionView.frame.size.width, self.presentionView.frame.size.height)] autorelease];
+    self.tableView = [[[VGTableView alloc] initWithFrame: CGRectMake(0, 0, self.presentionView.frame.size.width, self.presentionView.frame.size.height) andUser:self.user] autorelease];
     self.tableView.bounces = NO;
-    //NSMutableArray* columns = [NSMutableArray arrayWithObjects: @"col1", @"col2", @"col3", @"col4", @"col5", @"col6", @"col7", @"col8",  @"col9", @"col10", @"col11", nil];
-    //NSMutableArray* rows = [NSMutableArray arrayWithObjects: @"row1", @"row2", @"row3", @"row4", @"row5", @"rowl6", @"row7", @"row8", @"row9", @"row10", @"row11", nil];
-    NSMutableArray* columns = [NSMutableArray arrayWithObjects: @"col1", @"col2", @"col3", @"col4", nil];
-    NSMutableArray* rows = [NSMutableArray arrayWithObjects: @"row1", @"row2", @"row3", @"row4", nil];
-    
-    NSMutableArray *values = [NSMutableArray array];
-    for (NSInteger i = 0; i < rows.count; i++) {
-        for (NSInteger j = 0; j < columns.count; j++) {
-            VGTableCell *tableCell = [[VGTableCell new] autorelease];
-            tableCell.rowIndex = i;
-            tableCell.colIndex = j;
-            if (j % 2 == 0) {
-                tableCell.value =  [NSString stringWithFormat:@"%d", 0];
-            } else {
-                tableCell.value = [NSString stringWithFormat:@"%.2f", ((float)(arc4random()  % 100)) / 100.0] ;
-            }
-            [values addObject: tableCell];
-        }
-    }
-    [self setData:rows columns:columns values:values];
     // init graph view
     self.graphView = [[VGGraphViewController new] autorelease];
     self.graphView.view.frame = CGRectMake(0, 0, self.presentionView.frame.size.width, self.presentionView.frame.size.height);
     self.graphView.view.hidden = YES;
     [self.presentionView addSubview:self.tableView];
-    
+    self.tableView.tableDetegate = self;
     [self.presentionView addSubview:self.graphView.view];
 }
 
 - (void)dealloc {
+    self.user = nil;
     self.tableView = nil;
     [_presentionView release];
     [_btnEdit release];
     [_btnSave release];
     [super dealloc];
-}
-
-- (void) setData:(NSMutableArray*)rows columns:(NSMutableArray*)columns values:(NSMutableArray*)values {
-    [VGAppDelegate getInstance].columns = columns;
-    [VGAppDelegate getInstance].rows = rows;
-    [VGAppDelegate getInstance].values = values;
-    self.tableView.tableDetegate = self;
 }
 
 #pragma mark - Actions
@@ -104,7 +79,7 @@ static NSInteger TS_CHANGED_CELL                    = 3;
                     }
                     completion:^(BOOL finished){
                         if (!isPressentTable) {
-                            [self.graphView reloadDataWithArray:[VGAppDelegate getInstance].values];
+                            [self.graphView reloadDataWithArray:[VGAppDelegate getInstance].currentUser.dataSet];
                         } else {
                             [self.tableView reloadData];
                         }

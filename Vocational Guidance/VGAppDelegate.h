@@ -20,17 +20,16 @@
 @property (assign, nonatomic) BOOL isLogin;
 @property (strong, nonatomic) NSString* currentScreen;
 
-
+@property (nonatomic, retain) NSString* iconName;
 @property (nonatomic, retain) VGUser* currentUser;
-@property (nonatomic, retain) NSMutableArray *rows;
-@property (nonatomic, retain) NSMutableArray *columns;
-@property (nonatomic, retain) NSMutableArray *values;
 @property (nonatomic, retain) NSMutableArray *transactionsList;
-@property (nonatomic, retain) NSMutableArray *stringValues;
+
+// Functions
 
 + (VGAppDelegate*) getInstance;
 - (void) executingTransation;
 - (void) cancelTransaction;
+- (NSMutableArray*) stringValuesFromDataArray:(NSMutableArray*)arrayValues;
 
 @end
 

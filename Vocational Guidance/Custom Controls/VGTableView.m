@@ -30,11 +30,12 @@ static const NSInteger viewBoundY       = 488;
 
 @implementation VGTableView
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrame:(CGRect)frame andUser:(VGUser*) user;
 {
     self = [super initWithFrame:frame];
     if (self) {
         canEdit = NO;
+        self.user = user;
     }
     return self;
 }
@@ -75,37 +76,37 @@ static const NSInteger viewBoundY       = 488;
     }
     
     // init columns headers
-    for (int i  = 0; i < [VGAppDelegate getInstance].columns.count; i++) {
+    for (int i  = 0; i < self.user.columns.count; i++) {
         // Init label
         UILabel *lblColumnHeader = [[[UILabel alloc] initWithFrame:CGRectMake(cellWidth + cellWidth * i + offsetX, 0, cellWidth, cellHeight)] autorelease];
         lblColumnHeader.backgroundColor = [UIColor yellowColor];
         lblColumnHeader.textAlignment = NSTextAlignmentCenter;
         [lblColumnHeader setNumberOfLines:10];
-        lblColumnHeader.text = [NSString stringWithFormat:@"%@", [VGAppDelegate getInstance].columns[i]];
+        lblColumnHeader.text = [NSString stringWithFormat:@"%@", self.user.columns[i]];
         [self addSubview:lblColumnHeader];
         offsetX += 2;
     }
     
     // init rows headers
-    for (int i = 0; i < [VGAppDelegate getInstance].rows.count; i++) {
+    for (int i = 0; i < self.user.rows.count; i++) {
         UILabel *lblRowHeader = [[[UILabel alloc] initWithFrame:CGRectMake(0, cellHeight * i + offsetY + cellHeight, cellWidth, cellHeight)] autorelease];
         lblRowHeader.backgroundColor = [UIColor yellowColor];
         lblRowHeader.textAlignment = NSTextAlignmentCenter;
         [lblRowHeader setNumberOfLines:10];
-        lblRowHeader.text = [NSString stringWithFormat:@"%@", [VGAppDelegate getInstance].rows[i]];
+        lblRowHeader.text = [NSString stringWithFormat:@"%@", self.user.rows[i]];
         [self addSubview:lblRowHeader];
         offsetX = 2;
-        for (NSInteger j = 0; j < [VGAppDelegate getInstance].columns.count; j++) {
+        for (NSInteger j = 0; j < self.user.columns.count; j++) {
             UITextField *cell = [[[UITextField alloc] initWithFrame:CGRectMake(cellWidth + cellWidth * j + offsetX, cellHeight * i + offsetY + cellHeight, cellWidth, cellHeight)] autorelease];
             cell.backgroundColor = (canEdit) ? [UIColor whiteColor] : [UIColor grayColor];
             cell.textAlignment = NSTextAlignmentCenter;
             cell.enabled = canEdit;
-            cell.tag = i * [VGAppDelegate getInstance].columns.count + j;
+            cell.tag = i * self.user.columns.count + j;
             cell.delegate = nil;
             cell.delegate = self;
             cell.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %d && %K == %d", @"rowIndex", i, @"colIndex", j];
-            NSMutableArray *tmpValue = [NSMutableArray arrayWithArray:[VGAppDelegate getInstance].values];
+            NSMutableArray *tmpValue = [NSMutableArray arrayWithArray:self.user.dataSet];
             [tmpValue filterUsingPredicate:predicate];
             if (tmpValue.count) {
                 cell.text = [NSString stringWithFormat:@"%@", ((VGTableCell*)tmpValue[0]).value];
@@ -115,14 +116,14 @@ static const NSInteger viewBoundY       = 488;
                 tmpCell.colIndex = j;
                 tmpCell.rowIndex = i;
                 tmpCell.value = [NSString stringWithFormat:@"%d", 0];
-                [[VGAppDelegate getInstance].values addObject:tmpCell];
+                [self.user.dataSet addObject:tmpCell];
             }
             [self addSubview:cell];
             offsetX += 2;
         }
         offsetY += 2;
     }
-    self.contentSize = CGSizeMake(cellWidth + cellWidth * [VGAppDelegate getInstance].columns.count + offsetX , cellHeight * [VGAppDelegate getInstance].rows.count + offsetY + cellHeight);
+    self.contentSize = CGSizeMake(cellWidth + cellWidth * self.user.columns.count + offsetX , cellHeight * self.user.rows.count + offsetY + cellHeight);
 }
 
 - (void)drawRect:(CGRect)rect
@@ -132,6 +133,7 @@ static const NSInteger viewBoundY       = 488;
 
 - (void)dealloc
 {
+    self.user = nil;
     tmpString = nil;
     btnAddCol = nil;
     btnAddRow = nil;
@@ -169,8 +171,8 @@ static const NSInteger viewBoundY       = 488;
     }
     
     if (self.tableDetegate != nil) {
-        NSInteger rowIndex = textField.tag / [VGAppDelegate getInstance].columns.count;
-        NSInteger colIndex = textField.tag % [VGAppDelegate getInstance].columns.count;
+        NSInteger rowIndex = textField.tag / self.user.columns.count;
+        NSInteger colIndex = textField.tag % self.user.columns.count;
         [self.tableDetegate cellDidChangedAtRow:rowIndex andColIndex:colIndex withValue:textField.text andWithOldValue: tmpString];
         
     }
@@ -208,12 +210,12 @@ static const NSInteger viewBoundY       = 488;
 
 - (void) addToTableMethod:(NSString*)name {
     if (buttonClickedType == VGButtonClickedTypeRow) {
-        [[VGAppDelegate getInstance].rows addObject:name];
+        [self.user.rows addObject:name];
         if (self.tableDetegate != nil) {
             [self.tableDetegate rowDidAddWithName:name];
         }
     } else {
-        [[VGAppDelegate getInstance].columns addObject:name];
+        [self.user.columns addObject:name];
         if (self.tableDetegate != nil) {
             [self.tableDetegate colDidAddWithName:name];
         }

@@ -71,19 +71,19 @@ static NSMutableDictionary *screenMapping = nil;
     NSString* credentialName = nil;
     switch (credentialType) {
         case VGCredentilasTypeEmployer:
-            credentialName = @"Employer";
+            credentialName = @"User";
             break;
             
         case VGCredentilasTypeExpert:
-            credentialName = @"Expert";
+            credentialName = @"User";
             break;
             
         case VGCredentilasTypeManager:
-            credentialName = @"Manager";
+            credentialName = @"User";
             break;
             
         case VGCredentilasTypeSecretar:
-            credentialName = @"Secretar";
+            credentialName = @"User";
             break;
             
         default:
@@ -94,6 +94,8 @@ static NSMutableDictionary *screenMapping = nil;
         NSString* plistPath = [[NSBundle mainBundle] pathForResource:credentialName ofType:@"plist"];
         contentDictionary = [NSDictionary dictionaryWithContentsOfFile:plistPath];
         fields = [contentDictionary objectForKey:@"Fields"];
+        NSDictionary* iconDictionary = [contentDictionary objectForKey:@"Icons"];
+        [VGAppDelegate getInstance].iconName = [iconDictionary objectForKey:[VGAppDelegate getInstance].currentUser.credentialToString];
     }
     
     return fields;

@@ -15,5 +15,6 @@
 
 @property (nonatomic, retain) VGTableView *tableView;
 @property (nonatomic, retain) VGGraphViewController *graphView;
+@property (nonatomic, retain) VGUser* user;
 
 @end
