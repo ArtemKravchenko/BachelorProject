@@ -12,8 +12,9 @@
 
 - (void)dealloc
 {
-    [_skillName release];
-    [_skillDescription release];
+    [_skillId release];
+    [_name release];
+    [_description release];
     [super dealloc];
 }
 

@@ -12,7 +12,8 @@
 
 - (void)dealloc
 {
-    [_dataValue release];
+    [_dataId release];
+    [_value release];
     [super dealloc];
 }
 

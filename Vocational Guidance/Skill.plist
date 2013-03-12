@@ -3,7 +3,10 @@
 <plist version="1.0">
 <dict>
 	<key>Icon</key>
-	<string>skill-icon.jpg</string>
+	<dict>
+		<key>Skill</key>
+		<string>skill-icon.jpg</string>
+	</dict>
 	<key>Fiedls</key>
 	<array>
 		<string>name</string>

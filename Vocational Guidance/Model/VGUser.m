@@ -38,6 +38,7 @@
 
 - (void)dealloc
 {
+    [_userId release];
     [_rows release];
     [_columns release];
     [_dataSet release];
@@ -46,7 +47,6 @@
     [_side release];
     [_login release];
     [_password release];
-    [_user_id release];
     [_description release];
     [super dealloc];
 }

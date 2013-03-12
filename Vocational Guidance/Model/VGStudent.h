@@ -11,13 +11,13 @@
 
 @interface VGStudent : VGObject
 
-@property (nonatomic, assign) NSInteger studentId;
+@property (nonatomic, assign) NSString* studentId;
 @property (nonatomic, retain) NSString* cardNumber;
-@property (nonatomic, retain) NSString* studentName;
-@property (nonatomic, retain) NSString* studentSurname;
-@property (nonatomic, retain) NSString* studentEmail;
-@property (nonatomic, retain) NSString* studentSide;
-@property (nonatomic, assign) NSInteger studentAge;
+@property (nonatomic, retain) NSString* name;
+@property (nonatomic, retain) NSString* surname;
+@property (nonatomic, retain) NSString* email;
+@property (nonatomic, retain) NSString* side;
+@property (nonatomic, assign) NSInteger age;
 @property (nonatomic, retain) NSString* description;
 
 @end

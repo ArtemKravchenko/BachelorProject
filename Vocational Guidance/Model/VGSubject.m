@@ -12,8 +12,9 @@
 
 - (void)dealloc
 {
-    [_subjectName release];
-    [_subjectDescription release];
+    [_subjectId release];
+    [_name release];
+    [_description release];
     [super dealloc];
 }
 

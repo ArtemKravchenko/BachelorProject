@@ -8,6 +8,7 @@
 
 #import "VGTableView.h"
 #import "VGAddToTableViewController.h"
+#import "VGBaseDataModel.h"
 
 static const NSInteger cellWidth        = 95;
 static const NSInteger cellHeight       = 59;
@@ -78,23 +79,30 @@ static const NSInteger viewBoundY       = 488;
     // init columns headers
     for (int i  = 0; i < self.user.columns.count; i++) {
         // Init label
-        UILabel *lblColumnHeader = [[[UILabel alloc] initWithFrame:CGRectMake(cellWidth + cellWidth * i + offsetX, 0, cellWidth, cellHeight)] autorelease];
-        lblColumnHeader.backgroundColor = [UIColor yellowColor];
-        lblColumnHeader.textAlignment = NSTextAlignmentCenter;
-        [lblColumnHeader setNumberOfLines:10];
-        lblColumnHeader.text = [NSString stringWithFormat:@"%@", self.user.columns[i]];
-        [self addSubview:lblColumnHeader];
+        UIButton* btnColumnHeader = [UIButton buttonWithType:UIButtonTypeCustom];
+        btnColumnHeader.frame = CGRectMake(cellWidth + cellWidth * i + offsetX, 0, cellWidth, cellHeight);
+        btnColumnHeader.tag = 1000 + i;
+        [btnColumnHeader setBackgroundColor:[UIColor yellowColor]];
+        [btnColumnHeader setTintColor:[UIColor whiteColor]];
+        [btnColumnHeader setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btnColumnHeader setTitle: [NSString stringWithFormat:@"%@", self.user.columns[i]] forState:UIControlStateNormal];
+        [btnColumnHeader addTarget:self action:@selector(clickColumnHeader:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:btnColumnHeader];
+        
         offsetX += 2;
     }
     
     // init rows headers
     for (int i = 0; i < self.user.rows.count; i++) {
-        UILabel *lblRowHeader = [[[UILabel alloc] initWithFrame:CGRectMake(0, cellHeight * i + offsetY + cellHeight, cellWidth, cellHeight)] autorelease];
-        lblRowHeader.backgroundColor = [UIColor yellowColor];
-        lblRowHeader.textAlignment = NSTextAlignmentCenter;
-        [lblRowHeader setNumberOfLines:10];
-        lblRowHeader.text = [NSString stringWithFormat:@"%@", self.user.rows[i]];
-        [self addSubview:lblRowHeader];
+        UIButton* btnColumnHeader = [UIButton buttonWithType:UIButtonTypeCustom];
+        btnColumnHeader.frame = CGRectMake(0, cellHeight * i + offsetY + cellHeight, cellWidth, cellHeight);
+        btnColumnHeader.tag = 2000 + i;
+        [btnColumnHeader setBackgroundColor:[UIColor yellowColor]];
+        [btnColumnHeader setTintColor:[UIColor whiteColor]];
+        [btnColumnHeader setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btnColumnHeader setTitle: [NSString stringWithFormat:@"%@", self.user.columns[i]] forState:UIControlStateNormal];
+        [btnColumnHeader addTarget:self action:@selector(clickRowHeader:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:btnColumnHeader];
         offsetX = 2;
         for (NSInteger j = 0; j < self.user.columns.count; j++) {
             UITextField *cell = [[[UITextField alloc] initWithFrame:CGRectMake(cellWidth + cellWidth * j + offsetX, cellHeight * i + offsetY + cellHeight, cellWidth, cellHeight)] autorelease];
@@ -166,8 +174,8 @@ static const NSInteger viewBoundY       = 488;
     
     if ([textField.text floatValue] > 100) {
         textField.text = tmpString;
-    } else if ([textField.text floatValue] > 1) {
-        textField.text = [NSString stringWithFormat:@"%.2f", [textField.text floatValue] / 100];
+    } else if ([textField.text floatValue] >= 0) {
+        textField.text = [NSString stringWithFormat:@"%d", [textField.text integerValue]];
     }
     
     if (self.tableDetegate != nil) {
@@ -207,6 +215,14 @@ static const NSInteger viewBoundY       = 488;
 }
 
 #pragma mark - Actions
+
+- (void) clickRowHeader:(UIButton*)sender {
+    NSLog(@"%d", sender.tag);
+}
+
+- (void) clickColumnHeader:(UIButton*)sender {
+    NSLog(@"%d", sender.tag);
+}
 
 - (void) addToTableMethod:(NSString*)name {
     if (buttonClickedType == VGButtonClickedTypeRow) {

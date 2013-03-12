@@ -17,6 +17,7 @@
 
 @property (strong, nonatomic) UINavigationController *navigationController;
 
+@property (assign, nonatomic) BOOL isMyDetail;
 @property (assign, nonatomic) BOOL isLogin;
 @property (strong, nonatomic) NSString* currentScreen;
 
@@ -24,12 +25,16 @@
 @property (nonatomic, retain) VGUser* currentUser;
 @property (nonatomic, retain) NSMutableArray *transactionsList;
 
+@property (nonatomic, retain) NSMutableArray* allColumns;
+@property (nonatomic, retain) NSMutableArray* allRows;
 // Functions
 
 + (VGAppDelegate*) getInstance;
 - (void) executingTransation;
 - (void) cancelTransaction;
 - (NSMutableArray*) stringValuesFromDataArray:(NSMutableArray*)arrayValues;
+
+@property (nonatomic, retain) NSMutableDictionary* mocData;
 
 @end
 

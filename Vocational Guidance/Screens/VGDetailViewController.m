@@ -8,12 +8,16 @@
 
 #import "VGDetailViewController.h"
 #import "VGFieldsListViewController.h"
+#import "VGTableViewController.h"
 
 @interface VGDetailViewController ()
 
 @property (retain, nonatomic) IBOutlet UIImageView *imgIcon;
 @property (retain, nonatomic) IBOutlet UIView *fieldsView;
+@property (retain, nonatomic) IBOutlet UIButton *btnViewTable;
+@property (retain, nonatomic) IBOutlet UIButton *btnEdit;
 @property (retain, nonatomic) VGFieldsListViewController* fieldsViewController;
+@property (retain, nonatomic) VGTableViewController* tableViewController;
 
 @end
 
@@ -29,6 +33,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //
+    self.btnViewTable.hidden = ![self.object isKindOfClass:[VGUser class]];
+    self.btnEdit.hidden = !(([self.object isKindOfClass:[VGUser class]] == NO) && ([VGAppDelegate getInstance].isMyDetail == YES));
     // init self view
     self.imgIcon.image = [UIImage imageNamed:[VGAppDelegate getInstance].iconName];
     // init fields view controller
@@ -42,13 +49,26 @@
 }
 
 - (void)dealloc {
+    self.tableViewController = nil;
     [_fields release];
     [_fieldsViewController release];
     [_object release];
     [_imgIcon release];
     [_fieldsView release];
+    [_btnViewTable release];
+    [_btnEdit release];
     [super dealloc];
 }
 
-#pragma mark -
+#pragma mark - Actions
+
+- (IBAction)clickViewTable:(id)sender {
+    self.tableViewController = [[[VGTableViewController alloc] initWithUser:(VGUser*)self.object] autorelease];
+    [self.navigationController pushViewController:self.tableViewController animated:YES];
+}
+
+- (IBAction)clickEdit:(id)sender {
+    
+}
+
 @end

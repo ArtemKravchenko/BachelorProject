@@ -3,7 +3,10 @@
 <plist version="1.0">
 <dict>
 	<key>Icon</key>
-	<string>job-icon.jpg</string>
+	<dict>
+		<key>Job</key>
+		<string>job-icon.jpg</string>
+	</dict>
 	<key>Field</key>
 	<array>
 		<string>name</string>

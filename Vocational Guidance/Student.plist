@@ -4,11 +4,13 @@
 <dict>
 	<key>Fields</key>
 	<array>
+		<string>cardNumber</string>
 		<string>name</string>
 		<string>surname</string>
 		<string>email</string>
 		<string>side</string>
 		<string>age</string>
+		<string>description</string>
 	</array>
 	<key>Icons</key>
 	<dict>

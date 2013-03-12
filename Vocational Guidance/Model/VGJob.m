@@ -12,8 +12,9 @@
 
 - (void)dealloc
 {
-    [_jobName release];
-    [_jobDescription release];
+    [_jobId release];
+    [_name release];
+    [_description release];
     [super dealloc];
 }
 

@@ -17,4 +17,6 @@
 @property (nonatomic, retain) VGGraphViewController *graphView;
 @property (nonatomic, retain) VGUser* user;
 
+- (id)initWithUser:(VGUser*)user;
+
 @end

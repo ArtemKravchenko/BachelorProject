@@ -12,12 +12,13 @@
 
 - (void)dealloc
 {
+    [_studentId release];
     [_cardNumber release];
     [_description release];
-    [_studentName release];
-    [_studentSurname release];
-    [_studentEmail release];
-    [_studentSide release];
+    [_name release];
+    [_surname release];
+    [_email release];
+    [_side release];
     [super dealloc];
 }
 

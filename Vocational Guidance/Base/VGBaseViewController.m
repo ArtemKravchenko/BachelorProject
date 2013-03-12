@@ -86,11 +86,13 @@
         ((VGDetailViewController*)secondController).object = [screenInfo.params objectForKey:@"object"];
         NSMutableArray* tmpFields = [screenInfo.params objectForKey:@"fields"];
         ((VGDetailViewController*)secondController).fields = [NSMutableArray arrayWithArray:tmpFields];
+        [VGAppDelegate getInstance].isMyDetail = YES;
     } else if (screenInfo.classValue == [VGSearchViewController class]) {
         NSMutableArray* tmpFields = [screenInfo.params objectForKey:@"fields"];
         ((VGSearchViewController*)secondController).fieldsList = [NSMutableArray arrayWithArray:tmpFields];
         NSMutableDictionary* tmpAutoblank = [screenInfo.params objectForKey:@"autoblank"];
         ((VGSearchViewController*)secondController).autoblank = [NSMutableDictionary dictionaryWithDictionary:tmpAutoblank];
+        [VGAppDelegate getInstance].isMyDetail = NO;
     }
     
     [controllers addObject: secondController];

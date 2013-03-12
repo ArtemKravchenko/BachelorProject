@@ -10,7 +10,7 @@
 
 @interface VGBaseDataModel : NSObject
 
-@property (nonatomic, assign) NSInteger dataId;
-@property (nonatomic, retain) NSString* dataValue;
+@property (nonatomic, assign) NSString* dataId;
+@property (nonatomic, retain) NSString* value;
 
 @end

@@ -11,7 +11,7 @@
 #import "VGStudent.h"
 #import "VGSubject.h"
 
-@interface VGSecretarData : NSObject
+@interface VGSecretarData : VGBaseDataModel
 
 @property (nonatomic, retain) VGSubject* secretarDataSubject;
 @property (nonatomic, retain) VGStudent* secretarDataStudent;
