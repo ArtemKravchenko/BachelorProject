@@ -10,13 +10,15 @@
 
 @implementation VGStudent
 
+- (NSString*) name {
+    return [NSString stringWithFormat:@"%@ %@", self.studentName, self.studentSurname];
+}
+
 - (void)dealloc
 {
-    [_studentId release];
     [_cardNumber release];
-    [_description release];
-    [_name release];
-    [_surname release];
+    [_studentName release];
+    [_studentSurname release];
     [_email release];
     [_side release];
     [super dealloc];

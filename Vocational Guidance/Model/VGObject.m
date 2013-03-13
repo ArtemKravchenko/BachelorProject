@@ -10,4 +10,12 @@
 
 @implementation VGObject
 
+- (void)dealloc
+{
+    [_object_id release];
+    [_name release];
+    [_description release];
+    [super dealloc];
+}
+
 @end

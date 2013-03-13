@@ -11,8 +11,4 @@
 
 @interface VGSubject : VGObject
 
-@property (nonatomic, assign) NSString* subjectId;
-@property (nonatomic, retain) NSString* name;
-@property (nonatomic, retain) NSString* description;
-
 @end

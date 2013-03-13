@@ -21,14 +21,11 @@ typedef enum
 
 @interface VGUser : VGObject
 
-@property (nonatomic, retain) NSString*         userId;
-@property (nonatomic, retain) NSString*         name;
 @property (nonatomic, retain) NSString*         surname;
 @property (nonatomic, retain) NSString*         side;
 @property (nonatomic, retain) NSString*         login;
 @property (nonatomic, retain) NSString*         password;
 @property (nonatomic, assign) VGCredentilasType credential;
-@property (nonatomic, retain) NSString*         description;
 @property (nonatomic, retain) NSMutableArray*   dataSet;
 @property (nonatomic, retain) NSMutableArray*   rows;
 @property (nonatomic, retain) NSMutableArray*   columns;

@@ -11,8 +11,4 @@
 
 @interface VGJob : VGObject
 
-@property (nonatomic, assign) NSString* jobId;
-@property (nonatomic, retain) NSString* name;
-@property (nonatomic, retain) NSString* description;
-
 @end

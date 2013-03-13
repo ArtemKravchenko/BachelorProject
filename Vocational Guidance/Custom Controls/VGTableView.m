@@ -113,18 +113,19 @@ static const NSInteger viewBoundY       = 488;
             cell.delegate = nil;
             cell.delegate = self;
             cell.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %d && %K == %d", @"rowIndex", i, @"colIndex", j];
+            //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %d && %K == %d", @"rowIndex", i, @"colIndex", j];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K LIKE %@ AND %K LIKE %@", @"row.object_id", self.user.rows[i], @"col.object_id", self.user.columns[j]];
             NSMutableArray *tmpValue = [NSMutableArray arrayWithArray:self.user.dataSet];
             [tmpValue filterUsingPredicate:predicate];
             if (tmpValue.count) {
-                cell.text = [NSString stringWithFormat:@"%@", ((VGTableCell*)tmpValue[0]).value];
+                cell.text = [NSString stringWithFormat:@"%@", ((VGBaseDataModel*)tmpValue[0]).value];
             } else {
                 cell.text = [NSString stringWithFormat:@"%d", 0];
-                VGTableCell *tmpCell = [[VGTableCell new] autorelease];
-                tmpCell.colIndex = j;
-                tmpCell.rowIndex = i;
-                tmpCell.value = [NSString stringWithFormat:@"%d", 0];
-                [self.user.dataSet addObject:tmpCell];
+                VGBaseDataModel* tmpModel = [[VGBaseDataModel new] autorelease];
+                tmpModel.row = self.user.rows[i];
+                tmpModel.col = self.user.columns[j];
+                tmpModel.value = [NSString stringWithFormat:@"%d", 0];
+                [self.user.dataSet addObject:tmpModel];
             }
             [self addSubview:cell];
             offsetX += 2;
@@ -181,9 +182,9 @@ static const NSInteger viewBoundY       = 488;
     if (self.tableDetegate != nil) {
         NSInteger rowIndex = textField.tag / self.user.columns.count;
         NSInteger colIndex = textField.tag % self.user.columns.count;
-        [self.tableDetegate cellDidChangedAtRow:rowIndex andColIndex:colIndex withValue:textField.text andWithOldValue: tmpString];
-        
+        [self.tableDetegate cellDidChangedAtRow:self.user.rows[rowIndex] andColIndex:self.user.columns[colIndex] withValue:textField.text andWithOldValue: tmpString];
     }
+    
     return YES;
 }
 

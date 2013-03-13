@@ -7,6 +7,7 @@
 //
 
 #import "VGGraphViewController.h"
+#import "VGBaseDataModel.h"
 
 static const NSInteger graphItemWidth   = 89;
 static const NSInteger graphItemHeight  = 89;
@@ -74,10 +75,10 @@ static NSString * CellIdentifier = @"GraphCell";
         cell = [[[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: CellIdentifier] autorelease];
     }
     
-    VGTableCell* tmpCell = (VGTableCell*)self.tableData[indexPath.row];
+    VGBaseDataModel* tmpCell = (VGBaseDataModel*)self.tableData[indexPath.row];
     NSString *text = [NSString stringWithFormat:@"%@ , %@: %@",
-                      ((NSString*)self.user.rows[tmpCell.rowIndex]),
-                      ((NSString*)self.user.columns[tmpCell.colIndex]),
+                      tmpCell.row,
+                      tmpCell.col,
                       tmpCell.value];
     
     cell.textLabel.text = text;
@@ -205,7 +206,7 @@ static NSString * CellIdentifier = @"GraphCell";
                 [tmpArray filterUsingPredicate:predicate];
                 if (tmpArray.count) {
                     
-                    if (![((VGTableCell*)tmpArray[0]).value isEqualToString: @"0"]) {
+                    if (![((VGBaseDataModel*)tmpArray[0]).value isEqualToString: @"0"]) {
                         CGContextRef context = UIGraphicsGetCurrentContext();
                         CGContextBeginPath(context);
                         

@@ -123,28 +123,32 @@ static NSInteger TS_CHANGED_CELL                    = 3;
 
 - (void) rowDidAddWithName:(NSString*)name {
     self.btnSave.enabled = YES;
+    VGObject* row = [[VGObject new] autorelease];
+    row.name = name;
     NSMutableDictionary* tmpDictionary = [NSMutableDictionary dictionary];
     [tmpDictionary setObject:[NSString stringWithFormat:@"%d", TS_ADDED_ROW] forKey:@"transaction_type"];
-    [tmpDictionary setObject:name forKey:@"obj_name"];
+    [tmpDictionary setObject:row forKey:@"obj_name"];
     [[VGAppDelegate getInstance].transactionsList addObject:tmpDictionary];
     isSomethingWasChanged = YES;
 }
 
 - (void) colDidAddWithName:(NSString*)name {
     self.btnSave.enabled = YES;
+    VGObject* col = [[VGObject new] autorelease];
+    col.name = name;
     NSMutableDictionary* tmpDictionary = [NSMutableDictionary dictionary];
     [tmpDictionary setObject:[NSString stringWithFormat:@"%d", TS_ADDED_COL] forKey:@"transaction_type"];
-    [tmpDictionary setObject:name forKey:@"obj_name"];
+    [tmpDictionary setObject:col forKey:@"obj_name"];
     [[VGAppDelegate getInstance].transactionsList addObject:tmpDictionary];
     isSomethingWasChanged = YES;
 }
 
-- (void) cellDidChangedAtRow:(NSInteger)rowIndex andColIndex:(NSInteger)colIdex withValue:(NSString*)value andWithOldValue:(NSString *)oldValue {
+- (void) cellDidChangedAtRow:(VGObject*)row andColIndex:(VGObject*)col withValue:(NSString*)value andWithOldValue:(NSString *)oldValue {
     self.btnSave.enabled = YES;
     NSMutableDictionary* tmpDictionary = [NSMutableDictionary dictionary];
     [tmpDictionary setObject: [NSString stringWithFormat:@"%d", TS_CHANGED_CELL] forKey:@"transaction_type"];
-    [tmpDictionary setObject: [NSNumber numberWithInteger:rowIndex]  forKey:@"row_index"];
-    [tmpDictionary setObject: [NSNumber numberWithInteger:colIdex]  forKey:@"column_index"];
+    [tmpDictionary setObject: row  forKey:@"row_index"];
+    [tmpDictionary setObject: col  forKey:@"column_index"];
     [tmpDictionary setObject: value  forKey:@"cell_value"];
     [tmpDictionary setObject: oldValue forKey:@"old_value"];
     [[VGAppDelegate getInstance].transactionsList addObject:tmpDictionary];

@@ -7,10 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "VGObject.h"
 
 @interface VGBaseDataModel : NSObject
 
 @property (nonatomic, assign) NSString* dataId;
 @property (nonatomic, retain) NSString* value;
+@property (nonatomic, retain) VGObject* row;
+@property (nonatomic, retain) VGObject* col;
 
 @end

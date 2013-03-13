@@ -40,16 +40,6 @@
 
 // -------------------------------------------- Another types --------------------------------------------
 
-
-@interface VGTableCell : NSObject
-
-@property (nonatomic, assign) NSInteger rowIndex;
-@property (nonatomic, assign) NSInteger colIndex;
-@property (nonatomic, retain) NSString  *value;
-
-@end
-
-
 @interface VGTableType : NSObject
 
 @property (nonatomic, retain) NSString* value;

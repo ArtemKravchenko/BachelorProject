@@ -11,8 +11,4 @@
 
 @interface VGSkill : VGObject
 
-@property (nonatomic, assign) NSString* skillId;
-@property (nonatomic, retain) NSString* name;
-@property (nonatomic, retain) NSString* description;
-
 @end

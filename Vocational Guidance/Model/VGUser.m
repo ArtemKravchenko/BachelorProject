@@ -7,8 +7,17 @@
 //
 
 #import "VGUser.h"
+#import "VGBaseDataModel.h"
+
+@interface VGUser () {
+    NSMutableArray* tableCells;
+}
+
+@end
 
 @implementation VGUser
+
+@synthesize dataSet = _dataSet;
 
 - (NSString *)credentialToString {
     NSString* stringCredential = nil;
@@ -36,21 +45,26 @@
     return stringCredential;
 }
 
+-(void)setDataSet:(NSMutableArray *)value {
+    if (value) {
+        [_dataSet release];
+        _dataSet = [value retain];
+        tableCells = nil;
+    }
+    
+}
+
 - (void)dealloc
 {
-    [_userId release];
+    tableCells = nil;
     [_rows release];
     [_columns release];
     [_dataSet release];
-    [_name release];
     [_surname release];
     [_side release];
     [_login release];
     [_password release];
-    [_description release];
     [super dealloc];
 }
-
-
 
 @end

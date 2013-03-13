@@ -10,4 +10,9 @@
 
 @interface VGObject : NSObject
 
+@property (nonatomic, retain) NSString* object_id;
+
+@property (nonatomic, retain) NSString* name;
+@property (nonatomic, retain) NSString* description;
+ 
 @end

@@ -49,9 +49,6 @@
 		849FF17816E88DD6006984AC /* VGSubject.m in Sources */ = {isa = PBXBuildFile; fileRef = 849FF17716E88DD5006984AC /* VGSubject.m */; };
 		849FF17B16E88EA4006984AC /* VGSkill.m in Sources */ = {isa = PBXBuildFile; fileRef = 849FF17A16E88EA3006984AC /* VGSkill.m */; };
 		849FF17E16E88F08006984AC /* VGJob.m in Sources */ = {isa = PBXBuildFile; fileRef = 849FF17D16E88F08006984AC /* VGJob.m */; };
-		849FF18116E8907E006984AC /* VGEmploerData.m in Sources */ = {isa = PBXBuildFile; fileRef = 849FF18016E8907E006984AC /* VGEmploerData.m */; };
-		849FF18416E89223006984AC /* VGExpertData.m in Sources */ = {isa = PBXBuildFile; fileRef = 849FF18316E89222006984AC /* VGExpertData.m */; };
-		849FF18716E892FE006984AC /* VGSecretarData.m in Sources */ = {isa = PBXBuildFile; fileRef = 849FF18616E892FC006984AC /* VGSecretarData.m */; };
 		849FF18A16E8959F006984AC /* VGBaseDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 849FF18916E8959E006984AC /* VGBaseDataModel.m */; };
 		849FF18C16E8974B006984AC /* secretar-icon.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 849FF18B16E8974A006984AC /* secretar-icon.jpeg */; };
 		849FF18F16E89759006984AC /* expert-icon.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 849FF18D16E89758006984AC /* expert-icon.jpeg */; };
@@ -138,12 +135,6 @@
 		849FF17A16E88EA3006984AC /* VGSkill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGSkill.m; path = Model/VGSkill.m; sourceTree = "<group>"; };
 		849FF17C16E88F08006984AC /* VGJob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGJob.h; path = Model/VGJob.h; sourceTree = "<group>"; };
 		849FF17D16E88F08006984AC /* VGJob.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGJob.m; path = Model/VGJob.m; sourceTree = "<group>"; };
-		849FF17F16E8907D006984AC /* VGEmploerData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGEmploerData.h; path = Model/VGEmploerData.h; sourceTree = "<group>"; };
-		849FF18016E8907E006984AC /* VGEmploerData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGEmploerData.m; path = Model/VGEmploerData.m; sourceTree = "<group>"; };
-		849FF18216E89221006984AC /* VGExpertData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGExpertData.h; path = Model/VGExpertData.h; sourceTree = "<group>"; };
-		849FF18316E89222006984AC /* VGExpertData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGExpertData.m; path = Model/VGExpertData.m; sourceTree = "<group>"; };
-		849FF18516E892FB006984AC /* VGSecretarData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGSecretarData.h; path = Model/VGSecretarData.h; sourceTree = "<group>"; };
-		849FF18616E892FC006984AC /* VGSecretarData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGSecretarData.m; path = Model/VGSecretarData.m; sourceTree = "<group>"; };
 		849FF18816E8959D006984AC /* VGBaseDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGBaseDataModel.h; path = Model/VGBaseDataModel.h; sourceTree = "<group>"; };
 		849FF18916E8959E006984AC /* VGBaseDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGBaseDataModel.m; path = Model/VGBaseDataModel.m; sourceTree = "<group>"; };
 		849FF18B16E8974A006984AC /* secretar-icon.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "secretar-icon.jpeg"; path = "Imges/secretar-icon.jpeg"; sourceTree = "<group>"; };
@@ -198,12 +189,6 @@
 				849FF17A16E88EA3006984AC /* VGSkill.m */,
 				849FF17C16E88F08006984AC /* VGJob.h */,
 				849FF17D16E88F08006984AC /* VGJob.m */,
-				849FF17F16E8907D006984AC /* VGEmploerData.h */,
-				849FF18016E8907E006984AC /* VGEmploerData.m */,
-				849FF18216E89221006984AC /* VGExpertData.h */,
-				849FF18316E89222006984AC /* VGExpertData.m */,
-				849FF18516E892FB006984AC /* VGSecretarData.h */,
-				849FF18616E892FC006984AC /* VGSecretarData.m */,
 				849FF18816E8959D006984AC /* VGBaseDataModel.h */,
 				849FF18916E8959E006984AC /* VGBaseDataModel.m */,
 			);
@@ -487,9 +472,6 @@
 				849FF17816E88DD6006984AC /* VGSubject.m in Sources */,
 				849FF17B16E88EA4006984AC /* VGSkill.m in Sources */,
 				849FF17E16E88F08006984AC /* VGJob.m in Sources */,
-				849FF18116E8907E006984AC /* VGEmploerData.m in Sources */,
-				849FF18416E89223006984AC /* VGExpertData.m in Sources */,
-				849FF18716E892FE006984AC /* VGSecretarData.m in Sources */,
 				849FF18A16E8959F006984AC /* VGBaseDataModel.m in Sources */,
 				849FF1A516E8A425006984AC /* VGObject.m in Sources */,
 			);
