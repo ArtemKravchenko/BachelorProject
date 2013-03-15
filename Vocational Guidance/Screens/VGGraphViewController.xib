@@ -45,7 +45,7 @@
 						<string key="NSFrameSize">{271, 40}</string>
 						<reference key="NSSuperview" ref="1047073980"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="996242583"/>
+						<reference key="NSNextKeyView" ref="698248880"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -78,7 +78,7 @@
 						<string key="NSFrame">{{284, 0}, {666, 92}}</string>
 						<reference key="NSSuperview" ref="1047073980"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="80736919"/>
+						<reference key="NSNextKeyView" ref="282910808"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -104,7 +104,7 @@
 					<object class="IBUIScrollView" id="282910808">
 						<reference key="NSNextResponder" ref="1047073980"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{284, 94}, {686, 516}}</string>
+						<string key="NSFrame">{{348, 94}, {622, 516}}</string>
 						<reference key="NSSuperview" ref="1047073980"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
@@ -124,10 +124,10 @@
 							<object class="IBUISearchBar" id="996242583">
 								<reference key="NSNextResponder" ref="698248880"/>
 								<int key="NSvFlags">290</int>
-								<string key="NSFrameSize">{271, 44}</string>
+								<string key="NSFrameSize">{348, 44}</string>
 								<reference key="NSSuperview" ref="698248880"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="274644584"/>
+								<reference key="NSNextKeyView" ref="80736919"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<int key="IBUIContentMode">3</int>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -140,10 +140,10 @@
 								<reference key="NSNextResponder" ref="698248880"/>
 								<int key="NSvFlags">274</int>
 								<array class="NSMutableArray" key="NSSubviews"/>
-								<string key="NSFrame">{{0, 44}, {271, 516}}</string>
+								<string key="NSFrame">{{0, 44}, {348, 516}}</string>
 								<reference key="NSSuperview" ref="698248880"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="698248880"/>
+								<reference key="NSNextKeyView" ref="274644584"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">3</int>
@@ -160,10 +160,10 @@
 								<float key="IBUISectionFooterHeight">22</float>
 							</object>
 						</array>
-						<string key="NSFrame">{{0, 50}, {271, 560}}</string>
+						<string key="NSFrame">{{0, 50}, {348, 560}}</string>
 						<reference key="NSSuperview" ref="1047073980"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="282910808"/>
+						<reference key="NSNextKeyView" ref="996242583"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>

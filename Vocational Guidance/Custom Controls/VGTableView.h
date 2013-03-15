@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "VGAppDelegate.h"
+#import "VGAddToTableViewController.h"
+#import "VGDetailViewController.h"
 
 typedef void (^addToTableBlockType)(NSString*, UIPopoverController* popover);
 
@@ -20,8 +22,8 @@ enum VGButtonClickedType : NSInteger {
 @protocol VGTableAddDelegate <NSObject>
 
 @optional
-- (void) rowDidAddWithName:(NSString*)name;
-- (void) colDidAddWithName:(NSString*)name;
+- (void) rowDidAddWithName:(VGObject*)object;
+- (void) colDidAddWithName:(VGObject*)object;
 - (void) cellDidChangedAtRow:(VGObject*)row andColIndex:(VGObject*)col withValue:(NSString*)value  andWithOldValue:(NSString*)oldValue;
 - (void) cellWillChanging;
 - (void) objectWillAdding;
@@ -36,5 +38,6 @@ enum VGButtonClickedType : NSInteger {
 
 @property (nonatomic, retain) VGUser* user;
 @property (nonatomic, assign) id<VGTableAddDelegate> tableDetegate;
+@property (nonatomic, retain) UIViewController* parentViewController;
 
 @end

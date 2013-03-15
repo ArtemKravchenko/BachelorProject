@@ -177,6 +177,13 @@ static NSMutableDictionary *screenMapping = nil;
     NSMutableDictionary* params = [NSMutableDictionary dictionary];
     NSArray* fields = [self fieldsForCredentialType:VGCredentilasTypeStudent];
     [params setObject:fields forKey:@"fields"];
+    
+    // Set autoblank fields
+    autoblankFields = [NSMutableDictionary dictionary];
+    [autoblankFields setObject:@"Students" forKey:@"description"];
+    [params setObject:autoblankFields forKey:@"autoblank"];
+    
+    screenInfo.params = params;
     screenInfo.params = params;
     [screenMapping setObject:screenInfo forKey: @"Students List"];
     [screenInfo release];
@@ -191,6 +198,7 @@ static NSMutableDictionary *screenMapping = nil;
     // Set autoblank fields
     autoblankFields = [NSMutableDictionary dictionary];
     [autoblankFields setObject:@"Expert" forKey:@"credential"];
+    [autoblankFields setObject:@"Expert" forKey:@"description"];
     [params setObject:autoblankFields forKey:@"autoblank"];
     
     screenInfo.params = params;
@@ -207,6 +215,7 @@ static NSMutableDictionary *screenMapping = nil;
     // Set autoblank fields
     autoblankFields = [NSMutableDictionary dictionary];
     [autoblankFields setObject:@"Emploer" forKey:@"credential"];
+    [autoblankFields setObject:@"Employer" forKey:@"description"];
     [params setObject:autoblankFields forKey:@"autoblank"];
     
     screenInfo.params = params;

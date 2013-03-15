@@ -2,12 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Icon</key>
+	<key>Icons</key>
 	<dict>
 		<key>Skill</key>
 		<string>skill-icon.jpg</string>
 	</dict>
-	<key>Fiedls</key>
+	<key>Fields</key>
 	<array>
 		<string>name</string>
 		<string>description</string>

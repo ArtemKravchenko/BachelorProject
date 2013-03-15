@@ -7,7 +7,6 @@
 //
 
 #import "VGTableView.h"
-#import "VGAddToTableViewController.h"
 #import "VGBaseDataModel.h"
 
 static const NSInteger cellWidth        = 95;
@@ -23,6 +22,9 @@ static const NSInteger viewBoundY       = 488;
     UIButton *btnAddCol;
     BOOL canEdit;
     NSString *tmpString;
+    VGDetailViewController* detailViewController;
+    NSString* rowPlistName;
+    NSString* colPlistName;
 }
 
 @property (nonatomic, retain) UIPopoverController *popover;
@@ -37,6 +39,43 @@ static const NSInteger viewBoundY       = 488;
     if (self) {
         canEdit = NO;
         self.user = user;
+        
+        // init columns plist name
+        switch ([VGAppDelegate getInstance].currentUser.credential) {
+            case VGCredentilasTypeEmployer:
+                colPlistName = @"Skill";
+                break;
+                
+            case VGCredentilasTypeExpert:
+                colPlistName = @"Subject";
+                break;
+                
+            case VGCredentilasTypeSecretar:
+                colPlistName = @"Student";
+                break;
+                
+            default:
+                break;
+        }
+        
+        
+        // init rows plist name
+        switch ([VGAppDelegate getInstance].currentUser.credential) {
+            case VGCredentilasTypeEmployer:
+                rowPlistName = @"Job";
+                break;
+                
+            case VGCredentilasTypeExpert:
+                rowPlistName = @"Skill";
+                break;
+                
+            case VGCredentilasTypeSecretar:
+                rowPlistName = @"Subject";
+                break;
+                
+            default:
+                break;
+        }
     }
     return self;
 }
@@ -45,6 +84,10 @@ static const NSInteger viewBoundY       = 488;
     for (UIView* view in self.subviews) {
         if (![view isKindOfClass:[UIButton class]]) {
             [view removeFromSuperview];
+        } else {
+            if (![((UIButton*)view).titleLabel.text isEqualToString:@"+"]) {
+                [view removeFromSuperview];
+            }
         }
     }
 }
@@ -84,8 +127,9 @@ static const NSInteger viewBoundY       = 488;
         btnColumnHeader.tag = 1000 + i;
         [btnColumnHeader setBackgroundColor:[UIColor yellowColor]];
         [btnColumnHeader setTintColor:[UIColor whiteColor]];
+        [btnColumnHeader.titleLabel setFont:[UIFont systemFontOfSize:13]];
         [btnColumnHeader setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [btnColumnHeader setTitle: [NSString stringWithFormat:@"%@", self.user.columns[i]] forState:UIControlStateNormal];
+        [btnColumnHeader setTitle: [NSString stringWithFormat:@"%@", ((VGObject*)self.user.columns[i]).name] forState:UIControlStateNormal];
         [btnColumnHeader addTarget:self action:@selector(clickColumnHeader:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:btnColumnHeader];
         
@@ -94,15 +138,16 @@ static const NSInteger viewBoundY       = 488;
     
     // init rows headers
     for (int i = 0; i < self.user.rows.count; i++) {
-        UIButton* btnColumnHeader = [UIButton buttonWithType:UIButtonTypeCustom];
-        btnColumnHeader.frame = CGRectMake(0, cellHeight * i + offsetY + cellHeight, cellWidth, cellHeight);
-        btnColumnHeader.tag = 2000 + i;
-        [btnColumnHeader setBackgroundColor:[UIColor yellowColor]];
-        [btnColumnHeader setTintColor:[UIColor whiteColor]];
-        [btnColumnHeader setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [btnColumnHeader setTitle: [NSString stringWithFormat:@"%@", self.user.columns[i]] forState:UIControlStateNormal];
-        [btnColumnHeader addTarget:self action:@selector(clickRowHeader:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:btnColumnHeader];
+        UIButton* btnRowHeader = [UIButton buttonWithType:UIButtonTypeCustom];
+        btnRowHeader.frame = CGRectMake(0, cellHeight * i + offsetY + cellHeight, cellWidth, cellHeight);
+        btnRowHeader.tag = 2000 + i;
+        [btnRowHeader setBackgroundColor:[UIColor yellowColor]];
+        [btnRowHeader setTintColor:[UIColor whiteColor]];
+        [btnRowHeader.titleLabel setFont:[UIFont systemFontOfSize:13]];
+        [btnRowHeader setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btnRowHeader setTitle: [NSString stringWithFormat:@"%@", ((VGObject*)self.user.rows[i]).name] forState:UIControlStateNormal];
+        [btnRowHeader addTarget:self action:@selector(clickRowHeader:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:btnRowHeader];
         offsetX = 2;
         for (NSInteger j = 0; j < self.user.columns.count; j++) {
             UITextField *cell = [[[UITextField alloc] initWithFrame:CGRectMake(cellWidth + cellWidth * j + offsetX, cellHeight * i + offsetY + cellHeight, cellWidth, cellHeight)] autorelease];
@@ -114,7 +159,7 @@ static const NSInteger viewBoundY       = 488;
             cell.delegate = self;
             cell.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
             //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %d && %K == %d", @"rowIndex", i, @"colIndex", j];
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K LIKE %@ AND %K LIKE %@", @"row.object_id", self.user.rows[i], @"col.object_id", self.user.columns[j]];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K LIKE %@ AND %K LIKE %@", @"row.object_id", ((VGObject*)self.user.rows[i]).object_id, @"col.object_id", ((VGObject*)self.user.columns[j]).object_id];
             NSMutableArray *tmpValue = [NSMutableArray arrayWithArray:self.user.dataSet];
             [tmpValue filterUsingPredicate:predicate];
             if (tmpValue.count) {
@@ -125,6 +170,7 @@ static const NSInteger viewBoundY       = 488;
                 tmpModel.row = self.user.rows[i];
                 tmpModel.col = self.user.columns[j];
                 tmpModel.value = [NSString stringWithFormat:@"%d", 0];
+                tmpModel.dataId = [NSString stringWithFormat:@"tmp%d", ++[VGAppDelegate getInstance].tmpGlobalId];
                 [self.user.dataSet addObject:tmpModel];
             }
             [self addSubview:cell];
@@ -142,6 +188,10 @@ static const NSInteger viewBoundY       = 488;
 
 - (void)dealloc
 {
+    colPlistName = nil;
+    rowPlistName = nil;
+    self.parentViewController = nil;
+    detailViewController = nil;
     self.user = nil;
     tmpString = nil;
     btnAddCol = nil;
@@ -210,31 +260,53 @@ static const NSInteger viewBoundY       = 488;
         }
     }
     btnAddCol.enabled = canEdit;
-    //btnAddCol.titleLabel.backgroundColor = (canEdit) ? [UIColor whiteColor] : [UIColor grayColor];
     btnAddRow.enabled = canEdit;
-    //btnAddRow.titleLabel.backgroundColor = (canEdit) ? [UIColor whiteColor] : [UIColor grayColor];
 }
 
 #pragma mark - Actions
 
 - (void) clickRowHeader:(UIButton*)sender {
-    NSLog(@"%d", sender.tag);
+    [self detailWithPushingForExistingRow:self.user.rows[sender.tag - 2000]];
+}
+
+- (void) detailWithPushingForExistingRow:(VGObject*) object {
+    NSMutableArray* fields = [self fieldsFromPlistNameWithName:rowPlistName];
+    detailViewController = [[[VGDetailViewController alloc] initForChooseExistObject] autorelease];
+    detailViewController.object = object;
+    detailViewController.fields = fields;
+    [self.parentViewController.navigationController pushViewController:detailViewController animated:YES];
 }
 
 - (void) clickColumnHeader:(UIButton*)sender {
-    NSLog(@"%d", sender.tag);
+    [self detailWithPushingForExistCol:self.user.columns[sender.tag - 1000]];
 }
 
-- (void) addToTableMethod:(NSString*)name {
+- (void) detailWithPushingForExistCol:(VGObject*) object {
+    NSMutableArray* fields = [self fieldsFromPlistNameWithName:colPlistName];
+    detailViewController = [[[VGDetailViewController alloc] initForChooseExistObject] autorelease];
+    detailViewController.object = object;
+    detailViewController.fields = fields;
+    [self.parentViewController.navigationController pushViewController:detailViewController animated:YES];
+}
+
+- (NSMutableArray*) fieldsFromPlistNameWithName:(NSString*) name {
+    NSString* plistPath = [[NSBundle mainBundle] pathForResource:name ofType:@"plist"];
+    NSMutableDictionary* contentDictionary = [NSDictionary dictionaryWithContentsOfFile:plistPath];
+    NSDictionary* iconDictionary = [contentDictionary objectForKey:@"Icons"];
+    [VGAppDelegate getInstance].iconName = [iconDictionary objectForKey:name];
+    return [contentDictionary objectForKey:@"Fields"];
+}
+
+- (void) addToTableMethod:(VGObject*)object {
     if (buttonClickedType == VGButtonClickedTypeRow) {
-        [self.user.rows addObject:name];
+        [self.user.rows addObject:object];
         if (self.tableDetegate != nil) {
-            [self.tableDetegate rowDidAddWithName:name];
+            [self.tableDetegate rowDidAddWithName:object];
         }
     } else {
-        [self.user.columns addObject:name];
+        [self.user.columns addObject:object];
         if (self.tableDetegate != nil) {
-            [self.tableDetegate colDidAddWithName:name];
+            [self.tableDetegate colDidAddWithName:object];
         }
     }
     [self reloadData];
@@ -242,17 +314,27 @@ static const NSInteger viewBoundY       = 488;
     self.popover = nil;
 }
 
+- (void) presentExistingObject:(VGObject*)object {
+    [self.popover dismissPopoverAnimated:YES];
+    if (buttonClickedType == VGButtonClickedTypeRow) {
+        [self detailWithPushingForExistingRow:object];
+    } else {
+        [self detailWithPushingForExistCol:object];
+    }
+}
+
 - (void) clickAddRow {
     if (self.tableDetegate != nil) {
         [self.tableDetegate cellWillChanging];
     }
+    
     buttonClickedType = VGButtonClickedTypeRow;
-    insideViewController = [[VGAddToTableViewController new] autorelease];
-    insideViewController.method = @selector(addToTableMethod:);
+    insideViewController = [[[VGAddToTableViewController alloc] initWithExistArray:self.user.rows andFlag:YES] autorelease];
+    insideViewController.method = @selector(presentExistingObject:);
     insideViewController.target = self;
     
     self.popover = [[[UIPopoverController alloc] initWithContentViewController:insideViewController] autorelease];
-    [self.popover setPopoverContentSize:CGSizeMake(292, 56)];
+    [self.popover setPopoverContentSize:CGSizeMake(320, 480)];
     [self.popover presentPopoverFromRect: CGRectMake(25, 55, 1, 1)
                              inView: self
            permittedArrowDirections: UIPopoverArrowDirectionUp
@@ -263,17 +345,28 @@ static const NSInteger viewBoundY       = 488;
     if (self.tableDetegate != nil) {
         [self.tableDetegate cellWillChanging];
     }
+    
     buttonClickedType = VGButtonClickedTypeCol;
-    insideViewController = [[VGAddToTableViewController new] autorelease];
-    insideViewController.method = @selector(addToTableMethod:);
+    insideViewController = [[[VGAddToTableViewController alloc] initWithExistArray:self.user.columns andFlag:NO] autorelease];
+    insideViewController.method = @selector(presentExistingObject:);
     insideViewController.target = self;
     
     self.popover = [[[UIPopoverController alloc] initWithContentViewController:insideViewController] autorelease];
-    [self.popover setPopoverContentSize:CGSizeMake(292, 56)];
+    [self.popover setPopoverContentSize:CGSizeMake(320, 480)];
     [self.popover presentPopoverFromRect: CGRectMake(90, 15, 1, 1)
                                   inView: self
                 permittedArrowDirections: UIPopoverArrowDirectionLeft
                                 animated: YES];
+}
+
+#pragma mark - AddToTableViewController
+
+- (void) createNewObjectWithFlag:(BOOL) isRow {
+    [self.popover dismissPopoverAnimated:YES];
+    detailViewController = [[[VGDetailViewController alloc] initForAddNewObject] autorelease];
+    NSMutableArray* fields = [self fieldsFromPlistNameWithName:(isRow) ? rowPlistName : colPlistName];
+    detailViewController.fields = fields;
+    [self.parentViewController.navigationController pushViewController:detailViewController animated:YES];
 }
 
 @end

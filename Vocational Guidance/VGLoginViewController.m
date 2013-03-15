@@ -39,6 +39,39 @@
     [popup dismissViewControllerAnimated:YES completion:nil];
     [VGAppDelegate getInstance].isLogin = YES;
     
+    // ----------- TEMPORARY -----------------
+    
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"%K LIKE %@ AND %K LIKE %@", @"login", login, @"password", password];
+    NSMutableArray* tmpArray = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"persons"]];
+    
+    [tmpArray filterUsingPredicate:predicate];
+    if (tmpArray.count) {
+        [VGAppDelegate getInstance].currentUser = tmpArray[0];
+        
+        switch ([VGAppDelegate getInstance].currentUser.credential) {
+            case VGCredentilasTypeEmployer:
+                [VGAppDelegate getInstance].allRows = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"jobs"]];
+                [VGAppDelegate getInstance].allColumns = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"skills"]];
+                break;
+                
+            case VGCredentilasTypeExpert:
+                [VGAppDelegate getInstance].allRows = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"skills"]];
+                [VGAppDelegate getInstance].allColumns = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"subjects"]];
+                break;
+                
+            case VGCredentilasTypeSecretar:
+                [VGAppDelegate getInstance].allRows = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"subjects"]];
+                [VGAppDelegate getInstance].allColumns = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"students"]];
+                break;
+                
+            default:
+                break;
+        }
+    } else {
+        return;
+    }
+    
+    /*
     if ([login isEqualToString:@"S"]) {
         [VGAppDelegate getInstance].currentUser.credential = VGCredentilasTypeSecretar;
     } else if ([login isEqualToString:@"M"]) {
@@ -50,6 +83,8 @@
     } else {
         return;
     }
+    */
+    // ---------------------------------------
     
     [VGScreenNavigator initStartScreenMapping];
     

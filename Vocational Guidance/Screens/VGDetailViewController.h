@@ -14,5 +14,15 @@
 
 @property (nonatomic, retain) VGObject* object;
 @property (nonatomic, retain) NSMutableArray* fields;
+@property (retain, nonatomic) IBOutlet UIButton *btnViewTable;
+@property (retain, nonatomic) IBOutlet UIButton *btnEdit;
+@property (retain, nonatomic) IBOutlet UIButton *btnBack;
+@property (retain, nonatomic) IBOutlet UIButton *btnAdd;
+@property (nonatomic, assign) SEL initMethod;
+
+// Factory
+
+- (id) initForAddNewObject;
+- (id) initForChooseExistObject;
 
 @end

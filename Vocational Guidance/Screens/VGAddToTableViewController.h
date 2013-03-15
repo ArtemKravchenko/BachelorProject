@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface VGAddToTableViewController : UIViewController
+@interface VGAddToTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, assign) id target;
 @property (nonatomic, assign) SEL method;
+
+- (id)initWithExistArray:(NSMutableArray*) existArray andFlag:(BOOL)isRow;
 
 @end

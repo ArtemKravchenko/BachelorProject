@@ -16,7 +16,7 @@
 @property (nonatomic, retain) NSString* studentSurname;
 @property (nonatomic, retain) NSString* email;
 @property (nonatomic, retain) NSString* side;
-@property (nonatomic, assign) NSInteger age;
+@property (nonatomic, assign) NSString* age;
 @property (nonatomic, retain) NSString* description;
 
 @end

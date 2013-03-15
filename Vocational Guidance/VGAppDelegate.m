@@ -24,7 +24,7 @@
 @implementation VGAppDelegate
 
 - (void)dealloc {
-    self.mocData = nil;
+    self.mockData = nil;
     self.allColumns = nil;
     self.allRows = nil;
     [_iconName release];
@@ -39,13 +39,12 @@
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     VGLoginViewController *loginView = [[[VGLoginViewController alloc] init] autorelease];
     self.currentScreen = @"Login";
-    self.currentUser = [[VGUser new] autorelease];
     [self initTmpUser];
-    self.currentUser.side = @"National Aerospace University";
     self.navigationController = [[[UINavigationController alloc] initWithRootViewController:loginView] autorelease];
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
     self.transactionsList = [NSMutableArray array];
+    
     return YES;
 }
 
@@ -69,7 +68,7 @@
     return [NSMutableArray arrayWithArray: _stringValues];
 }
 
-#pragma mark - Work with transactions
+#pragma mark - Execute transactions
 
 - (void) executingTransation {
     for (NSDictionary *transactionItem in self.transactionsList) {
@@ -97,6 +96,8 @@
     _stringValues = nil;
 }
 
+#pragma mark - Cancel trnsaction
+
 - (void) cancelTransaction {
     for (NSDictionary *transactionItem in self.transactionsList) {
         NSString *stringType = (NSString*)[transactionItem objectForKey:@"transaction_type"];
@@ -110,14 +111,14 @@
     [self.transactionsList removeAllObjects];
 }
 
-- (void) removeObject:(NSInteger)type withObject:(VGObject*)name {
+- (void) removeObject:(NSInteger)type withObject:(VGObject*)object {
     NSMutableArray* changedArray = (type == 2) ? self.currentUser.columns : self.currentUser.rows;
     
     NSMutableArray* deletingArray = [NSMutableArray array];
-    [changedArray removeObject:name];
+    [changedArray removeObject:object];
     NSInteger count = self.currentUser.dataSet.count;
     for (int i = 0; i < count; i++) {
-        if (((type == 2) ? ((VGBaseDataModel*)self.currentUser.dataSet[i]).col.object_id : ((VGBaseDataModel*)self.currentUser.dataSet[i]).row.object_id) == name.object_id) {
+        if (((type == 2) ? ((VGBaseDataModel*)self.currentUser.dataSet[i]).col.object_id : ((VGBaseDataModel*)self.currentUser.dataSet[i]).row.object_id) == object.object_id) {
             [deletingArray addObject:self.currentUser.dataSet[i]];
         }
     }
@@ -137,9 +138,13 @@
     _stringValues = nil;
 }
 
+#pragma mark - Init Mock Data
+
 - (void) initTmpUser {
     
-    self.mocData = [NSMutableDictionary dictionary];
+    // init tmp id
+    
+    self.mockData = [NSMutableDictionary dictionary];
     
     // init students
     NSMutableArray* students = [NSMutableArray array];
@@ -152,7 +157,7 @@
     student.studentName = @"Kiril";
     student.studentSurname = @"Kukushkin";
     student.side = @"KHAI";
-    student.age = 20;
+    student.age = @"20";
     [students addObject:student];
     
     student = [[VGStudent new] autorelease];
@@ -161,7 +166,7 @@
     student.studentName = @"Michael";
     student.studentSurname = @"Obama";
     student.side = @"KHAI";
-    student.age = 20;
+    student.age = @"20";
     [students addObject:student];
     
     student = [[VGStudent new] autorelease];
@@ -170,7 +175,7 @@
     student.studentName = @"Barak";
     student.studentSurname = @"Obama";
     student.side = @"KHAI";
-    student.age = 20;
+    student.age = @"20";
     [students addObject:student];
     
     student = [[VGStudent new] autorelease];
@@ -179,7 +184,7 @@
     student.studentName = @"Filip";
     student.studentSurname = @"Kirkorov";
     student.side = @"KHAI";
-    student.age = 20;
+    student.age = @"20";
     [students addObject:student];
     
     student = [[VGStudent new] autorelease];
@@ -188,7 +193,7 @@
     student.studentName = @"Fredy";
     student.studentSurname = @"Mercury";
     student.side = @"KHAI";
-    student.age = 20;
+    student.age = @"20";
     [students addObject:student];
     
     student = [[VGStudent new] autorelease];
@@ -197,7 +202,7 @@
     student.studentName = @"Gusha";
     student.studentSurname = @"Katushkin";
     student.side = @"KHAI";
-    student.age = 20;
+    student.age = @"20";
     [students addObject:student];
     
     student = [[VGStudent new] autorelease];
@@ -206,7 +211,7 @@
     student.studentName = @"Victor";
     student.studentSurname = @"Yanukovich";
     student.side = @"KHAI";
-    student.age = 20;
+    student.age = @"20";
     [students addObject:student];
     
     student = [[VGStudent new] autorelease];
@@ -215,7 +220,7 @@
     student.studentName = @"Dmitrit";
     student.studentSurname = @"Medvedev";
     student.side = @"KHAI";
-    student.age = 20;
+    student.age = @"20";
     [students addObject:student];
     
     student = [[VGStudent new] autorelease];
@@ -224,7 +229,7 @@
     student.studentName = @"Vlodimir";
     student.studentSurname = @"Putin";
     student.side = @"KHAI";
-    student.age = 20;
+    student.age = @"20";
     [students addObject:student];
     
     // init jobs
@@ -748,70 +753,70 @@
     secretarData.value = @"89";
     secretarData.row = [subjects objectAtIndex:0];
     secretarData.col = [students objectAtIndex:0];
-    [secretarsData addObject:secretarsData];
+    [secretarsData addObject:secretarData];
     
     secretarData = [[VGBaseDataModel new] autorelease];
     secretarData.dataId = @"2";
     secretarData.value = @"70";
     secretarData.row = [subjects objectAtIndex:0];
     secretarData.col = [students objectAtIndex:1];
-    [secretarsData addObject:secretarsData];
+    [secretarsData addObject:secretarData];
     
     secretarData = [[VGBaseDataModel new] autorelease];
     secretarData.dataId = @"3";
     secretarData.value = @"76";
     secretarData.row = [subjects objectAtIndex:0];
     secretarData.col = [students objectAtIndex:2];
-    [secretarsData addObject:secretarsData];
+    [secretarsData addObject:secretarData];
     
     secretarData = [[VGBaseDataModel new] autorelease];
     secretarData.dataId = @"4";
     secretarData.value = @"81";
     secretarData.row = [subjects objectAtIndex:0];
     secretarData.col = [students objectAtIndex:3];
-    [secretarsData addObject:secretarsData];
+    [secretarsData addObject:secretarData];
     
     secretarData = [[VGBaseDataModel new] autorelease];
     secretarData.dataId = @"5";
     secretarData.value = @"82";
     secretarData.row = [subjects objectAtIndex:0];
     secretarData.col = [students objectAtIndex:4];
-    [secretarsData addObject:secretarsData];
+    [secretarsData addObject:secretarData];
     
     secretarData = [[VGBaseDataModel new] autorelease];
     secretarData.dataId = @"6";
     secretarData.value = @"69";
     secretarData.row = [subjects objectAtIndex:1];
     secretarData.col = [students objectAtIndex:0];
-    [secretarsData addObject:secretarsData];
+    [secretarsData addObject:secretarData];
     
     secretarData = [[VGBaseDataModel new] autorelease];
     secretarData.dataId = @"7";
     secretarData.value = @"80";
     secretarData.row = [subjects objectAtIndex:1];
     secretarData.col = [students objectAtIndex:1];
-    [secretarsData addObject:secretarsData];
+    [secretarsData addObject:secretarData];
     
     secretarData = [[VGBaseDataModel new] autorelease];
     secretarData.dataId = @"8";
     secretarData.value = @"91";
     secretarData.row = [subjects objectAtIndex:1];
     secretarData.col = [students objectAtIndex:2];
-    [secretarsData addObject:secretarsData];
+    [secretarsData addObject:secretarData];
     
     secretarData = [[VGBaseDataModel new] autorelease];
     secretarData.dataId = @"9";
     secretarData.value = @"79";
     secretarData.row = [subjects objectAtIndex:1];
     secretarData.col = [students objectAtIndex:3];
-    [secretarsData addObject:secretarsData];
+    [secretarsData addObject:secretarData];
     
     secretarData = [[VGBaseDataModel new] autorelease];
     secretarData.dataId = @"10";
     secretarData.value = @"96";
     secretarData.row = [subjects objectAtIndex:1];
     secretarData.col = [students objectAtIndex:4];
-    [secretarsData addObject:secretarsData];
+    [secretarsData addObject:secretarData];
     
     
     secretarData = [[VGBaseDataModel new] autorelease];
@@ -819,105 +824,105 @@
     secretarData.value = @"87";
     secretarData.row = [subjects objectAtIndex:2];
     secretarData.col = [students objectAtIndex:0];
-    [secretarsData addObject:secretarsData];
+    [secretarsData addObject:secretarData];
     
     secretarData = [[VGBaseDataModel new] autorelease];
     secretarData.dataId = @"12";
     secretarData.value = @"69";
     secretarData.row = [subjects objectAtIndex:2];
     secretarData.col = [students objectAtIndex:1];
-    [secretarsData addObject:secretarsData];
+    [secretarsData addObject:secretarData];
     
     secretarData = [[VGBaseDataModel new] autorelease];
     secretarData.dataId = @"13";
     secretarData.value = @"95";
     secretarData.row = [subjects objectAtIndex:2];
     secretarData.col = [students objectAtIndex:2];
-    [secretarsData addObject:secretarsData];
+    [secretarsData addObject:secretarData];
     
     secretarData = [[VGBaseDataModel new] autorelease];
     secretarData.dataId = @"14";
     secretarData.value = @"79";
     secretarData.row = [subjects objectAtIndex:2];
     secretarData.col = [students objectAtIndex:3];
-    [secretarsData addObject:secretarsData];
+    [secretarsData addObject:secretarData];
     
     secretarData = [[VGBaseDataModel new] autorelease];
     secretarData.dataId = @"15";
     secretarData.value = @"83";
     secretarData.row = [subjects objectAtIndex:2];
     secretarData.col = [students objectAtIndex:4];
-    [secretarsData addObject:secretarsData];
+    [secretarsData addObject:secretarData];
     
     secretarData = [[VGBaseDataModel new] autorelease];
     secretarData.dataId = @"16";
     secretarData.value = @"97";
     secretarData.row = [subjects objectAtIndex:3];
     secretarData.col = [students objectAtIndex:0];
-    [secretarsData addObject:secretarsData];
+    [secretarsData addObject:secretarData];
     
     secretarData = [[VGBaseDataModel new] autorelease];
     secretarData.dataId = @"17";
     secretarData.value = @"70";
     secretarData.row = [subjects objectAtIndex:3];
     secretarData.col = [students objectAtIndex:1];
-    [secretarsData addObject:secretarsData];
+    [secretarsData addObject:secretarData];
     
     secretarData = [[VGBaseDataModel new] autorelease];
     secretarData.dataId = @"18";
     secretarData.value = @"79";
     secretarData.row = [subjects objectAtIndex:3];
     secretarData.col = [students objectAtIndex:2];
-    [secretarsData addObject:secretarsData];
+    [secretarsData addObject:secretarData];
     
     secretarData = [[VGBaseDataModel new] autorelease];
     secretarData.dataId = @"19";
     secretarData.value = @"88";
     secretarData.row = [subjects objectAtIndex:3];
     secretarData.col = [students objectAtIndex:3];
-    [secretarsData addObject:secretarsData];
+    [secretarsData addObject:secretarData];
     
     secretarData = [[VGBaseDataModel new] autorelease];
     secretarData.dataId = @"20";
     secretarData.value = @"84";
     secretarData.row = [subjects objectAtIndex:3];
     secretarData.col = [students objectAtIndex:4];
-    [secretarsData addObject:secretarsData];
+    [secretarsData addObject:secretarData];
     
     secretarData = [[VGBaseDataModel new] autorelease];
     secretarData.dataId = @"21";
     secretarData.value = @"92";
     secretarData.row = [subjects objectAtIndex:4];
     secretarData.col = [students objectAtIndex:0];
-    [secretarsData addObject:secretarsData];
+    [secretarsData addObject:secretarData];
     
     secretarData = [[VGBaseDataModel new] autorelease];
     secretarData.dataId = @"22";
     secretarData.value = @"97";
     secretarData.row = [subjects objectAtIndex:4];
     secretarData.col = [students objectAtIndex:1];
-    [secretarsData addObject:secretarsData];
+    [secretarsData addObject:secretarData];
     
     secretarData = [[VGBaseDataModel new] autorelease];
     secretarData.dataId = @"23";
     secretarData.value = @"79";
     secretarData.row = [subjects objectAtIndex:4];
     secretarData.col = [students objectAtIndex:2];
-    [secretarsData addObject:secretarsData];
+    [secretarsData addObject:secretarData];
     
     secretarData = [[VGBaseDataModel new] autorelease];
     secretarData.dataId = @"24";
     secretarData.value = @"85";
     secretarData.row = [subjects objectAtIndex:4];
     secretarData.col = [students objectAtIndex:3];
-    [secretarsData addObject:secretarsData];
+    [secretarsData addObject:secretarData];
     
     secretarData = [[VGBaseDataModel new] autorelease];
     secretarData.dataId = @"25";
     secretarData.value = @"99";
     secretarData.row = [subjects objectAtIndex:4];
     secretarData.col = [students objectAtIndex:4];
-    [secretarsData addObject:secretarsData];
+    [secretarsData addObject:secretarData];
     
     // init persons
     NSMutableArray* persons = [NSMutableArray array];
@@ -940,7 +945,7 @@
     person.name = @"Stive";
     person.surname = @"Jobs";
     person.side = @"Apple";
-    person.login = @"Emplyer";
+    person.login = @"Employer";
     person.password = @"Employer";
     person.credential = VGCredentilasTypeEmployer;
     person.dataSet = employersData;
@@ -990,11 +995,11 @@
     person.columns = tmpcolsArray;
     [persons addObject:person];
     
-    [self.mocData setObject:students forKey:@"students"];
-    [self.mocData setObject:jobs forKey:@"jobs"];
-    [self.mocData setObject:subjects forKey:@"subjects"];
-    [self.mocData setObject:skills forKey:@"skills"];
-    [self.mocData setObject:persons forKey:@"persons"];
+    [self.mockData setObject:students forKey:@"students"];
+    [self.mockData setObject:jobs forKey:@"jobs"];
+    [self.mockData setObject:subjects forKey:@"subjects"];
+    [self.mockData setObject:skills forKey:@"skills"];
+    [self.mockData setObject:persons forKey:@"persons"];
 }
 
 @end

@@ -77,8 +77,8 @@ static NSString * CellIdentifier = @"GraphCell";
     
     VGBaseDataModel* tmpCell = (VGBaseDataModel*)self.tableData[indexPath.row];
     NSString *text = [NSString stringWithFormat:@"%@ , %@: %@",
-                      tmpCell.row,
-                      tmpCell.col,
+                      tmpCell.row.name,
+                      tmpCell.col.name,
                       tmpCell.value];
     
     cell.textLabel.text = text;
@@ -157,7 +157,7 @@ static NSString * CellIdentifier = @"GraphCell";
     for (NSInteger i = 0; i < self.user.columns.count; i++) {
         originX = offsetX + graphItemWidth  * i;
         originY = offsetY;
-        [self addItemWithOriginX:originX andOriginY:originY andValue: ((NSString*)self.user.columns[i])];
+        [self addItemWithOriginX:originX andOriginY:originY andValue: ((VGObject*)self.user.columns[i]).name];
         offsetX += deltaX;
     }
     // Add rows
@@ -167,7 +167,7 @@ static NSString * CellIdentifier = @"GraphCell";
         originX = offsetX + graphItemWidth  * i;
         originY = offsetY;
         
-        [self addItemWithOriginX:originX andOriginY:originY andValue: ((NSString*)self.user.rows[i])];
+        [self addItemWithOriginX:originX andOriginY:originY andValue: ((VGObject*)self.user.rows[i]).name];
         offsetX += deltaX;
     }
     
@@ -201,7 +201,7 @@ static NSString * CellIdentifier = @"GraphCell";
             offsetX = 20;
             offsetY = 20;
             for (NSInteger j = 0; j < self.user.columns.count; j++) {
-                NSPredicate* predicate = [NSPredicate predicateWithFormat:@"%K == %d && %K == %d", @"rowIndex", i, @"colIndex", j];
+                NSPredicate* predicate = [NSPredicate predicateWithFormat:@"%K LIKE %@ && %K LIKE %@", @"row.object_id", ((VGObject*)self.user.rows[i]).object_id, @"col.object_id", ((VGObject*)self.user.columns[j]).object_id];
                 NSMutableArray *tmpArray = [NSMutableArray arrayWithArray: self.tableValues];
                 [tmpArray filterUsingPredicate:predicate];
                 if (tmpArray.count) {

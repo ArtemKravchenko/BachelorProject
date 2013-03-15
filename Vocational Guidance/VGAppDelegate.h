@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "VGUser.h"
+#import "VGObject.h"
 
 @class VGUser;
 
@@ -17,7 +18,7 @@
 
 @property (strong, nonatomic) UINavigationController *navigationController;
 
-@property (assign, nonatomic) BOOL isMyDetail;
+@property (nonatomic, assign) NSInteger tmpGlobalId;
 @property (assign, nonatomic) BOOL isLogin;
 @property (strong, nonatomic) NSString* currentScreen;
 
@@ -34,7 +35,7 @@
 - (void) cancelTransaction;
 - (NSMutableArray*) stringValuesFromDataArray:(NSMutableArray*)arrayValues;
 
-@property (nonatomic, retain) NSMutableDictionary* mocData;
+@property (nonatomic, retain) NSMutableDictionary* mockData;
 
 @end
 

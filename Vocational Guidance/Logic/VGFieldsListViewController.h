@@ -19,5 +19,6 @@
 @property (nonatomic, retain) NSMutableDictionary* autoBlankFields;
 
 - (void) initFieldsWithFrame:(CGRect)frame ;
+- (void) saveDataToObject;
 
 @end

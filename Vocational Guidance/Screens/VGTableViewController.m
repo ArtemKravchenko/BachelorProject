@@ -40,10 +40,12 @@ static NSInteger TS_CHANGED_CELL                    = 3;
     [super viewDidLoad];
     self.tableView = [[[VGTableView alloc] initWithFrame: CGRectMake(0, 0, self.presentionView.frame.size.width, self.presentionView.frame.size.height) andUser:self.user] autorelease];
     self.tableView.bounces = NO;
+    self.tableView.parentViewController = self;
     // init graph view
     self.graphView = [[VGGraphViewController new] autorelease];
     self.graphView.view.frame = CGRectMake(0, 0, self.presentionView.frame.size.width, self.presentionView.frame.size.height);
     self.graphView.view.hidden = YES;
+    self.graphView.user = self.user;
     [self.presentionView addSubview:self.tableView];
     self.tableView.tableDetegate = self;
     [self.presentionView addSubview:self.graphView.view];
@@ -121,24 +123,20 @@ static NSInteger TS_CHANGED_CELL                    = 3;
 
 #pragma mark - VGTable delegate
 
-- (void) rowDidAddWithName:(NSString*)name {
+- (void) rowDidAddWithName:(VGObject*)object {
     self.btnSave.enabled = YES;
-    VGObject* row = [[VGObject new] autorelease];
-    row.name = name;
     NSMutableDictionary* tmpDictionary = [NSMutableDictionary dictionary];
     [tmpDictionary setObject:[NSString stringWithFormat:@"%d", TS_ADDED_ROW] forKey:@"transaction_type"];
-    [tmpDictionary setObject:row forKey:@"obj_name"];
+    [tmpDictionary setObject:object forKey:@"obj_name"];
     [[VGAppDelegate getInstance].transactionsList addObject:tmpDictionary];
     isSomethingWasChanged = YES;
 }
 
-- (void) colDidAddWithName:(NSString*)name {
+- (void) colDidAddWithName:(VGObject*)object {
     self.btnSave.enabled = YES;
-    VGObject* col = [[VGObject new] autorelease];
-    col.name = name;
     NSMutableDictionary* tmpDictionary = [NSMutableDictionary dictionary];
     [tmpDictionary setObject:[NSString stringWithFormat:@"%d", TS_ADDED_COL] forKey:@"transaction_type"];
-    [tmpDictionary setObject:col forKey:@"obj_name"];
+    [tmpDictionary setObject:object forKey:@"obj_name"];
     [[VGAppDelegate getInstance].transactionsList addObject:tmpDictionary];
     isSomethingWasChanged = YES;
 }

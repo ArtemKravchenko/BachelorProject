@@ -12,8 +12,10 @@
 
 - (void)dealloc
 {
-    [_dataId release];
-    [_value release];
+    self.dataId = nil;
+    self.value = nil;
+    self.row = nil;
+    self.col = nil;
     [super dealloc];
 }
 

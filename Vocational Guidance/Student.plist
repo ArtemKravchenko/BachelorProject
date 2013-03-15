@@ -5,8 +5,8 @@
 	<key>Fields</key>
 	<array>
 		<string>cardNumber</string>
-		<string>name</string>
-		<string>surname</string>
+		<string>studentName</string>
+		<string>studentSurname</string>
 		<string>email</string>
 		<string>side</string>
 		<string>age</string>

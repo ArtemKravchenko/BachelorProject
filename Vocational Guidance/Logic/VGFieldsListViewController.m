@@ -65,8 +65,6 @@ static const NSInteger cellValueFieldOriginX    = 131;
     [self.view setBackgroundColor:[UIColor redColor]];
     [self.fieldsView setContentSize:CGSizeMake(frame.size.width, frame.size.height+1)];
     [self.fieldsView setBounces:YES];
-    //[self.fieldsView setBackgroundColor:[UIColor grayColor]];
-    
     
     NSInteger originY = 0;
     NSInteger indexConsiderAutoblank = 0;
@@ -84,12 +82,12 @@ static const NSInteger cellValueFieldOriginX    = 131;
             // Create cell value
             UITextField* cellValue = nil;
             if (self.object != nil) {
-                if ([self.object respondsToSelector:NSSelectorFromString([property lowercaseString])]) {
+                if ([self.object respondsToSelector:NSSelectorFromString(property)]) {
                     if ([property isEqualToString:@"credential"]) {
                         property = [NSString stringWithFormat:@"%@ToString",property];
                         cellValue = [self cellTextFieldWithOriginY:0 withValue:[self.object performSelector:NSSelectorFromString(property)]];
                     } else {
-                        cellValue = [self cellTextFieldWithOriginY:0 withValue:[self.object performSelector:NSSelectorFromString([property lowercaseString])]];
+                        cellValue = [self cellTextFieldWithOriginY:0 withValue:[self.object performSelector:NSSelectorFromString(property)]];
                     }
                 }
             } else {
@@ -107,6 +105,7 @@ static const NSInteger cellValueFieldOriginX    = 131;
     }
     [self.view addSubview:self.fieldsView];
 }
+
 - (BOOL) isFieldExistInAutoblantList:(NSString*)field {
     for (NSString* key in self.autoBlankFields) {
         if ([key isEqualToString:field]) {
@@ -114,6 +113,29 @@ static const NSInteger cellValueFieldOriginX    = 131;
         }
     }
     return NO;
+}
+
+- (void) saveDataToObject {
+    if (self.object == nil) {
+        self.object = [[[self.object class] new] autorelease];
+    }
+    for (NSInteger i = 0; i < self.fields.count; i++) {
+        NSString* property = self.fields[i];
+        [property stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[property substringToIndex:1] capitalizedString]];
+        property = [NSString stringWithFormat:@"set%@", property];
+        NSString* value = ((UITextField*)[self.fieldsView viewWithTag:300 + i]).text;
+        if (![value isEqualToString:@""] && ![property isEqualToString:@"description"]) {
+            if ([self.object respondsToSelector:NSSelectorFromString(property)]) {
+                [self.object performSelector:NSSelectorFromString(property) withObject:value];
+            } else {
+                NSLog(@"Error: can't response selector (%@)", property);
+            }
+        } else {
+            NSLog(@"Error: value is nil");
+            self.object = nil;
+            break;
+        }
+    }
 }
 
 #pragma mark - get view functions
