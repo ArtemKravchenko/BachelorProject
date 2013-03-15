@@ -40,6 +40,7 @@
 		841AF51316DD0117008FCA42 /* VGOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841AF51116DD0117008FCA42 /* VGOptionsViewController.m */; };
 		841AF51416DD0117008FCA42 /* VGOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 841AF51216DD0117008FCA42 /* VGOptionsViewController.xib */; };
 		841AF51716DD038D008FCA42 /* VGMessageHandlerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841AF51616DD038D008FCA42 /* VGMessageHandlerViewController.m */; };
+		849BEB3B16F3339C001868D3 /* VGRequestQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 849BEB3A16F3339C001868D3 /* VGRequestQueue.m */; };
 		849E569F16DF6450009E9AB6 /* graph-badge.png in Resources */ = {isa = PBXBuildFile; fileRef = 849E569D16DF6450009E9AB6 /* graph-badge.png */; };
 		849E56A016DF6450009E9AB6 /* graph-badge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 849E569E16DF6450009E9AB6 /* graph-badge@2x.png */; };
 		849E56A816DF8FC4009E9AB6 /* VGGraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 849E56A616DF8FC3009E9AB6 /* VGGraphViewController.m */; };
@@ -120,6 +121,8 @@
 		841AF51216DD0117008FCA42 /* VGOptionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VGOptionsViewController.xib; path = Screens/VGOptionsViewController.xib; sourceTree = "<group>"; };
 		841AF51516DD038D008FCA42 /* VGMessageHandlerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGMessageHandlerViewController.h; path = "Vocational Guidance/Base/VGMessageHandlerViewController.h"; sourceTree = "<group>"; };
 		841AF51616DD038D008FCA42 /* VGMessageHandlerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGMessageHandlerViewController.m; path = "Vocational Guidance/Base/VGMessageHandlerViewController.m"; sourceTree = "<group>"; };
+		849BEB3916F3339C001868D3 /* VGRequestQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGRequestQueue.h; path = WebServices/VGRequestQueue.h; sourceTree = "<group>"; };
+		849BEB3A16F3339C001868D3 /* VGRequestQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGRequestQueue.m; path = WebServices/VGRequestQueue.m; sourceTree = "<group>"; };
 		849C761916E1031400054D17 /* Constant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
 		849E569D16DF6450009E9AB6 /* graph-badge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "graph-badge.png"; path = "Imges/graph-badge.png"; sourceTree = "<group>"; };
 		849E569E16DF6450009E9AB6 /* graph-badge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "graph-badge@2x.png"; path = "Imges/graph-badge@2x.png"; sourceTree = "<group>"; };
@@ -280,6 +283,8 @@
 		841AF4DB16DCAF35008FCA42 /* Web Services */ = {
 			isa = PBXGroup;
 			children = (
+				849BEB3916F3339C001868D3 /* VGRequestQueue.h */,
+				849BEB3A16F3339C001868D3 /* VGRequestQueue.m */,
 			);
 			name = "Web Services";
 			sourceTree = "<group>";
@@ -474,6 +479,7 @@
 				849FF17E16E88F08006984AC /* VGJob.m in Sources */,
 				849FF18A16E8959F006984AC /* VGBaseDataModel.m in Sources */,
 				849FF1A516E8A425006984AC /* VGObject.m in Sources */,
+				849BEB3B16F3339C001868D3 /* VGRequestQueue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

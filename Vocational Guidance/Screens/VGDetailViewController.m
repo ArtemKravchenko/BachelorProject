@@ -16,6 +16,7 @@
 @property (retain, nonatomic) IBOutlet UIView *fieldsView;
 @property (retain, nonatomic) VGFieldsListViewController* fieldsViewController;
 @property (retain, nonatomic) VGTableViewController* tableViewController;
+@property (retain, nonatomic) Class classValue;
 
 @end
 
@@ -23,10 +24,11 @@
 
 #pragma mark - Init Functions
 
-- (id) initForAddNewObject {
+- (id) initForAddNewObject:(Class)classValue {
     self = [super initWithNibName:@"VGDetailViewController" bundle:[NSBundle mainBundle]];
     if (self) {
         self.initMethod = @selector(initForNewObject);
+        self.classValue = classValue;
     }
     return self;
 }
@@ -78,7 +80,11 @@
     // init fields view controller
     self.fieldsViewController = [[VGFieldsListViewController new] autorelease];
     self.fieldsViewController.fields = self.fields;
-    self.fieldsViewController.object = self.object;
+    if (self.object != nil) {
+        self.fieldsViewController.object = self.object;
+    } else {
+        self.fieldsViewController.classValue = self.classValue;
+    }
     self.fieldsViewController.cellWidth = self.fieldsView.frame.size.width;
     CGRect frame = CGRectMake(0, 0, self.fieldsView.frame.size.width, self.fieldsView.frame.size.height);
     [self.fieldsViewController initFieldsWithFrame:frame];
@@ -135,11 +141,9 @@
 }
 
 - (IBAction)clickAdd:(id)sender {
-    // PREPEARE OBJECT
     [self.fieldsViewController saveDataToObject];
     if (self.fieldsViewController.object != nil) {
         self.object = self.fieldsViewController.object;
-        NSLog(@"%@", [self.navigationController viewControllers]);
         VGTableViewController* parentViewController = [self.navigationController viewControllers][[self.navigationController viewControllers].count - 2];
         if ([parentViewController.tableView respondsToSelector:@selector(addToTableMethod:)]) {
             [parentViewController.tableView performSelector:@selector(addToTableMethod:) withObject:self.object];

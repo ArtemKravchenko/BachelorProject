@@ -17,6 +17,7 @@
 @property (nonatomic, assign) NSInteger cellWidth;
 @property (nonatomic, assign) BOOL editMode;
 @property (nonatomic, retain) NSMutableDictionary* autoBlankFields;
+@property (nonatomic, assign) Class classValue;
 
 - (void) initFieldsWithFrame:(CGRect)frame ;
 - (void) saveDataToObject;

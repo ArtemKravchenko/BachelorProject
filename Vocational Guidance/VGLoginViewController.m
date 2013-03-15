@@ -71,24 +71,8 @@
         return;
     }
     
-    /*
-    if ([login isEqualToString:@"S"]) {
-        [VGAppDelegate getInstance].currentUser.credential = VGCredentilasTypeSecretar;
-    } else if ([login isEqualToString:@"M"]) {
-        [VGAppDelegate getInstance].currentUser.credential = VGCredentilasTypeManager;
-    } else if ([login isEqualToString:@"Ex"]){
-        [VGAppDelegate getInstance].currentUser.credential = VGCredentilasTypeExpert;
-    } else if ([login isEqualToString:@"Em"]){
-        [VGAppDelegate getInstance].currentUser.credential = VGCredentilasTypeEmployer;
-    } else {
-        return;
-    }
-    */
-    // ---------------------------------------
-    
     [VGScreenNavigator initStartScreenMapping];
     
-    //[VGScreenNavigator navigateToScreen:VG_Present_Screen];
     VGPresentViewController *presentVC = [[VGPresentViewController new] autorelease];
     [[VGAppDelegate getInstance].navigationController pushViewController:presentVC animated:YES];
 }

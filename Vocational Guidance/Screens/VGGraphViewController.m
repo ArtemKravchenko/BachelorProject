@@ -92,7 +92,7 @@ static NSString * CellIdentifier = @"GraphCell";
     if (![[searchBar.text stringByReplacingCharactersInRange:range withString:text] isEqualToString:@""]) {
         NSPredicate* predicate = nil;
         // Prepeare tmpArray
-        NSMutableArray* tmpArray = [[VGAppDelegate getInstance] stringValuesFromDataArray:self.tableData];
+        NSMutableArray* tmpArray = [[VGAppDelegate getInstance] stringValuesFromDataArray:self.user.dataSet];
         predicate = [NSPredicate predicateWithFormat:@" %K CONTAINS %@", @"value" ,[searchBar.text stringByReplacingCharactersInRange:range withString:text]];
         [tmpArray filterUsingPredicate:predicate];
         

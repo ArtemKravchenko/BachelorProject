@@ -7,12 +7,14 @@
 //
 
 #import "VGFieldsListViewController.h"
+#import "VGAppDelegate.h"
 
 static const NSInteger cellHeight               = 44;
 static const NSInteger cellLabelWidth           = 130;
 static const NSInteger cellLabelOriginX         = 0;
 static const NSInteger cellValueFieldWidth      = 226;
 static const NSInteger cellValueFieldOriginX    = 131;
+static const NSInteger cellValueTag             = 300;
 
 @interface VGFieldsListViewController ()
 
@@ -94,7 +96,7 @@ static const NSInteger cellValueFieldOriginX    = 131;
                 cellValue = [self cellTextFieldWithOriginY:0 withValue:nil];
             }
             cellValue.enabled = self.editMode;
-            cellValue.tag = 300 + i;
+            cellValue.tag = cellValueTag + i;
             [cellView addSubview:cellValue];
             [cellView addSubview:cellPropertyLabel];
             [self.fieldsView addSubview:cellView];
@@ -117,23 +119,28 @@ static const NSInteger cellValueFieldOriginX    = 131;
 
 - (void) saveDataToObject {
     if (self.object == nil) {
-        self.object = [[[self.object class] new] autorelease];
+        self.object = [[self.classValue new] autorelease];
+        self.object.object_id = [NSString stringWithFormat:@"tmp%d", ++[VGAppDelegate getInstance].tmpGlobalId];
     }
+    
     for (NSInteger i = 0; i < self.fields.count; i++) {
-        NSString* property = self.fields[i];
-        [property stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[property substringToIndex:1] capitalizedString]];
-        property = [NSString stringWithFormat:@"set%@", property];
-        NSString* value = ((UITextField*)[self.fieldsView viewWithTag:300 + i]).text;
-        if (![value isEqualToString:@""] && ![property isEqualToString:@"description"]) {
+        NSString* property = [NSString stringWithString:self.fields[i]];
+        NSString* firstCapitalString = [[property substringToIndex:1] uppercaseString];
+        property = [property stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:firstCapitalString];
+        property = [NSString stringWithFormat:@"set%@:", property];
+        NSString* value = ((UITextField*)[self.fieldsView viewWithTag:cellValueTag + i]).text;
+        if (![value isEqualToString:@""] && (value != nil)) {
             if ([self.object respondsToSelector:NSSelectorFromString(property)]) {
                 [self.object performSelector:NSSelectorFromString(property) withObject:value];
             } else {
                 NSLog(@"Error: can't response selector (%@)", property);
             }
         } else {
-            NSLog(@"Error: value is nil");
-            self.object = nil;
-            break;
+            if (![property isEqualToString:@"setDescription:"]) {
+                NSLog(@"Error: value is nil");
+                self.object = nil;
+                break;
+            }
         }
     }
 }
