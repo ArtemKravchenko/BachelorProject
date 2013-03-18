@@ -7,7 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "VGBaseRequest.h"
 
 @interface VGRequestQueue : NSObject
+
+@property (nonatomic, retain) NSOperationQueue *operationQueue;
+
++ (VGRequestQueue*)queue;
+
+- (void)addRequest:(VGBaseRequest*)request;
+- (void)cancelRequst;
+
 
 @end

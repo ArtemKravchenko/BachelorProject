@@ -8,10 +8,6 @@
 
 #import "VGTableViewController.h"
 
-static NSInteger TS_ADDED_ROW                       = 1;
-static NSInteger TS_ADDED_COL                       = 2;
-static NSInteger TS_CHANGED_CELL                    = 3;
-
 @interface VGTableViewController () {
     BOOL isSomethingWasChanged;
 }
@@ -126,8 +122,8 @@ static NSInteger TS_CHANGED_CELL                    = 3;
 - (void) rowDidAddWithName:(VGObject*)object {
     self.btnSave.enabled = YES;
     NSMutableDictionary* tmpDictionary = [NSMutableDictionary dictionary];
-    [tmpDictionary setObject:[NSString stringWithFormat:@"%d", TS_ADDED_ROW] forKey:@"transaction_type"];
-    [tmpDictionary setObject:object forKey:@"obj_name"];
+    [tmpDictionary setObject:[NSString stringWithFormat:@"%d", TS_ADDED_ROW] forKey:VG_TRANSACTION_TYPE];
+    [tmpDictionary setObject:object forKey:VG_OBJECT_NAME];
     [[VGAppDelegate getInstance].transactionsList addObject:tmpDictionary];
     isSomethingWasChanged = YES;
 }
@@ -135,8 +131,8 @@ static NSInteger TS_CHANGED_CELL                    = 3;
 - (void) colDidAddWithName:(VGObject*)object {
     self.btnSave.enabled = YES;
     NSMutableDictionary* tmpDictionary = [NSMutableDictionary dictionary];
-    [tmpDictionary setObject:[NSString stringWithFormat:@"%d", TS_ADDED_COL] forKey:@"transaction_type"];
-    [tmpDictionary setObject:object forKey:@"obj_name"];
+    [tmpDictionary setObject:[NSString stringWithFormat:@"%d", TS_ADDED_COL] forKey:VG_TRANSACTION_TYPE];
+    [tmpDictionary setObject:object forKey:VG_OBJECT_NAME];
     [[VGAppDelegate getInstance].transactionsList addObject:tmpDictionary];
     isSomethingWasChanged = YES;
 }
@@ -144,11 +140,11 @@ static NSInteger TS_CHANGED_CELL                    = 3;
 - (void) cellDidChangedAtRow:(VGObject*)row andColIndex:(VGObject*)col withValue:(NSString*)value andWithOldValue:(NSString *)oldValue {
     self.btnSave.enabled = YES;
     NSMutableDictionary* tmpDictionary = [NSMutableDictionary dictionary];
-    [tmpDictionary setObject: [NSString stringWithFormat:@"%d", TS_CHANGED_CELL] forKey:@"transaction_type"];
-    [tmpDictionary setObject: row  forKey:@"row_index"];
-    [tmpDictionary setObject: col  forKey:@"column_index"];
-    [tmpDictionary setObject: value  forKey:@"cell_value"];
-    [tmpDictionary setObject: oldValue forKey:@"old_value"];
+    [tmpDictionary setObject: [NSString stringWithFormat:@"%d", TS_CHANGED_CELL] forKey:VG_TRANSACTION_TYPE];
+    [tmpDictionary setObject: row  forKey:VG_ROW_OBJECT];
+    [tmpDictionary setObject: col  forKey:VG_COL_OBJECT];
+    [tmpDictionary setObject: value  forKey:VG_CELL_VALUE];
+    [tmpDictionary setObject: oldValue forKey:VG_OLD_VALUE];
     [[VGAppDelegate getInstance].transactionsList addObject:tmpDictionary];
     isSomethingWasChanged = YES;
 }

@@ -40,6 +40,15 @@
 		841AF51316DD0117008FCA42 /* VGOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841AF51116DD0117008FCA42 /* VGOptionsViewController.m */; };
 		841AF51416DD0117008FCA42 /* VGOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 841AF51216DD0117008FCA42 /* VGOptionsViewController.xib */; };
 		841AF51716DD038D008FCA42 /* VGMessageHandlerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841AF51616DD038D008FCA42 /* VGMessageHandlerViewController.m */; };
+		8496AAE016F709C4001E1184 /* VGBaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8496AADF16F709C4001E1184 /* VGBaseRequest.m */; };
+		8496AAE316F70CA1001E1184 /* VGGetPersonRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8496AAE216F70CA1001E1184 /* VGGetPersonRequest.m */; };
+		8496AAE616F70DEE001E1184 /* VGSearchPersonsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8496AAE516F70DEE001E1184 /* VGSearchPersonsRequest.m */; };
+		8496AAE916F72A6B001E1184 /* VGAddNewObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8496AAE816F72A6B001E1184 /* VGAddNewObject.m */; };
+		8496AAEC16F73884001E1184 /* VGChangeCellRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8496AAEB16F73883001E1184 /* VGChangeCellRequest.m */; };
+		8496AAEF16F73A16001E1184 /* VGChooseExpertRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8496AAEE16F73A16001E1184 /* VGChooseExpertRequest.m */; };
+		8496AAF216F73D98001E1184 /* VGChooseEmployerRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8496AAF116F73D98001E1184 /* VGChooseEmployerRequest.m */; };
+		8496AAF516F73E3E001E1184 /* VGChooseStudentRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8496AAF416F73E3D001E1184 /* VGChooseStudentRequest.m */; };
+		8496AAF816F73F28001E1184 /* VGChooseMyStudentsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8496AAF716F73F27001E1184 /* VGChooseMyStudentsRequest.m */; };
 		849BEB3B16F3339C001868D3 /* VGRequestQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 849BEB3A16F3339C001868D3 /* VGRequestQueue.m */; };
 		849E569F16DF6450009E9AB6 /* graph-badge.png in Resources */ = {isa = PBXBuildFile; fileRef = 849E569D16DF6450009E9AB6 /* graph-badge.png */; };
 		849E56A016DF6450009E9AB6 /* graph-badge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 849E569E16DF6450009E9AB6 /* graph-badge@2x.png */; };
@@ -121,9 +130,26 @@
 		841AF51216DD0117008FCA42 /* VGOptionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VGOptionsViewController.xib; path = Screens/VGOptionsViewController.xib; sourceTree = "<group>"; };
 		841AF51516DD038D008FCA42 /* VGMessageHandlerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGMessageHandlerViewController.h; path = "Vocational Guidance/Base/VGMessageHandlerViewController.h"; sourceTree = "<group>"; };
 		841AF51616DD038D008FCA42 /* VGMessageHandlerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGMessageHandlerViewController.m; path = "Vocational Guidance/Base/VGMessageHandlerViewController.m"; sourceTree = "<group>"; };
+		8496AADE16F709C4001E1184 /* VGBaseRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGBaseRequest.h; path = WebServices/VGBaseRequest.h; sourceTree = "<group>"; };
+		8496AADF16F709C4001E1184 /* VGBaseRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGBaseRequest.m; path = WebServices/VGBaseRequest.m; sourceTree = "<group>"; };
+		8496AAE116F70CA0001E1184 /* VGGetPersonRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGGetPersonRequest.h; path = WebServices/VGGetPersonRequest.h; sourceTree = "<group>"; };
+		8496AAE216F70CA1001E1184 /* VGGetPersonRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGGetPersonRequest.m; path = WebServices/VGGetPersonRequest.m; sourceTree = "<group>"; };
+		8496AAE416F70DEE001E1184 /* VGSearchPersonsRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGSearchPersonsRequest.h; path = WebServices/VGSearchPersonsRequest.h; sourceTree = "<group>"; };
+		8496AAE516F70DEE001E1184 /* VGSearchPersonsRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGSearchPersonsRequest.m; path = WebServices/VGSearchPersonsRequest.m; sourceTree = "<group>"; };
+		8496AAE716F72A6B001E1184 /* VGAddNewObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGAddNewObject.h; path = WebServices/VGAddNewObject.h; sourceTree = "<group>"; };
+		8496AAE816F72A6B001E1184 /* VGAddNewObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGAddNewObject.m; path = WebServices/VGAddNewObject.m; sourceTree = "<group>"; };
+		8496AAEA16F73883001E1184 /* VGChangeCellRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGChangeCellRequest.h; path = WebServices/VGChangeCellRequest.h; sourceTree = "<group>"; };
+		8496AAEB16F73883001E1184 /* VGChangeCellRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGChangeCellRequest.m; path = WebServices/VGChangeCellRequest.m; sourceTree = "<group>"; };
+		8496AAED16F73A15001E1184 /* VGChooseExpertRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGChooseExpertRequest.h; path = WebServices/VGChooseExpertRequest.h; sourceTree = "<group>"; };
+		8496AAEE16F73A16001E1184 /* VGChooseExpertRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGChooseExpertRequest.m; path = WebServices/VGChooseExpertRequest.m; sourceTree = "<group>"; };
+		8496AAF016F73D98001E1184 /* VGChooseEmployerRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGChooseEmployerRequest.h; path = WebServices/VGChooseEmployerRequest.h; sourceTree = "<group>"; };
+		8496AAF116F73D98001E1184 /* VGChooseEmployerRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGChooseEmployerRequest.m; path = WebServices/VGChooseEmployerRequest.m; sourceTree = "<group>"; };
+		8496AAF316F73E3D001E1184 /* VGChooseStudentRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGChooseStudentRequest.h; path = WebServices/VGChooseStudentRequest.h; sourceTree = "<group>"; };
+		8496AAF416F73E3D001E1184 /* VGChooseStudentRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGChooseStudentRequest.m; path = WebServices/VGChooseStudentRequest.m; sourceTree = "<group>"; };
+		8496AAF616F73F27001E1184 /* VGChooseMyStudentsRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGChooseMyStudentsRequest.h; path = WebServices/VGChooseMyStudentsRequest.h; sourceTree = "<group>"; };
+		8496AAF716F73F27001E1184 /* VGChooseMyStudentsRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGChooseMyStudentsRequest.m; path = WebServices/VGChooseMyStudentsRequest.m; sourceTree = "<group>"; };
 		849BEB3916F3339C001868D3 /* VGRequestQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGRequestQueue.h; path = WebServices/VGRequestQueue.h; sourceTree = "<group>"; };
 		849BEB3A16F3339C001868D3 /* VGRequestQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGRequestQueue.m; path = WebServices/VGRequestQueue.m; sourceTree = "<group>"; };
-		849C761916E1031400054D17 /* Constant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
 		849E569D16DF6450009E9AB6 /* graph-badge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "graph-badge.png"; path = "Imges/graph-badge.png"; sourceTree = "<group>"; };
 		849E569E16DF6450009E9AB6 /* graph-badge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "graph-badge@2x.png"; path = "Imges/graph-badge@2x.png"; sourceTree = "<group>"; };
 		849E56A516DF8FC1009E9AB6 /* VGGraphViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGGraphViewController.h; path = Screens/VGGraphViewController.h; sourceTree = "<group>"; };
@@ -251,7 +277,6 @@
 				841AF4C916DCAC90008FCA42 /* Default.png */,
 				841AF4CB16DCAC90008FCA42 /* Default@2x.png */,
 				841AF4CD16DCAC90008FCA42 /* Default-568h@2x.png */,
-				849C761916E1031400054D17 /* Constant.h */,
 				849FF19B16E89ADA006984AC /* Subject.plist */,
 				849FF19D16E89B2E006984AC /* Skill.plist */,
 				849FF19F16E89BD0006984AC /* Job.plist */,
@@ -285,6 +310,24 @@
 			children = (
 				849BEB3916F3339C001868D3 /* VGRequestQueue.h */,
 				849BEB3A16F3339C001868D3 /* VGRequestQueue.m */,
+				8496AADE16F709C4001E1184 /* VGBaseRequest.h */,
+				8496AADF16F709C4001E1184 /* VGBaseRequest.m */,
+				8496AAE116F70CA0001E1184 /* VGGetPersonRequest.h */,
+				8496AAE216F70CA1001E1184 /* VGGetPersonRequest.m */,
+				8496AAE416F70DEE001E1184 /* VGSearchPersonsRequest.h */,
+				8496AAE516F70DEE001E1184 /* VGSearchPersonsRequest.m */,
+				8496AAE716F72A6B001E1184 /* VGAddNewObject.h */,
+				8496AAE816F72A6B001E1184 /* VGAddNewObject.m */,
+				8496AAEA16F73883001E1184 /* VGChangeCellRequest.h */,
+				8496AAEB16F73883001E1184 /* VGChangeCellRequest.m */,
+				8496AAED16F73A15001E1184 /* VGChooseExpertRequest.h */,
+				8496AAEE16F73A16001E1184 /* VGChooseExpertRequest.m */,
+				8496AAF016F73D98001E1184 /* VGChooseEmployerRequest.h */,
+				8496AAF116F73D98001E1184 /* VGChooseEmployerRequest.m */,
+				8496AAF316F73E3D001E1184 /* VGChooseStudentRequest.h */,
+				8496AAF416F73E3D001E1184 /* VGChooseStudentRequest.m */,
+				8496AAF616F73F27001E1184 /* VGChooseMyStudentsRequest.h */,
+				8496AAF716F73F27001E1184 /* VGChooseMyStudentsRequest.m */,
 			);
 			name = "Web Services";
 			sourceTree = "<group>";
@@ -480,6 +523,15 @@
 				849FF18A16E8959F006984AC /* VGBaseDataModel.m in Sources */,
 				849FF1A516E8A425006984AC /* VGObject.m in Sources */,
 				849BEB3B16F3339C001868D3 /* VGRequestQueue.m in Sources */,
+				8496AAE016F709C4001E1184 /* VGBaseRequest.m in Sources */,
+				8496AAE316F70CA1001E1184 /* VGGetPersonRequest.m in Sources */,
+				8496AAE616F70DEE001E1184 /* VGSearchPersonsRequest.m in Sources */,
+				8496AAE916F72A6B001E1184 /* VGAddNewObject.m in Sources */,
+				8496AAEC16F73884001E1184 /* VGChangeCellRequest.m in Sources */,
+				8496AAEF16F73A16001E1184 /* VGChooseExpertRequest.m in Sources */,
+				8496AAF216F73D98001E1184 /* VGChooseEmployerRequest.m in Sources */,
+				8496AAF516F73E3E001E1184 /* VGChooseStudentRequest.m in Sources */,
+				8496AAF816F73F28001E1184 /* VGChooseMyStudentsRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -72,12 +72,12 @@
 
 - (void) executingTransation {
     for (NSDictionary *transactionItem in self.transactionsList) {
-        NSString *stringType = (NSString*)[transactionItem objectForKey:@"transaction_type"];
+        NSString *stringType = (NSString*)[transactionItem objectForKey:VG_TRANSACTION_TYPE];
         NSInteger type = [stringType integerValue];
-        if (type == 3) {
-            [self changeValue:(NSString*)[transactionItem objectForKey: @"cell_value"] forRow:((VGObject*)[transactionItem objectForKey: @"row_index"]) andCol:((VGObject*)[transactionItem objectForKey: @"column_index"])];
+        if (type == TS_CHANGED_CELL) {
+            [self changeValue:(NSString*)[transactionItem objectForKey: VG_CELL_VALUE] forRow:((VGObject*)[transactionItem objectForKey: VG_ROW_OBJECT]) andCol:((VGObject*)[transactionItem objectForKey: VG_COL_OBJECT])];
         } else {
-            [self addObject:type withObject:[transactionItem objectForKey: @"obj_name"]];
+            [self addObject:type withObject:[transactionItem objectForKey: VG_OBJECT_NAME]];
         }
     }
     [self.transactionsList removeAllObjects];
@@ -100,25 +100,25 @@
 
 - (void) cancelTransaction {
     for (NSDictionary *transactionItem in self.transactionsList) {
-        NSString *stringType = (NSString*)[transactionItem objectForKey:@"transaction_type"];
+        NSString *stringType = (NSString*)[transactionItem objectForKey:VG_TRANSACTION_TYPE];
         NSInteger type = [stringType integerValue];
-        if (type == 3) {
-            [self returnOldValue:(NSString*)[transactionItem objectForKey: @"old_value"] forRowIndex:((VGObject*)[transactionItem objectForKey: @"row_index"]) andColIndex:((VGObject*)[transactionItem objectForKey: @"column_index"])];
+        if (type == TS_CHANGED_CELL) {
+            [self returnOldValue:(NSString*)[transactionItem objectForKey: VG_OLD_VALUE] forRowIndex:((VGObject*)[transactionItem objectForKey: VG_ROW_OBJECT]) andColIndex:((VGObject*)[transactionItem objectForKey: VG_COL_OBJECT])];
         } else {
-            [self removeObject:type withObject:[transactionItem objectForKey: @"obj_name"]];
+            [self removeObject:type withObject:[transactionItem objectForKey: VG_OBJECT_NAME]];
         }
     }
     [self.transactionsList removeAllObjects];
 }
 
 - (void) removeObject:(NSInteger)type withObject:(VGObject*)object {
-    NSMutableArray* changedArray = (type == 2) ? self.currentUser.columns : self.currentUser.rows;
+    NSMutableArray* changedArray = (type == TS_ADDED_COL) ? self.currentUser.columns : self.currentUser.rows;
     
     NSMutableArray* deletingArray = [NSMutableArray array];
     [changedArray removeObject:object];
     NSInteger count = self.currentUser.dataSet.count;
     for (int i = 0; i < count; i++) {
-        if (((type == 2) ? ((VGBaseDataModel*)self.currentUser.dataSet[i]).col.object_id : ((VGBaseDataModel*)self.currentUser.dataSet[i]).row.object_id) == object.object_id) {
+        if (((type == TS_ADDED_COL) ? ((VGBaseDataModel*)self.currentUser.dataSet[i]).col.object_id : ((VGBaseDataModel*)self.currentUser.dataSet[i]).row.object_id) == object.object_id) {
             [deletingArray addObject:self.currentUser.dataSet[i]];
         }
     }

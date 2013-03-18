@@ -153,7 +153,6 @@ static const NSInteger viewBoundY       = 488;
             cell.delegate = nil;
             cell.delegate = self;
             cell.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-            //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %d && %K == %d", @"rowIndex", i, @"colIndex", j];
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K LIKE %@ AND %K LIKE %@", @"row.object_id", ((VGObject*)self.user.rows[i]).object_id, @"col.object_id", ((VGObject*)self.user.columns[j]).object_id];
             NSMutableArray *tmpValue = [NSMutableArray arrayWithArray:self.user.dataSet];
             [tmpValue filterUsingPredicate:predicate];

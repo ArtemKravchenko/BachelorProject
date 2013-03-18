@@ -3,7 +3,6 @@
 //
 
 #import <Availability.h>
-#import "Constant.h"
 
 #ifndef __IPHONE_4_0
 #warning "This project uses features only available in iOS SDK 4.0 and later."
@@ -17,3 +16,17 @@
 
 #define PO_NAV_OPTIONS                              1001
 
+static NSString* const kSkills                              = @"skills";
+
+static NSInteger const TS_ADDED_ROW                         = 1;
+static NSInteger const TS_ADDED_COL                         = 2;
+static NSInteger const TS_CHANGED_CELL                      = 3;
+
+static NSString* const VG_TRANSACTION_TYPE                  = @"transaction_type";
+static NSString* const VG_CELL_VALUE                        = @"cell_value";
+static NSString* const VG_ROW_OBJECT                        = @"row_object";
+static NSString* const VG_COL_OBJECT                        = @"column_object";
+static NSString* const VG_OBJECT_NAME                       = @"obj_name"; 
+static NSString* const VG_OLD_VALUE                         = @"old_value";
+
+static NSString* const VG_BASE_URL                          = @"";
