@@ -8,6 +8,6 @@
 
 #import "VGBaseRequest.h"
 
-@interface VGChooseMyStudentsRequest : VGBaseRequest
+@interface VGChooseMyDataRequest : VGBaseRequest
 
 @end

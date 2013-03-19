@@ -23,6 +23,6 @@
 // Factory
 
 - (id) initForAddNewObject:(Class)classValue;
-- (id) initForChooseExistObject;
+- (id) initForChooseExistObject:(Class)classValue;
 
 @end

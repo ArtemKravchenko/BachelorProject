@@ -33,7 +33,7 @@
     return self;
 }
 
-- (id) initForChooseExistObject {
+- (id) initForChooseExistObject:(Class)classValue {
     self = [super initWithNibName:@"VGDetailViewController" bundle:[NSBundle mainBundle]];
     if (self) {
         self.initMethod = @selector(initForChooseObject);
@@ -141,8 +141,7 @@
 }
 
 - (IBAction)clickAdd:(id)sender {
-    [self.fieldsViewController saveDataToObject];
-    if (self.fieldsViewController.object != nil) {
+    if ([self.fieldsViewController saveDataToObject]) {
         self.object = self.fieldsViewController.object;
         VGTableViewController* parentViewController = [self.navigationController viewControllers][[self.navigationController viewControllers].count - 2];
         if ([parentViewController.tableView respondsToSelector:@selector(addToTableMethod:)]) {

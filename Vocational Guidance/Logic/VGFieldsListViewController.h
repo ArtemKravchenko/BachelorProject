@@ -20,6 +20,6 @@
 @property (nonatomic, assign) Class classValue;
 
 - (void) initFieldsWithFrame:(CGRect)frame ;
-- (void) saveDataToObject;
+- (BOOL) saveDataToObject;
 
 @end

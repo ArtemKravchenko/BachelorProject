@@ -117,7 +117,7 @@ static const NSInteger cellValueTag             = 300;
     return NO;
 }
 
-- (void) saveDataToObject {
+- (BOOL) saveDataToObject {
     if (self.object == nil) {
         self.object = [[self.classValue new] autorelease];
         self.object.object_id = [NSString stringWithFormat:@"tmp%d", ++[VGAppDelegate getInstance].tmpGlobalId];
@@ -134,15 +134,16 @@ static const NSInteger cellValueTag             = 300;
                 [self.object performSelector:NSSelectorFromString(property) withObject:value];
             } else {
                 NSLog(@"Error: can't response selector (%@)", property);
+                return NO;
             }
         } else {
             if (![property isEqualToString:@"setDescription:"]) {
                 NSLog(@"Error: value is nil");
-                self.object = nil;
-                break;
+                return NO;
             }
         }
     }
+    return YES;
 }
 
 #pragma mark - get view functions

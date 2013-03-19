@@ -12,6 +12,7 @@
 static const NSInteger graphItemWidth   = 89;
 static const NSInteger graphItemHeight  = 89;
 static const NSInteger deltaX           = 200;
+static const NSInteger startOffset      = 20;
 
 static NSString * CellIdentifier = @"GraphCell";
 
@@ -143,8 +144,11 @@ static NSString * CellIdentifier = @"GraphCell";
     NSInteger originX = 0;
     NSInteger originY = 0;
     
-    NSInteger offsetX = 20;
-    NSInteger offsetY = 20;
+    NSInteger offsetX = startOffset;
+    NSInteger offsetY = startOffset;
+    
+    NSInteger fullOffsetRow = 0;
+    NSInteger fullOffsetCol = 0;
     
     // Add lines
     [self.gdl removeFromSuperview];
@@ -159,9 +163,10 @@ static NSString * CellIdentifier = @"GraphCell";
         originY = offsetY;
         [self addItemWithOriginX:originX andOriginY:originY andValue: ((VGObject*)self.user.columns[i]).name];
         offsetX += deltaX;
+        fullOffsetCol = originX;
     }
     // Add rows
-    offsetX = 20;
+    offsetX = startOffset;
     offsetY += graphItemHeight * 4;
     for (NSInteger i = 0; i < self.user.rows.count; i++) {
         originX = offsetX + graphItemWidth  * i;
@@ -169,9 +174,10 @@ static NSString * CellIdentifier = @"GraphCell";
         
         [self addItemWithOriginX:originX andOriginY:originY andValue: ((VGObject*)self.user.rows[i]).name];
         offsetX += deltaX;
+        fullOffsetRow = originX;
     }
     
-    self.contentSize = CGSizeMake(offsetX + MAX(self.user.columns.count * graphItemWidth, self.user.rows.count), self.frame.size.height);
+    self.contentSize = CGSizeMake(MAX(fullOffsetRow, fullOffsetCol) + graphItemWidth * 2, self.frame.size.height);
     self.gdl.frame = CGRectMake(0, 0, self.contentSize.width, self.contentSize.height);
 }
 
@@ -198,8 +204,8 @@ static NSString * CellIdentifier = @"GraphCell";
     NSInteger offsetY = 0;
     if (self.tableValues != nil) {
         for (NSInteger i = 0; i < self.user.rows.count; i++) {
-            offsetX = 20;
-            offsetY = 20;
+            offsetX = startOffset;
+            offsetY = startOffset;
             for (NSInteger j = 0; j < self.user.columns.count; j++) {
                 NSPredicate* predicate = [NSPredicate predicateWithFormat:@"%K LIKE %@ && %K LIKE %@", @"row.object_id", ((VGObject*)self.user.rows[i]).object_id, @"col.object_id", ((VGObject*)self.user.columns[j]).object_id];
                 NSMutableArray *tmpArray = [NSMutableArray arrayWithArray: self.tableValues];
@@ -211,7 +217,7 @@ static NSString * CellIdentifier = @"GraphCell";
                         CGContextBeginPath(context);
                         
                         CGContextMoveToPoint(context, offsetX + graphItemWidth  * j + graphItemWidth / 2, offsetY + graphItemHeight/ 2);
-                        CGContextAddLineToPoint(context, 20 + (deltaX * i) + graphItemWidth  * i + graphItemWidth / 2, offsetY + graphItemHeight * 4.5);
+                        CGContextAddLineToPoint(context, startOffset + (deltaX * i) + graphItemWidth  * i + graphItemWidth / 2, offsetY + graphItemHeight * 4.5);
                         
                         // Set line width
                         CGContextSetLineWidth(context, 0.5);

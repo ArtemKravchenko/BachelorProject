@@ -269,7 +269,7 @@ static const NSInteger viewBoundY       = 488;
 
 - (void) detailWithPushingForExistObject:(VGObject*) object andPlistName:(NSString*) name {
     NSMutableArray* fields = [self fieldsFromPlistNameWithName:name];
-    detailViewController = [[[VGDetailViewController alloc] initForChooseExistObject] autorelease];
+    detailViewController = [[[VGDetailViewController alloc] initForChooseExistObject:[object class]] autorelease];
     detailViewController.object = object;
     detailViewController.fields = fields;
     [self.parentViewController.navigationController pushViewController:detailViewController animated:YES];

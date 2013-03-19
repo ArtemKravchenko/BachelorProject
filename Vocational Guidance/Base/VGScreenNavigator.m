@@ -199,6 +199,8 @@ static NSMutableDictionary *screenMapping = nil;
     autoblankFields = [NSMutableDictionary dictionary];
     [autoblankFields setObject:@"Expert" forKey:@"credential"];
     [autoblankFields setObject:@"Expert" forKey:@"description"];
+    [autoblankFields setObject:@"Expert" forKey:@"login"];
+    [autoblankFields setObject:@"Expert" forKey:@"password"];
     [params setObject:autoblankFields forKey:@"autoblank"];
     
     screenInfo.params = params;
@@ -216,6 +218,8 @@ static NSMutableDictionary *screenMapping = nil;
     autoblankFields = [NSMutableDictionary dictionary];
     [autoblankFields setObject:@"Emploer" forKey:@"credential"];
     [autoblankFields setObject:@"Employer" forKey:@"description"];
+    [autoblankFields setObject:@"Employer" forKey:@"login"];
+    [autoblankFields setObject:@"Employer" forKey:@"password"];
     [params setObject:autoblankFields forKey:@"autoblank"];
     
     screenInfo.params = params;

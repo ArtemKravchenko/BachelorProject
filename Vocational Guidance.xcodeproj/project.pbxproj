@@ -48,7 +48,7 @@
 		8496AAEF16F73A16001E1184 /* VGChooseExpertRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8496AAEE16F73A16001E1184 /* VGChooseExpertRequest.m */; };
 		8496AAF216F73D98001E1184 /* VGChooseEmployerRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8496AAF116F73D98001E1184 /* VGChooseEmployerRequest.m */; };
 		8496AAF516F73E3E001E1184 /* VGChooseStudentRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8496AAF416F73E3D001E1184 /* VGChooseStudentRequest.m */; };
-		8496AAF816F73F28001E1184 /* VGChooseMyStudentsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8496AAF716F73F27001E1184 /* VGChooseMyStudentsRequest.m */; };
+		8496AAF816F73F28001E1184 /* VGChooseMyDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8496AAF716F73F27001E1184 /* VGChooseMyDataRequest.m */; };
 		849BEB3B16F3339C001868D3 /* VGRequestQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 849BEB3A16F3339C001868D3 /* VGRequestQueue.m */; };
 		849E569F16DF6450009E9AB6 /* graph-badge.png in Resources */ = {isa = PBXBuildFile; fileRef = 849E569D16DF6450009E9AB6 /* graph-badge.png */; };
 		849E56A016DF6450009E9AB6 /* graph-badge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 849E569E16DF6450009E9AB6 /* graph-badge@2x.png */; };
@@ -146,8 +146,8 @@
 		8496AAF116F73D98001E1184 /* VGChooseEmployerRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGChooseEmployerRequest.m; path = WebServices/VGChooseEmployerRequest.m; sourceTree = "<group>"; };
 		8496AAF316F73E3D001E1184 /* VGChooseStudentRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGChooseStudentRequest.h; path = WebServices/VGChooseStudentRequest.h; sourceTree = "<group>"; };
 		8496AAF416F73E3D001E1184 /* VGChooseStudentRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGChooseStudentRequest.m; path = WebServices/VGChooseStudentRequest.m; sourceTree = "<group>"; };
-		8496AAF616F73F27001E1184 /* VGChooseMyStudentsRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGChooseMyStudentsRequest.h; path = WebServices/VGChooseMyStudentsRequest.h; sourceTree = "<group>"; };
-		8496AAF716F73F27001E1184 /* VGChooseMyStudentsRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGChooseMyStudentsRequest.m; path = WebServices/VGChooseMyStudentsRequest.m; sourceTree = "<group>"; };
+		8496AAF616F73F27001E1184 /* VGChooseMyDataRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGChooseMyDataRequest.h; path = WebServices/VGChooseMyDataRequest.h; sourceTree = "<group>"; };
+		8496AAF716F73F27001E1184 /* VGChooseMyDataRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGChooseMyDataRequest.m; path = WebServices/VGChooseMyDataRequest.m; sourceTree = "<group>"; };
 		849BEB3916F3339C001868D3 /* VGRequestQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGRequestQueue.h; path = WebServices/VGRequestQueue.h; sourceTree = "<group>"; };
 		849BEB3A16F3339C001868D3 /* VGRequestQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGRequestQueue.m; path = WebServices/VGRequestQueue.m; sourceTree = "<group>"; };
 		849E569D16DF6450009E9AB6 /* graph-badge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "graph-badge.png"; path = "Imges/graph-badge.png"; sourceTree = "<group>"; };
@@ -326,8 +326,8 @@
 				8496AAF116F73D98001E1184 /* VGChooseEmployerRequest.m */,
 				8496AAF316F73E3D001E1184 /* VGChooseStudentRequest.h */,
 				8496AAF416F73E3D001E1184 /* VGChooseStudentRequest.m */,
-				8496AAF616F73F27001E1184 /* VGChooseMyStudentsRequest.h */,
-				8496AAF716F73F27001E1184 /* VGChooseMyStudentsRequest.m */,
+				8496AAF616F73F27001E1184 /* VGChooseMyDataRequest.h */,
+				8496AAF716F73F27001E1184 /* VGChooseMyDataRequest.m */,
 			);
 			name = "Web Services";
 			sourceTree = "<group>";
@@ -531,7 +531,7 @@
 				8496AAEF16F73A16001E1184 /* VGChooseExpertRequest.m in Sources */,
 				8496AAF216F73D98001E1184 /* VGChooseEmployerRequest.m in Sources */,
 				8496AAF516F73E3E001E1184 /* VGChooseStudentRequest.m in Sources */,
-				8496AAF816F73F28001E1184 /* VGChooseMyStudentsRequest.m in Sources */,
+				8496AAF816F73F28001E1184 /* VGChooseMyDataRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
