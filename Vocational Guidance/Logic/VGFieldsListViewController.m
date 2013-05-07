@@ -7,6 +7,7 @@
 //
 
 #import "VGFieldsListViewController.h"
+#import "VGDetailViewController.h"
 #import "VGAppDelegate.h"
 
 static const NSInteger cellHeight               = 44;
@@ -18,18 +19,13 @@ static const NSInteger cellValueTag             = 300;
 
 @interface VGFieldsListViewController ()
 
+@property (nonatomic, retain) UIPopoverController* popover;
+@property (nonatomic, retain) UITableView* tableValues;
+@property (nonatomic, retain) VGSide* userSide;
+
 @end
 
 @implementation VGFieldsListViewController
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        
-    }
-    return self;
-}
 
 #pragma mark - View life's cycle
 
@@ -40,9 +36,13 @@ static const NSInteger cellValueTag             = 300;
 
 - (void)dealloc
 {
-    [_autoBlankFields release];
-    [_fieldsView release];
-    [_fields release];
+    self.popover = nil;
+    self.tableValues = nil;
+    self.emptyFields = nil;
+    self.fieldsView = nil;
+    self.fields  = nil;
+    self.cellValueButton = nil;
+    self.userSide = nil;
     [super dealloc];
 }
 
@@ -69,89 +69,170 @@ static const NSInteger cellValueTag             = 300;
     [self.fieldsView setBounces:YES];
     
     NSInteger originY = 0;
-    NSInteger indexConsiderAutoblank = 0;
     for (NSInteger i = 0; i < self.fields.count; i++) {
-        originY = cellHeight * indexConsiderAutoblank + 1 * indexConsiderAutoblank;
-        NSString* property = ((NSString*)[self.fields objectAtIndex:i]);
+        originY = cellHeight * i;
+        NSString* property = ((NSString*)[((NSDictionary*)[self.fields objectAtIndex:i]) objectForKey:@"property name"]);
+        NSString* field = ((NSString*)[((NSDictionary*)[self.fields objectAtIndex:i]) objectForKey:@"field name"]);
         
-        if (![self isFieldExistInAutoblantList:property]) {
+        if (![self isFieldCanBeEmpty:property]) {
+            NSArray* propertyArray = [property componentsSeparatedByString:@"."];
             // Create cell view
             UIView* cellView = [self cellViewWithWidth:self.cellWidth andOriginY:originY];
             cellView.tag = 100 + i;
             // Create cell label
-            UILabel* cellPropertyLabel = [self cellLabelWithValue:property andWidth:cellLabelWidth andOriginX:cellLabelOriginX andOriginY:0];
+            UILabel* cellPropertyLabel = [self cellLabelWithValue:field andWidth:cellLabelWidth andOriginX:cellLabelOriginX andOriginY:0];
             cellPropertyLabel.tag  = 200 + i;
             // Create cell value
             UITextField* cellValue = nil;
             if (self.object != nil) {
-                if ([self.object respondsToSelector:NSSelectorFromString(property)]) {
-                    if ([property isEqualToString:@"credential"]) {
-                        property = [NSString stringWithFormat:@"%@ToString",property];
-                        cellValue = [self cellTextFieldWithOriginY:0 withValue:[self.object performSelector:NSSelectorFromString(property)]];
-                    } else {
-                        cellValue = [self cellTextFieldWithOriginY:0 withValue:[self.object performSelector:NSSelectorFromString(property)]];
+                if(propertyArray.count == 1) {
+                    if ([self.object respondsToSelector:NSSelectorFromString(property)]) {
+                        if ([property isEqualToString:@"credential"]) {
+                            property = [NSString stringWithFormat:@"%@ToString",property];
+                            cellValue = [self cellTextFieldWithOriginY:0 withValue:[self.object performSelector:NSSelectorFromString(property)]];
+                        } else {
+                            NSLog(@"%@", [self.object performSelector:NSSelectorFromString(property)]);
+                            cellValue = [self cellTextFieldWithOriginY:0 withValue:[self.object performSelector:NSSelectorFromString(property)]];
+                        }
+                    }
+                } else {
+                    NSObject* firstObject = [self.object performSelector:NSSelectorFromString(propertyArray[0])];
+                    NSObject* lastObject = firstObject;
+                    for (int i =  1; i < propertyArray.count; i++) {
+                        lastObject = [lastObject performSelector:NSSelectorFromString(propertyArray[i])];
+                    }
+                    self.cellValueButton = [self cellButtonWithOriginy:0 withValue:((NSString*)lastObject)];
+                    if ([((NSString*)propertyArray[0]) isEqualToString: @"side"]) {
+                        [self.cellValueButton addTarget:self action:@selector(sideClick:) forControlEvents:UIControlEventTouchUpInside];
                     }
                 }
             } else {
-                cellValue = [self cellTextFieldWithOriginY:0 withValue:nil];
+                if(propertyArray.count == 1) {
+                    cellValue = [self cellTextFieldWithOriginY:0 withValue:nil];
+                } else {
+                    self.cellValueButton = [self cellButtonWithOriginy:0 withValue: nil];
+                    [self.cellValueButton addTarget:self action:@selector(sideClick:) forControlEvents:UIControlEventTouchUpInside];
+                }
             }
+            self.cellValueButton.enabled = self.editMode;
             cellValue.enabled = self.editMode;
             cellValue.tag = cellValueTag + i;
-            [cellView addSubview:cellValue];
+            [cellView addSubview: (propertyArray.count == 1) ? cellValue : self.cellValueButton];
             [cellView addSubview:cellPropertyLabel];
             [self.fieldsView addSubview:cellView];
-            indexConsiderAutoblank++;
         } else {
-            NSLog(@"%@ is autoblank", property);
+            NSLog(@"%@ is can be empty", property);
         }
     }
     [self.view addSubview:self.fieldsView];
 }
 
-- (BOOL) isFieldExistInAutoblantList:(NSString*)field {
-    for (NSString* key in self.autoBlankFields) {
-        if ([key isEqualToString:field]) {
-            return YES;
+- (BOOL) isFieldCanBeEmpty:(NSString*)field{
+    if (self.emptyFields != nil) {
+        for (NSString* key in self.emptyFields) {
+            if ([key isEqualToString:field]) {
+                return YES;
+            }
         }
     }
     return NO;
 }
 
 - (BOOL) saveDataToObject {
+    // Tmp
     if (self.object == nil) {
         self.object = [[self.classValue new] autorelease];
-        self.object.object_id = [NSString stringWithFormat:@"tmp%d", ++[VGAppDelegate getInstance].tmpGlobalId];
+        if ([self.object isKindOfClass:[VGStudent class]]) {
+            ((VGStudent*)self.object).side = self.userSide;
+        }
+        self.object.objectId = [NSString stringWithFormat:@"tmp%d", ++[VGAppDelegate getInstance].tmpGlobalId];
     }
     
     for (NSInteger i = 0; i < self.fields.count; i++) {
-        NSString* property = [NSString stringWithString:self.fields[i]];
-        NSString* firstCapitalString = [[property substringToIndex:1] uppercaseString];
-        property = [property stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:firstCapitalString];
-        property = [NSString stringWithFormat:@"set%@:", property];
-        NSString* value = ((UITextField*)[self.fieldsView viewWithTag:cellValueTag + i]).text;
-        if (![value isEqualToString:@""] && (value != nil)) {
-            if ([self.object respondsToSelector:NSSelectorFromString(property)]) {
-                [self.object performSelector:NSSelectorFromString(property) withObject:value];
+        NSString* property = [NSString stringWithString:([((NSDictionary*)self.fields[i]) objectForKey:@"property name"])];
+        NSArray* propertyArray = [property componentsSeparatedByString:@"."];
+        if (propertyArray.count == 1) {
+            NSString* firstCapitalString = [[property substringToIndex:1] uppercaseString];
+            property = [property stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:firstCapitalString];
+            property = [NSString stringWithFormat:@"set%@:", property];
+            NSString* value = ((UITextField*)[self.fieldsView viewWithTag:cellValueTag + i]).text;
+            if (![value isEqualToString:@""] && (value != nil)) {
+                if ([self.object respondsToSelector:NSSelectorFromString(property)]) {
+                    [self.object performSelector:NSSelectorFromString(property) withObject: value];
+                } else {
+                    NSLog(@"(VGFieldsListViewController) Error: can't response selector (%@)", property);
+                    return NO;
+                }
             } else {
-                NSLog(@"Error: can't response selector (%@)", property);
-                return NO;
-            }
-        } else {
-            if (![property isEqualToString:@"setDescription:"]) {
-                NSLog(@"Error: value is nil");
-                return NO;
+                if (![property isEqualToString:@"setDescription:"]) {
+                    NSLog(@"(VGFieldsListViewController) Error: property %@ value is nil", property);
+                    return NO;
+                }
             }
         }
     }
     return YES;
 }
 
-#pragma mark - get view functions
+#pragma mark - complex fields
+
+- (void) sideClick:(UITextField*)sender {
+    // init table view
+    self.tableValues = [[UITableView new] autorelease];
+    self.tableValues.delegate = self;
+    self.tableValues.dataSource = self;
+    self.tableValues.frame = CGRectMake(0, 0, 300, 300);
+    
+    // init controller for table view
+    UIViewController* viewController = [[UIViewController new] autorelease];
+    viewController.view = self.tableValues;
+    
+    // init popover view controller
+    
+    self.popover = [[[UIPopoverController alloc] initWithContentViewController: viewController] autorelease];
+    [self.popover setPopoverContentSize:CGSizeMake(320, 480)];
+    [self.popover presentPopoverFromRect: CGRectMake(100, 100, 1, 1)
+                                  inView: self.view
+                permittedArrowDirections: ([self.parentViewController isKindOfClass:[VGDetailViewController class]]) ? UIPopoverArrowDirectionLeft : UIPopoverArrowDirectionRight
+                                animated: YES];
+}
+
+#pragma mark - table data source delegate
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [VGAppDelegate getInstance].allSides.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *CellIdentifier = @"SideCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+    }
+    
+    NSString *cellValue = ((VGSide*)[VGAppDelegate getInstance].allSides[indexPath.row]).name;
+    cell.textLabel.text = cellValue;
+    return cell;
+}
+
+#pragma mark - table view delegate
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.object == nil) {
+        self.userSide = [VGAppDelegate getInstance].allSides[indexPath.row];
+    } else {
+        [self.object performSelector:@selector(setSide:) withObject:[VGAppDelegate getInstance].allSides[indexPath.row]];
+    }
+    [self.popover dismissPopoverAnimated:YES];
+    [self.cellValueButton setTitle:((VGSide*)[VGAppDelegate getInstance].allSides[indexPath.row]).name forState:UIControlStateNormal];
+}
+
+#pragma mark - "get" view functions
 
 - (UIView*) cellViewWithWidth:(NSInteger)cellWidth andOriginY:(NSInteger)originY {
     UIView* newCellView = [[UIView new] autorelease];
     [newCellView setFrame:CGRectMake(0, originY, cellWidth, cellHeight)];
-    [newCellView setBackgroundColor:[UIColor blackColor]];
+    [newCellView setBackgroundColor:[UIColor greenColor]];
     return newCellView;
 }
 
@@ -172,6 +253,16 @@ static const NSInteger cellValueTag             = 300;
         [newCellEmptyTextField setText:value];
     }
     return newCellEmptyTextField;
+}
+
+- (UIButton*) cellButtonWithOriginy: (NSInteger)originY withValue:(NSString*)value {
+    UIButton* newCellButton = [[UIButton new] autorelease];
+    [newCellButton setFrame:CGRectMake(cellLabelWidth, originY, self.cellWidth - cellLabelWidth, cellHeight)];
+    [newCellButton setTitle: (value != nil) ? value : @"" forState:UIControlStateNormal];
+    [newCellButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [newCellButton setContentVerticalAlignment: UIControlContentVerticalAlignmentCenter];
+    [newCellButton setBackgroundColor:[UIColor yellowColor]];
+    return  newCellButton;
 }
 
 @end

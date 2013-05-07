@@ -25,11 +25,19 @@
 
 - (void)dealloc {
     self.mockData = nil;
-    self.allColumns = nil;
-    self.allRows = nil;
-    [_iconName release];
-    [_currentUser release];
-    [_transactionsList release];
+    self.allStudents = nil;
+    self.allSubjects = nil;
+    self.allSkills = nil;
+    self.allVacancies = nil;
+    self.allSides = nil;
+    self.iconName = nil;
+    self.currentUser = nil;
+    self.currentStudent = nil;
+    self.currentExpert = nil;
+    self.currentEmployer = nil;
+    self.transactionsList = nil;
+    self.navigationController = nil;
+    self.results = nil;
     [_stringValues release];
     [_window release];
     [super dealloc];
@@ -75,7 +83,7 @@
         NSString *stringType = (NSString*)[transactionItem objectForKey:VG_TRANSACTION_TYPE];
         NSInteger type = [stringType integerValue];
         if (type == TS_CHANGED_CELL) {
-            [self changeValue:(NSString*)[transactionItem objectForKey: VG_CELL_VALUE] forRow:((VGObject*)[transactionItem objectForKey: VG_ROW_OBJECT]) andCol:((VGObject*)[transactionItem objectForKey: VG_COL_OBJECT])];
+            [self changeValue:(NSString*)[transactionItem objectForKey: VG_CELL_VALUE] forRow:((id<VGTableVariable>)[transactionItem objectForKey: VG_ROW_OBJECT]) andCol:((id<VGTableVariable>)[transactionItem objectForKey: VG_COL_OBJECT])];
         } else {
             [self addObject:type withObject:[transactionItem objectForKey: VG_OBJECT_NAME]];
         }
@@ -87,9 +95,9 @@
     _stringValues = nil;
 }
 
-- (void) changeValue:(NSString*)value forRow:(VGObject*)rowIndex andCol:(VGObject*)colIndex {
+- (void) changeValue:(NSString*)value forRow:(id<VGTableVariable>)rowIndex andCol:(id<VGTableVariable>)colIndex {
     for (VGBaseDataModel* cell in self.currentUser.dataSet) {
-        if (rowIndex.object_id == cell.row.object_id && colIndex.object_id == cell.col.object_id) {
+        if (rowIndex.objectId == cell.row.objectId && colIndex.objectId == cell.col.objectId) {
             cell.value = value;
         }
     }
@@ -103,7 +111,7 @@
         NSString *stringType = (NSString*)[transactionItem objectForKey:VG_TRANSACTION_TYPE];
         NSInteger type = [stringType integerValue];
         if (type == TS_CHANGED_CELL) {
-            [self returnOldValue:(NSString*)[transactionItem objectForKey: VG_OLD_VALUE] forRowIndex:((VGObject*)[transactionItem objectForKey: VG_ROW_OBJECT]) andColIndex:((VGObject*)[transactionItem objectForKey: VG_COL_OBJECT])];
+            [self returnOldValue:(NSString*)[transactionItem objectForKey: VG_OLD_VALUE] forRowIndex:((id<VGTableVariable>)[transactionItem objectForKey: VG_ROW_OBJECT]) andColIndex:((id<VGTableVariable>)[transactionItem objectForKey: VG_COL_OBJECT])];
         } else {
             [self removeObject:type withObject:[transactionItem objectForKey: VG_OBJECT_NAME]];
         }
@@ -111,14 +119,14 @@
     [self.transactionsList removeAllObjects];
 }
 
-- (void) removeObject:(NSInteger)type withObject:(VGObject*)object {
+- (void) removeObject:(NSInteger)type withObject:(id<VGTableVariable>)object {
     NSMutableArray* changedArray = (type == TS_ADDED_COL) ? self.currentUser.columns : self.currentUser.rows;
     
     NSMutableArray* deletingArray = [NSMutableArray array];
     [changedArray removeObject:object];
     NSInteger count = self.currentUser.dataSet.count;
     for (int i = 0; i < count; i++) {
-        if (((type == TS_ADDED_COL) ? ((VGBaseDataModel*)self.currentUser.dataSet[i]).col.object_id : ((VGBaseDataModel*)self.currentUser.dataSet[i]).row.object_id) == object.object_id) {
+        if (((type == TS_ADDED_COL) ? ((VGBaseDataModel*)self.currentUser.dataSet[i]).col.objectId : ((VGBaseDataModel*)self.currentUser.dataSet[i]).row.objectId) == object.objectId) {
             [deletingArray addObject:self.currentUser.dataSet[i]];
         }
     }
@@ -129,13 +137,21 @@
     _stringValues = nil;
 }
 
-- (void) returnOldValue:(NSString*)value forRowIndex:(VGObject*)rowIndex andColIndex:(VGObject*)colIndex {
+- (void) returnOldValue:(NSString*)value forRowIndex:(id<VGTableVariable>)rowIndex andColIndex:(id<VGTableVariable>)colIndex {
     for (VGBaseDataModel* cell in self.currentUser.dataSet) {
-        if (rowIndex.object_id == cell.row.object_id && colIndex.object_id == cell.col.object_id) {
+        if (rowIndex.objectId == cell.row.objectId && colIndex.objectId == cell.col.objectId) {
             cell.value = value;
         }
     }
     _stringValues = nil;
+}
+
+- (void) checkoutSession {
+    if (self.currentStudent != nil && self.currentExpert != nil && self.currentEmployer != nil) {
+        [VGScreenNavigator showResultButton];
+    } else {
+        [VGScreenNavigator hideResultButton];
+    }
 }
 
 #pragma mark - Init Mock Data
@@ -146,89 +162,90 @@
     
     self.mockData = [NSMutableDictionary dictionary];
     
+    // init sides
+    
+    NSMutableArray* sides = [NSMutableArray array];
+    
+    VGSide* side = [[VGSide new] autorelease];
+    side.sideId = @"1";
+    side.name = @"KHAI";
+    
+    [sides addObject:side];
+    
     // init students
     NSMutableArray* students = [NSMutableArray array];
     
     VGStudent* student = nil;
     
     student = [[VGStudent new] autorelease];
-    student.object_id = @"1";
-    student.cardNumber = @"7218271821";
-    student.studentName = @"Kiril";
-    student.studentSurname = @"Kukushkin";
-    student.side = @"KHAI";
+    student.objectId = @"1";
+    student.firstName = @"Kiril";
+    student.secondName = @"Kukushkin";
+    student.side = sides[0];
     student.age = @"20";
     [students addObject:student];
     
     student = [[VGStudent new] autorelease];
-    student.object_id = @"2";
-    student.cardNumber = @"7238271821";
-    student.studentName = @"Michael";
-    student.studentSurname = @"Obama";
-    student.side = @"KHAI";
+    student.objectId = @"2";
+    student.firstName = @"Michael";
+    student.secondName = @"Obama";
+    student.side = sides[0];
     student.age = @"20";
     [students addObject:student];
     
     student = [[VGStudent new] autorelease];
-    student.object_id = @"3";
-    student.cardNumber = @"7218211821";
-    student.studentName = @"Barak";
-    student.studentSurname = @"Obama";
-    student.side = @"KHAI";
+    student.objectId = @"3";
+    student.firstName = @"Barak";
+    student.secondName = @"Obama";
+    student.side = sides[0];
     student.age = @"20";
     [students addObject:student];
     
     student = [[VGStudent new] autorelease];
-    student.object_id = @"4";
-    student.cardNumber = @"7218291821";
-    student.studentName = @"Filip";
-    student.studentSurname = @"Kirkorov";
-    student.side = @"KHAI";
+    student.objectId = @"4";
+    student.firstName = @"Filip";
+    student.secondName = @"Kirkorov";
+    student.side = sides[0];
     student.age = @"20";
     [students addObject:student];
     
     student = [[VGStudent new] autorelease];
-    student.object_id = @"5";
-    student.cardNumber = @"8218271821";
-    student.studentName = @"Fredy";
-    student.studentSurname = @"Mercury";
-    student.side = @"KHAI";
+    student.objectId = @"5";
+    student.firstName = @"Fredy";
+    student.secondName = @"Mercury";
+    student.side = sides[0];
     student.age = @"20";
     [students addObject:student];
     
     student = [[VGStudent new] autorelease];
-    student.object_id = @"6";
-    student.cardNumber = @"7018271821";
-    student.studentName = @"Gusha";
-    student.studentSurname = @"Katushkin";
-    student.side = @"KHAI";
+    student.objectId = @"6";
+    student.firstName = @"Gusha";
+    student.secondName = @"Katushkin";
+    student.side = sides[0];
     student.age = @"20";
     [students addObject:student];
     
     student = [[VGStudent new] autorelease];
-    student.object_id = @"7";
-    student.cardNumber = @"7218151841";
-    student.studentName = @"Victor";
-    student.studentSurname = @"Yanukovich";
-    student.side = @"KHAI";
+    student.objectId = @"7";
+    student.firstName = @"Victor";
+    student.secondName = @"Yanukovich";
+    student.side = sides[0];
     student.age = @"20";
     [students addObject:student];
     
     student = [[VGStudent new] autorelease];
-    student.object_id = @"8";
-    student.cardNumber = @"7212271821";
-    student.studentName = @"Dmitrit";
-    student.studentSurname = @"Medvedev";
-    student.side = @"KHAI";
+    student.objectId = @"8";
+    student.firstName = @"Dmitrit";
+    student.secondName = @"Medvedev";
+    student.side = sides[0];
     student.age = @"20";
     [students addObject:student];
     
     student = [[VGStudent new] autorelease];
-    student.object_id = @"9";
-    student.cardNumber = @"7218271221";
-    student.studentName = @"Vlodimir";
-    student.studentSurname = @"Putin";
-    student.side = @"KHAI";
+    student.objectId = @"9";
+    student.firstName = @"Vlodimir";
+    student.secondName = @"Putin";
+    student.side = sides[0];
     student.age = @"20";
     [students addObject:student];
     
@@ -238,47 +255,47 @@
     VGJob* job = nil;
     
     job = [[VGJob new] autorelease];
-    job.object_id = @"1";
+    job.objectId = @"1";
     job.name = @"Java developer";
     [jobs addObject:job];
     
     job = [[VGJob new] autorelease];
-    job.object_id = @"2";
+    job.objectId = @"2";
     job.name = @"IOS Developer";
     [jobs addObject:job];
     
     job = [[VGJob new] autorelease];
-    job.object_id = @"3";
+    job.objectId = @"3";
     job.name = @".NET Developer";
     [jobs addObject:job];
     
     job = [[VGJob new] autorelease];
-    job.object_id = @"4";
+    job.objectId = @"4";
     job.name = @"Front-end Developer";
     [jobs addObject:job];
     
     job = [[VGJob new] autorelease];
-    job.object_id = @"5";
+    job.objectId = @"5";
     job.name = @"Back-end Developer";
     [jobs addObject:job];
     
     job = [[VGJob new] autorelease];
-    job.object_id = @"6";
+    job.objectId = @"6";
     job.name = @"Project Manger";
     [jobs addObject:job];
     
     job = [[VGJob new] autorelease];
-    job.object_id = @"7";
+    job.objectId = @"7";
     job.name = @"System Administrator";
     [jobs addObject:job];
     
     job = [[VGJob new] autorelease];
-    job.object_id = @"8";
+    job.objectId = @"8";
     job.name = @"HR";
     [jobs addObject:job];
     
     job = [[VGJob new] autorelease];
-    job.object_id = @"9";
+    job.objectId = @"9";
     job.name = @"Buosnes analityc";
     [jobs addObject:job];
     
@@ -288,47 +305,47 @@
     VGSubject* subject = nil;
     
     subject = [[VGSubject new] autorelease];
-    subject.object_id = @"1";
+    subject.objectId = @"1";
     subject.name = @"Programming";
     [subjects addObject:subject];
     
     subject = [[VGSubject new] autorelease];
-    subject.object_id = @"2";
+    subject.objectId = @"2";
     subject.name = @"Mathemathics Analys";
     [subjects addObject:subject];
     
     subject = [[VGSubject new] autorelease];
-    subject.object_id = @"3";
+    subject.objectId = @"3";
     subject.name = @"English";
     [subjects addObject:subject];
     
     subject = [[VGSubject new] autorelease];
-    subject.object_id = @"4";
+    subject.objectId = @"4";
     subject.name = @"Teory of Algorithm";
     [subjects addObject:subject];
     
     subject = [[VGSubject new] autorelease];
-    subject.object_id = @"5";
+    subject.objectId = @"5";
     subject.name = @"Discret Mathemathics";
     [subjects addObject:subject];
     
     subject = [[VGSubject new] autorelease];
-    subject.object_id = @"6";
+    subject.objectId = @"6";
     subject.name = @"Philosophy";
     [subjects addObject:subject];
     
     subject = [[VGSubject new] autorelease];
-    subject.object_id = @"7";
+    subject.objectId = @"7";
     subject.name = @"Web Develophing";
     [subjects addObject:subject];
     
     subject = [[VGSubject new] autorelease];
-    subject.object_id = @"8";
+    subject.objectId = @"8";
     subject.name = @"Data Bases";
     [subjects addObject:subject];
     
     subject = [[VGSubject new] autorelease];
-    subject.object_id = @"9";
+    subject.objectId = @"9";
     subject.name = @"Functional Analys";
     [subjects addObject:subject];
     
@@ -338,47 +355,47 @@
     VGSkill* skill = nil;
     
     skill = [[VGSkill new] autorelease];
-    skill.object_id = @"1";
+    skill.objectId = @"1";
     skill.name = @"C#";
     [skills addObject:skill];
     
     skill = [[VGSkill new] autorelease];
-    skill.object_id = @"2";
+    skill.objectId = @"2";
     skill.name = @"Objective-c";
     [skills addObject:skill];
     
     skill = [[VGSkill new] autorelease];
-    skill.object_id = @"3";
+    skill.objectId = @"3";
     skill.name = @"PHP";
     [skills addObject:skill];
     
     skill = [[VGSkill new] autorelease];
-    skill.object_id = @"4";
+    skill.objectId = @"4";
     skill.name = @"JavaScript";
     [skills addObject:skill];
     
     skill = [[VGSkill new] autorelease];
-    skill.object_id = @"5";
+    skill.objectId = @"5";
     skill.name = @"HTML";
     [skills addObject:skill];
     
     skill = [[VGSkill new] autorelease];
-    skill.object_id = @"6";
+    skill.objectId = @"6";
     skill.name = @"CSS";
     [skills addObject:skill];
     
     skill = [[VGSkill new] autorelease];
-    skill.object_id = @"7";
+    skill.objectId = @"7";
     skill.name = @"MySql";
     [skills addObject:skill];
     
     skill = [[VGSkill new] autorelease];
-    skill.object_id = @"8";
+    skill.objectId = @"8";
     skill.name = @"MSSQL";
     [skills addObject:skill];
     
     skill = [[VGSkill new] autorelease];
-    skill.object_id = @"9";
+    skill.objectId = @"9";
     skill.name = @"English";
     [skills addObject:skill];
     
@@ -941,10 +958,10 @@
     }
     
     person = [[VGUser new] autorelease];
-    person.object_id = @"1";
-    person.name = @"Stive";
-    person.surname = @"Jobs";
-    person.side = @"Apple";
+    person.objectId = @"1";
+    person.firstName = @"Stive";
+    person.secondName = @"Jobs";
+    person.side = sides[0];
     person.login = @"Employer";
     person.password = @"Employer";
     person.credential = VGCredentilasTypeEmployer;
@@ -962,10 +979,10 @@
     }
     
     person = [[VGUser new] autorelease];
-    person.object_id = @"2";
-    person.name = @"Aleksandr";
-    person.surname = @"Kulik";
-    person.side = @"KHAI";
+    person.objectId = @"2";
+    person.firstName = @"Aleksandr";
+    person.secondName = @"Kulik";
+    person.side = sides[0];
     person.login = @"Expert";
     person.password = @"Expert";
     person.credential = VGCredentilasTypeExpert;
@@ -983,10 +1000,10 @@
     }
     
     person = [[VGUser new] autorelease];
-    person.object_id = @"3";
-    person.name = @"Nina";
-    person.surname = @"Bakumenko";
-    person.side = @"KHAI";
+    person.objectId = @"3";
+    person.firstName = @"Nina";
+    person.secondName = @"Bakumenko";
+    person.side = sides[0];
     person.login = @"Secretar";
     person.password = @"Secretar";
     person.credential = VGCredentilasTypeSecretar;
@@ -1000,6 +1017,7 @@
     [self.mockData setObject:subjects forKey:@"subjects"];
     [self.mockData setObject:skills forKey:@"skills"];
     [self.mockData setObject:persons forKey:@"persons"];
+    [self.mockData setObject:sides forKey:@"sides"];
 }
 
 @end

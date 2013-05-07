@@ -7,13 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "VGObject.h"
+#import "VGUser.h"
 
-@interface VGBaseDataModel : NSObject
+@interface VGBaseDataModel : NSObject <VGObjectToJSON>
 
 @property (nonatomic, assign) NSString* dataId;
 @property (nonatomic, retain) NSString* value;
-@property (nonatomic, retain) VGObject* row;
-@property (nonatomic, retain) VGObject* col;
+@property (nonatomic, retain) id<VGTableVariable> row;
+@property (nonatomic, retain) id<VGTableVariable> col;
 
 @end

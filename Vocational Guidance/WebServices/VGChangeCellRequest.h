@@ -7,10 +7,10 @@
 //
 
 #import "VGBaseRequest.h"
-#import "VGObject.h"
+#import "VGAppDelegate.h"
 
 @interface VGChangeCellRequest : VGBaseRequest
 
-- (id)initWithRow:(VGObject*)row andColumn:(VGObject*)column andValue:(NSString*)value;
+- (id)initWithRow:(id<VGTableVariable>)row andColumn:(id<VGTableVariable>)column andValue:(NSString*)value;
 
 @end

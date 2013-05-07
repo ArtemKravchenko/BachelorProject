@@ -16,7 +16,7 @@ static NSString* const kChooseEmployerUrlRoute =              @"";
 {
     self = [super init];
     if (self) {
-        self.params = [NSString stringWithFormat:@"/%@/%@", kChooseEmployerUrlRoute, employer.object_id];
+        self.params = [NSString stringWithFormat:@"/%@/%@", kChooseEmployerUrlRoute, employer.objectId];
     }
     return self;
 }

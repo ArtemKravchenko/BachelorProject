@@ -16,7 +16,7 @@ static NSString* const kChooseExpertUrlRoute =              @"";
 {
     self = [super init];
     if (self) {
-        self.params = [NSString stringWithFormat:@"/%@/%@", kChooseExpertUrlRoute, expert.object_id];
+        self.params = [NSString stringWithFormat:@"/%@/%@", kChooseExpertUrlRoute, expert.objectId];
     }
     return self;
 }

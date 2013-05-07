@@ -7,6 +7,7 @@
 //
 
 #import "VGPresentViewController.h"
+#import "VGAlertView.h"
 
 @interface VGPresentViewController ()
 
@@ -14,18 +15,10 @@
 
 @implementation VGPresentViewController
 
-- (id)init
-{
-    self = [super initWithNibName:@"VGPresentViewController" bundle:[NSBundle mainBundle]];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [VGAlertView hidePleaseWaitState];
     // Do any additional setup after loading the view from its nib.
 }
 

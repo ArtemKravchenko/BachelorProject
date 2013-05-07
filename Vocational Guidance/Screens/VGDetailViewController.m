@@ -10,13 +10,22 @@
 #import "VGFieldsListViewController.h"
 #import "VGTableViewController.h"
 
+static NSString* const kSave = @"Save";
+static NSString* const kAdd = @"Add";
+static NSString* const kChoose = @"Choose";
+
 @interface VGDetailViewController ()
 
 @property (retain, nonatomic) IBOutlet UIImageView *imgIcon;
 @property (retain, nonatomic) IBOutlet UIView *fieldsView;
+@property (retain, nonatomic) IBOutlet UIButton *btnViewTable;
+@property (retain, nonatomic) IBOutlet UIButton *btnEdit;
+@property (retain, nonatomic) IBOutlet UIButton *btnBack;
+@property (retain, nonatomic) IBOutlet UIButton *btnAdd;
+
 @property (retain, nonatomic) VGFieldsListViewController* fieldsViewController;
 @property (retain, nonatomic) VGTableViewController* tableViewController;
-@property (retain, nonatomic) Class classValue;
+@property (nonatomic, assign) SEL initMethod;
 
 @end
 
@@ -24,60 +33,58 @@
 
 #pragma mark - Init Functions
 
-- (id) initForAddNewObject:(Class)classValue {
+- (id)init
+{
     self = [super initWithNibName:@"VGDetailViewController" bundle:[NSBundle mainBundle]];
     if (self) {
-        self.initMethod = @selector(initForNewObject);
+        self.initMethod = @selector(initForCurrentUserState);
+    }
+    return self;
+}
+
+- (id) initWithChooseState:(Class) classValue {
+    self = [super initWithNibName:@"VGDetailViewController" bundle:[NSBundle mainBundle]];
+    if (self) {
+        self.initMethod = @selector(initForChooseState);
         self.classValue = classValue;
     }
     return self;
 }
 
-- (id) initForChooseExistObject:(Class)classValue {
+- (id) initWithEditState:(Class)classValue {
     self = [super initWithNibName:@"VGDetailViewController" bundle:[NSBundle mainBundle]];
     if (self) {
-        self.initMethod = @selector(initForChooseObject);
+        self.initMethod = @selector(intitForEditState);
+        self.classValue = classValue;
     }
     return self;
 }
 
-- (id)init{
-    self = [super initWithNibName:@"VGDetailViewController" bundle:[NSBundle mainBundle]];
-    if (self) {
-    }
-    return self;
-}
-
-- (void) initForChooseObject {
-    self.btnViewTable.hidden = YES;
-    
-    self.btnAdd.hidden = NO;
-    [self.btnAdd setTitle:@"Choose" forState:UIControlStateNormal];
-    self.btnBack.hidden = NO;
-    self.btnEdit.hidden = NO;
-}
-
-- (void) initForNewObject {
+- (void) intitForEditState {
     self.btnViewTable.hidden = YES;
     
     self.btnAdd.hidden = NO;
     self.btnBack.hidden = NO;
-    [self.btnBack setTitle:@"Cancel" forState:UIControlStateNormal];
     self.btnEdit.hidden = NO;
 }
 
-#pragma mark - View's cycle
+- (void) initBase {
+    self.btnViewTable.hidden = NO;
+    self.btnEdit.hidden = YES;
+    [self.btnAdd setTitle:kChoose forState:UIControlStateNormal];
+}
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // init self view
-    
-    if (self.initMethod != nil) {
-        [self performSelector:self.initMethod];
-    }
-    
-    self.imgIcon.image = [UIImage imageNamed:[VGAppDelegate getInstance].iconName];
-    // init fields view controller
+- (void) initForCurrentUserState {
+    [self initBase];
+    self.btnBack.hidden = YES;
+}
+
+- (void) initForChooseState {
+    [self initBase];
+    self.btnBack.hidden = NO;
+}
+
+- (void) initFieldsListViewController {
     self.fieldsViewController = [[VGFieldsListViewController new] autorelease];
     self.fieldsViewController.fields = self.fields;
     if (self.object != nil) {
@@ -91,17 +98,29 @@
     [self.fieldsView addSubview:self.fieldsViewController.view];
 }
 
+#pragma mark - View's cycle
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // init self view
+    
+    [self performSelector:self.initMethod];
+    self.imgIcon.image = [UIImage imageNamed:[VGAppDelegate getInstance].iconName];
+    [self initFieldsListViewController];
+}
+
 - (void)dealloc {
+    self.fields = nil;
+    self.object = nil;
+    self.imgIcon = nil;
+    self.fieldsView = nil;
+    self.btnViewTable = nil;
+    self.btnEdit = nil;
+    self.btnBack = nil;
+    self.btnAdd = nil;
+    self.fieldsViewController = nil;
     self.tableViewController = nil;
-    [_fields release];
-    [_fieldsViewController release];
-    [_object release];
-    [_imgIcon release];
-    [_fieldsView release];
-    [_btnViewTable release];
-    [_btnEdit release];
-    [_btnBack release];
-    [_btnAdd release];
+    self.classValue = nil;
     [super dealloc];
 }
 
@@ -112,28 +131,22 @@
     [self.navigationController pushViewController:self.tableViewController animated:YES];
 }
 
-- (IBAction)clickEdit:(id)sender {
-    if ([((UIButton*)sender).titleLabel.text isEqualToString:@"Edit"]) {
-        for (UIView* view in self.fieldsViewController.fieldsView.subviews) {
-            for (UITextField* textField in view.subviews) {
-                if ([textField isKindOfClass:[UITextField class]]) {
-                    textField.enabled = YES;
-                    textField.backgroundColor = [UIColor whiteColor];
-                }
+- (void) setEditModeForFields:(BOOL)editMode {
+    for (UIView* view in self.fieldsViewController.fieldsView.subviews) {
+        for (UIView* field in view.subviews) {
+            if ([field isKindOfClass:[UITextField class]]) {
+                ((UITextField*)field).enabled = editMode;
+            } else if ([field isKindOfClass:[UIButton class]]) {
+                ((UIButton*)field).enabled = editMode;
             }
+            field.backgroundColor = (editMode) ? [UIColor whiteColor] : [UIColor yellowColor];
         }
-        [((UIButton*)sender) setTitle:@"Save" forState:UIControlStateNormal];
-    } else {
-        for (UIView* view in self.fieldsViewController.fieldsView.subviews) {
-            for (UITextField* textField in view.subviews) {
-                if ([textField isKindOfClass:[UITextField class]]) {
-                    textField.enabled = NO;
-                    textField.backgroundColor = [UIColor yellowColor];
-                }
-            }
-        }
-        [((UIButton*)sender) setTitle:@"Edit" forState:UIControlStateNormal];
     }
+    [self.btnEdit setTitle: (editMode) ? kSave : kEdit forState:UIControlStateNormal];
+}
+
+- (IBAction)clickEdit:(id)sender {
+    [self setEditModeForFields:[((UIButton*)sender).titleLabel.text isEqualToString:kEdit]];
 }
 
 - (IBAction)clickBack:(id)sender {
@@ -141,17 +154,35 @@
 }
 
 - (IBAction)clickAdd:(id)sender {
-    if ([self.fieldsViewController saveDataToObject]) {
-        self.object = self.fieldsViewController.object;
-        VGTableViewController* parentViewController = [self.navigationController viewControllers][[self.navigationController viewControllers].count - 2];
-        if ([parentViewController.tableView respondsToSelector:@selector(addToTableMethod:)]) {
-            [parentViewController.tableView performSelector:@selector(addToTableMethod:) withObject:self.object];
-            [self.navigationController popViewControllerAnimated:YES];
+    if ([self.btnAdd.titleLabel.text isEqualToString:kAdd]) {
+        if ([self.fieldsViewController saveDataToObject]) {
+            VGTableViewController* parentViewController = [self.navigationController viewControllers][[self.navigationController viewControllers].count - 2];
+            if ([parentViewController.tableView respondsToSelector:@selector(addToTableMethod:)]) {
+                [parentViewController.tableView performSelector:@selector(addToTableMethod:) withObject:self.fieldsViewController.object];
+                [self.navigationController popViewControllerAnimated:YES];
+            } else {
+                NSLog(@"Error: parentViewController can't respond selector(addToTableMethod:)");
+            }
         } else {
-            NSLog(@"Error: parentViewController can't respond selector(addToTableMethod:)");
+            NSLog(@"(VGDetailViewContoller) Error: object is nill");
         }
+    } else if ([self.btnAdd.titleLabel.text isEqualToString:kChoose]) {
+        if ([self.object isKindOfClass:[VGUser class]]) {
+            if (((VGUser*)self.object).credential == VGCredentilasTypeExpert) {
+                [VGAppDelegate getInstance].currentExpert = (VGUser*)self.object;
+            } else if (((VGUser*)self.object).credential == VGCredentilasTypeEmployer) {
+                [VGAppDelegate getInstance].currentEmployer = (VGUser*)self.object; 
+            } else {
+                NSLog(@"VGDetailViewContoller) Error: incorect credential type of object : %u", ((VGUser*)self.object).credential);
+            }
+        } else if ([self.object isKindOfClass:[VGStudent class]]) {
+            [VGAppDelegate getInstance].currentStudent = (VGStudent*)self.object;
+        } else {
+            NSLog(@"VGDetailViewContoller) Error: incorect type of object : %@", [self.object class]);
+        }
+        [[VGAppDelegate getInstance] checkoutSession];
     } else {
-        NSLog(@"Error: object is nill");
+        NSLog(@"VGDetailViewContoller) Error: wrong button name : '%@' (should be 'Add' or 'Choose')", self.btnAdd.titleLabel.text);
     }
 }
 @end

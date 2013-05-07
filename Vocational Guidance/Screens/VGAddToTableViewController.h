@@ -12,7 +12,9 @@
 
 @property (nonatomic, assign) id target;
 @property (nonatomic, assign) SEL method;
+@property (nonatomic, retain) NSMutableArray* allRows;
+@property (nonatomic, retain) NSMutableArray* allColumns;
 
-- (id)initWithExistArray:(NSMutableArray*) existArray andFlag:(BOOL)isRow;
+- (id)initWithExistArray:(NSMutableArray*) existArray andFlag:(BOOL)isRow andGlobalArray:(NSMutableArray*)globalArray;
 
 @end

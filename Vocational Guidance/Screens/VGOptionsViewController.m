@@ -33,7 +33,7 @@ static NSString * CellIdentifier = @"OptionCell";
     
 	optionsController = [[VGOptionsViewController alloc] init];
 	optionsController.title = @"Main Menu";
-	optionsController.arrayOprions = options;
+	optionsController.arrayOptions = options;
 	optionsController.delegate = delegate;
 	
 	navController = [[UINavigationController alloc] initWithRootViewController:optionsController];
@@ -60,14 +60,14 @@ static NSString * CellIdentifier = @"OptionCell";
 
 - (void)dealloc
 {
-    self.arrayOprions = nil;
+    self.arrayOptions = nil;
     [super dealloc];
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.arrayOprions count];
+    return [self.arrayOptions count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -77,7 +77,7 @@ static NSString * CellIdentifier = @"OptionCell";
         cell = [[[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: CellIdentifier] autorelease];
     }
     
-    NSString *text = [self.arrayOprions objectAtIndex:indexPath.row];
+    NSString *text = [self.arrayOptions objectAtIndex:indexPath.row];
     
     cell.textLabel.text = text;
     
@@ -88,7 +88,7 @@ static NSString * CellIdentifier = @"OptionCell";
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *controllerName = [self.arrayOprions objectAtIndex:indexPath.row];
+    NSString *controllerName = [self.arrayOptions objectAtIndex:indexPath.row];
     [VGScreenNavigator navigateToScreen:controllerName];
     [self.popover dismissPopoverAnimated:YES];
     self.popover = nil;

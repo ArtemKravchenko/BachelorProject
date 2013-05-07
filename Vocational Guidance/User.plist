@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Can be empty</key>
+	<array>
+		<string>description</string>
+	</array>
 	<key>Icons</key>
 	<dict>
 		<key>Secretar</key>
@@ -15,13 +19,30 @@
 	</dict>
 	<key>Fields</key>
 	<array>
-		<string>login</string>
-		<string>password</string>
-		<string>credential</string>
-		<string>side</string>
-		<string>surname</string>
-		<string>name</string>
-		<string>description</string>
+		<dict>
+			<key>property name</key>
+			<string>firstName</string>
+			<key>field name</key>
+			<string>User name</string>
+		</dict>
+		<dict>
+			<key>field name</key>
+			<string>User surname</string>
+			<key>property name</key>
+			<string>secondName</string>
+		</dict>
+		<dict>
+			<key>property name</key>
+			<string>side.name</string>
+			<key>field name</key>
+			<string>Side</string>
+		</dict>
+		<dict>
+			<key>field name</key>
+			<string>Description</string>
+			<key>property name</key>
+			<string>description</string>
+		</dict>
 	</array>
 </dict>
 </plist>

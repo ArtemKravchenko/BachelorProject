@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "VGSavedScreenInfo.h"
 #import "VGMessageHandlerViewController.h"
+#import "VGBaseRequest.h"
 
-@interface VGBaseViewController : VGMessageHandlerViewController
+@interface VGBaseViewController : VGMessageHandlerViewController <VGBaseRequestDelegate>
 
 - (void) sendNewNavigationStack: (VGSavedScreenInfo *) screenInfo toObject: (id) target action: (SEL) action;
 

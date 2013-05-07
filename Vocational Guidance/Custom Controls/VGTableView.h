@@ -22,9 +22,9 @@ enum VGButtonClickedType : NSInteger {
 @protocol VGTableAddDelegate <NSObject>
 
 @optional
-- (void) rowDidAddWithName:(VGObject*)object;
-- (void) colDidAddWithName:(VGObject*)object;
-- (void) cellDidChangedAtRow:(VGObject*)row andColIndex:(VGObject*)col withValue:(NSString*)value  andWithOldValue:(NSString*)oldValue;
+- (void) rowDidAddWithName:(id<VGTableVariable>)object;
+- (void) colDidAddWithName:(id<VGTableVariable>)object;
+- (void) cellDidChangedAtRow:(id<VGTableVariable>)row andColIndex:(id<VGTableVariable>)col withValue:(NSString*)value  andWithOldValue:(NSString*)oldValue;
 - (void) cellWillChanging;
 - (void) objectWillAdding;
 

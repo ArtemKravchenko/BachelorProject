@@ -8,6 +8,8 @@
 
 #import "VGTableViewController.h"
 
+static NSString* const kCancel = @"Cancel";
+
 @interface VGTableViewController () {
     BOOL isSomethingWasChanged;
 }
@@ -38,25 +40,30 @@
     self.tableView.bounces = NO;
     self.tableView.parentViewController = self;
     // init graph view
-    self.graphView = [[VGGraphViewController new] autorelease];
-    self.graphView.view.frame = CGRectMake(0, 0, self.presentionView.frame.size.width, self.presentionView.frame.size.height);
-    self.graphView.view.hidden = YES;
-    self.graphView.user = self.user;
+    self.graphViewController = [[VGGraphViewController new] autorelease];
+    self.graphViewController.view.frame = CGRectMake(0, 0, self.presentionView.frame.size.width, self.presentionView.frame.size.height);
+    self.graphViewController.view.hidden = YES;
+    self.graphViewController.user = self.user;
     [self.presentionView addSubview:self.tableView];
     self.tableView.tableDetegate = self;
-    [self.presentionView addSubview:self.graphView.view];
+    [self.presentionView addSubview:self.graphViewController.view];
 }
 
 - (void)dealloc {
     self.user = nil;
     self.tableView = nil;
-    [_presentionView release];
-    [_btnEdit release];
-    [_btnSave release];
+    self.graphViewController = nil;
+    self.presentionView = nil;
+    self.btnEdit = nil;
+    self.btnSave = nil;
     [super dealloc];
 }
 
 #pragma mark - Actions
+
+- (IBAction)clickBack:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (IBAction)clickViewTransition:(id)sender {
     self.btnEdit.hidden = (((UIButton*)sender).tag == 12) ? YES : NO;
@@ -73,11 +80,11 @@
                        options:(isPressentTable)?UIViewAnimationOptionTransitionFlipFromLeft:UIViewAnimationOptionTransitionFlipFromRight
                     animations:^{
                         self.tableView.hidden = !isPressentTable;
-                        self.graphView.view.hidden = isPressentTable;
+                        self.graphViewController.view.hidden = isPressentTable;
                     }
                     completion:^(BOOL finished){
                         if (!isPressentTable) {
-                            [self.graphView reloadDataWithArray:[VGAppDelegate getInstance].currentUser.dataSet];
+                            [self.graphViewController reloadDataWithArray:[VGAppDelegate getInstance].currentUser.dataSet];
                         } else {
                             [self.tableView reloadData];
                         }
@@ -89,16 +96,16 @@
 
 - (void) editMode:(BOOL)canEdit {
     self.btnSave.hidden = !canEdit;
-    [self.btnEdit setTitle:(canEdit) ? @"Cancel" : @"Edit" forState:UIControlStateNormal];
+    [self.btnEdit setTitle:(canEdit) ? kCancel : kEdit forState:UIControlStateNormal];
     [self.tableView edtiMode:canEdit];
 }
 
 - (IBAction)clickEdit:(id)sender {
-    if ([self.btnEdit.titleLabel.text isEqualToString:@"Cancel"]) {
+    if ([self.btnEdit.titleLabel.text isEqualToString: kCancel]) {
         [[VGAppDelegate getInstance] cancelTransaction];
         [self.tableView reloadData];
     } 
-    BOOL editMode = ([self.btnEdit.titleLabel.text isEqualToString:@"Edit"]) ? YES : NO;
+    BOOL editMode = ([self.btnEdit.titleLabel.text isEqualToString:kEdit]) ? YES : NO;
     [self editMode:editMode];
 }
 
@@ -119,7 +126,7 @@
 
 #pragma mark - VGTable delegate
 
-- (void) rowDidAddWithName:(VGObject*)object {
+- (void) rowDidAddWithName:(id<VGTableVariable>)object {
     self.btnSave.enabled = YES;
     NSMutableDictionary* tmpDictionary = [NSMutableDictionary dictionary];
     [tmpDictionary setObject:[NSString stringWithFormat:@"%d", TS_ADDED_ROW] forKey:VG_TRANSACTION_TYPE];
@@ -128,7 +135,7 @@
     isSomethingWasChanged = YES;
 }
 
-- (void) colDidAddWithName:(VGObject*)object {
+- (void) colDidAddWithName:(id<VGTableVariable>)object {
     self.btnSave.enabled = YES;
     NSMutableDictionary* tmpDictionary = [NSMutableDictionary dictionary];
     [tmpDictionary setObject:[NSString stringWithFormat:@"%d", TS_ADDED_COL] forKey:VG_TRANSACTION_TYPE];
@@ -137,7 +144,7 @@
     isSomethingWasChanged = YES;
 }
 
-- (void) cellDidChangedAtRow:(VGObject*)row andColIndex:(VGObject*)col withValue:(NSString*)value andWithOldValue:(NSString *)oldValue {
+- (void) cellDidChangedAtRow:(id<VGTableVariable>)row andColIndex:(id<VGTableVariable>)col withValue:(NSString*)value andWithOldValue:(NSString *)oldValue {
     self.btnSave.enabled = YES;
     NSMutableDictionary* tmpDictionary = [NSMutableDictionary dictionary];
     [tmpDictionary setObject: [NSString stringWithFormat:@"%d", TS_CHANGED_CELL] forKey:VG_TRANSACTION_TYPE];

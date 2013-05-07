@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Can be empty</key>
+	<array>
+		<string>description</string>
+	</array>
 	<key>Icons</key>
 	<dict>
 		<key>Job</key>
@@ -9,8 +13,18 @@
 	</dict>
 	<key>Fields</key>
 	<array>
-		<string>name</string>
-		<string>description</string>
+		<dict>
+			<key>property name</key>
+			<string>name</string>
+			<key>field name</key>
+			<string>Name</string>
+		</dict>
+		<dict>
+			<key>propert name</key>
+			<string>description</string>
+			<key>field name</key>
+			<string>Description</string>
+		</dict>
 	</array>
 </dict>
 </plist>

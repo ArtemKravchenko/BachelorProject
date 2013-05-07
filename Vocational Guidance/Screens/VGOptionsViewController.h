@@ -11,7 +11,7 @@
 
 @interface VGOptionsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIPopoverControllerDelegate>
 
-@property (nonatomic, retain) NSArray *arrayOprions;
+@property (nonatomic, retain) NSArray *arrayOptions;
 @property (nonatomic, retain) UIPopoverController *popover;
 @property (nonatomic, assign) VGMessageHandlerViewController *delegate;
 

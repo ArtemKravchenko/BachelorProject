@@ -15,43 +15,59 @@ static const NSInteger keyHeight        = 352;
 static const NSInteger viewFrameOffsetY = 61;
 static const NSInteger viewBoundY       = 488;
 
-@interface VGTableView () {
-    VGAddToTableViewController *insideViewController;
-    VGButtonClickedType buttonClickedType;
-    UIButton *btnAddRow;
-    UIButton *btnAddCol;
-    BOOL canEdit;
-    NSString *tmpString;
-    VGDetailViewController* detailViewController;
-    NSString* rowPlistName;
-    NSString* colPlistName;
-}
+@interface VGTableView ()
 
+@property (nonatomic, retain) VGAddToTableViewController *insideViewController;
 @property (nonatomic, retain) UIPopoverController *popover;
+@property (nonatomic, assign) VGButtonClickedType buttonClickedType;
+@property (nonatomic, retain) UIButton *btnAddRow;
+@property (nonatomic, retain) UIButton *btnAddCol;
+@property (nonatomic, assign) BOOL canEdit;
+@property (nonatomic, retain) NSString *temporaryString;
+@property (nonatomic, retain) VGDetailViewController* detailViewController;
+@property (nonatomic, retain) NSString* rowPlistName;
+@property (nonatomic, retain) NSString* colPlistName;
 
 @end
 
 @implementation VGTableView
 
+- (void)dealloc
+{
+    self.insideViewController = nil;
+    self.user = nil;
+    self.tableDetegate = nil;
+    self.parentViewController = nil;
+    self.popover = nil;
+    self.btnAddRow = nil;
+    self.btnAddCol = nil;
+    self.temporaryString = nil;
+    self.detailViewController = nil;
+    self.rowPlistName = nil;
+    self.colPlistName = nil;
+    [super dealloc];
+}
+
+
 - (id)initWithFrame:(CGRect)frame andUser:(VGUser*) user;
 {
     self = [super initWithFrame:frame];
     if (self) {
-        canEdit = NO;
+        self.canEdit = NO;
         self.user = user;
         
         // init columns plist name
         switch ([VGAppDelegate getInstance].currentUser.credential) {
             case VGCredentilasTypeEmployer:
-                colPlistName = @"Skill";
+                self.colPlistName = @"Skill";
                 break;
                 
             case VGCredentilasTypeExpert:
-                colPlistName = @"Subject";
+                self.colPlistName = @"Subject";
                 break;
                 
             case VGCredentilasTypeSecretar:
-                colPlistName = @"Student";
+                self.colPlistName = @"Student";
                 break;
                 
             default:
@@ -62,15 +78,15 @@ static const NSInteger viewBoundY       = 488;
         // init rows plist name
         switch ([VGAppDelegate getInstance].currentUser.credential) {
             case VGCredentilasTypeEmployer:
-                rowPlistName = @"Job";
+                self.rowPlistName = @"Job";
                 break;
                 
             case VGCredentilasTypeExpert:
-                rowPlistName = @"Skill";
+                self.rowPlistName = @"Skill";
                 break;
                 
             case VGCredentilasTypeSecretar:
-                rowPlistName = @"Subject";
+                self.rowPlistName = @"Subject";
                 break;
                 
             default:
@@ -105,6 +121,26 @@ static const NSInteger viewBoundY       = 488;
     [self addSubview:btnObjectHeader];
 }
 
+- (UIButton*) buttonWithSelector:(SEL)selector andFrame:(CGRect)frame {
+    UIButton* button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [button addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];
+    button.enabled = NO;
+    [button setTitle:@"+" forState:UIControlStateNormal];
+    button.frame = frame;
+    return button;
+}
+
+- (UITextField*) textFieldWithFrame:(CGRect)frame andTag:(NSInteger)tag {
+    UITextField *cell = [[[UITextField alloc] initWithFrame: frame] autorelease];
+    cell.backgroundColor = (self.canEdit) ? [UIColor whiteColor] : [UIColor grayColor];
+    cell.textAlignment = NSTextAlignmentCenter;
+    cell.enabled = self.canEdit;
+    cell.tag = tag;
+    cell.delegate = self;
+    cell.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    return cell;
+}
+
 - (void) reloadData {
     [self removeAllFromView];
     
@@ -112,59 +148,41 @@ static const NSInteger viewBoundY       = 488;
     NSInteger offsetX = 2;
     NSInteger offsetY = 2;
     
-    if (btnAddRow == nil) {
-        btnAddRow = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [btnAddRow addTarget:self action:@selector(clickAddRow) forControlEvents:UIControlEventTouchUpInside];
-        btnAddRow.enabled = NO;
-        [btnAddRow setTitle:@"+" forState:UIControlStateNormal];
-        btnAddRow.frame = CGRectMake(1, cellHeight / 2 , cellWidth / 2, cellHeight / 2);
-        [self addSubview:btnAddRow];
+    if (self.btnAddRow == nil) {
+        self.btnAddRow = [self buttonWithSelector:@selector(clickAddRow) andFrame: CGRectMake(1, cellHeight / 2 , cellWidth / 2, cellHeight / 2)];
+        [self addSubview:self.btnAddRow];
     }
     
-    if (btnAddCol == nil) {
-        btnAddCol = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [btnAddCol addTarget:self action:@selector(clickAddCol) forControlEvents:UIControlEventTouchUpInside];
-        btnAddCol.enabled = NO;
-        [btnAddCol setTitle:@"+" forState:UIControlStateNormal];
-        btnAddCol.frame = CGRectMake(cellWidth / 2 , 1 , cellWidth / 2, cellHeight / 2);
-        [self addSubview:btnAddCol];
+    if (self.btnAddCol == nil) {
+        self.btnAddCol = [self buttonWithSelector:@selector(clickAddCol) andFrame:CGRectMake(cellWidth / 2 , 1 , cellWidth / 2, cellHeight / 2)];
+        [self addSubview:self.btnAddCol];
     }
     
     // init columns headers
     for (int i  = 0; i < self.user.columns.count; i++) {
         // Init label
-        [self addObjectOnTableWithFrame:CGRectMake(cellWidth + cellWidth * i + offsetX, 0, cellWidth, cellHeight) andTag:(1000 + i) andTitle:[NSString stringWithFormat:@"%@", ((VGObject*)self.user.columns[i]).name] andSelector:@selector(clickColumnHeader:)];
-        
+        [self addObjectOnTableWithFrame:CGRectMake(cellWidth + cellWidth * i + offsetX, 0, cellWidth, cellHeight) andTag:(1000 + i)
+                               andTitle:[NSString stringWithFormat:@"%@", ((id<VGTableVariable>)self.user.columns[i]).name] andSelector:@selector(clickColumnHeader:)];
         offsetX += 2;
     }
     
     // init rows headers
     for (int i = 0; i < self.user.rows.count; i++) {
-        [self addObjectOnTableWithFrame:CGRectMake(0, cellHeight * i + offsetY + cellHeight, cellWidth, cellHeight) andTag:(2000 + i) andTitle:[NSString stringWithFormat:@"%@", ((VGObject*)self.user.rows[i]).name] andSelector:@selector(clickRowHeader:)];
+        [self addObjectOnTableWithFrame:CGRectMake(0, cellHeight * i + offsetY + cellHeight, cellWidth, cellHeight) andTag:(2000 + i)
+                               andTitle:[NSString stringWithFormat:@"%@", ((id<VGTableVariable>)self.user.rows[i]).name] andSelector:@selector(clickRowHeader:)];
         
         offsetX = 2;
         // init cells
         for (NSInteger j = 0; j < self.user.columns.count; j++) {
-            UITextField *cell = [[[UITextField alloc] initWithFrame:CGRectMake(cellWidth + cellWidth * j + offsetX, cellHeight * i + offsetY + cellHeight, cellWidth, cellHeight)] autorelease];
-            cell.backgroundColor = (canEdit) ? [UIColor whiteColor] : [UIColor grayColor];
-            cell.textAlignment = NSTextAlignmentCenter;
-            cell.enabled = canEdit;
-            cell.tag = i * self.user.columns.count + j;
-            cell.delegate = nil;
-            cell.delegate = self;
-            cell.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K LIKE %@ AND %K LIKE %@", @"row.object_id", ((VGObject*)self.user.rows[i]).object_id, @"col.object_id", ((VGObject*)self.user.columns[j]).object_id];
+            UITextField *cell = [self textFieldWithFrame:CGRectMake(cellWidth + cellWidth * j + offsetX, cellHeight * i + offsetY + cellHeight, cellWidth, cellHeight) andTag:i * self.user.columns.count + j];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K LIKE %@ AND %K LIKE %@", @"row.objectId", ((id<VGTableVariable>)self.user.rows[i]).objectId, @"col.objectId", ((id<VGTableVariable>)self.user.columns[j]).objectId];
             NSMutableArray *tmpValue = [NSMutableArray arrayWithArray:self.user.dataSet];
             [tmpValue filterUsingPredicate:predicate];
             if (tmpValue.count) {
                 cell.text = [NSString stringWithFormat:@"%@", ((VGBaseDataModel*)tmpValue[0]).value];
             } else {
                 cell.text = [NSString stringWithFormat:@"%d", 0];
-                VGBaseDataModel* tmpModel = [[VGBaseDataModel new] autorelease];
-                tmpModel.row = self.user.rows[i];
-                tmpModel.col = self.user.columns[j];
-                tmpModel.value = [NSString stringWithFormat:@"%d", 0];
-                tmpModel.dataId = [NSString stringWithFormat:@"tmp%d", ++[VGAppDelegate getInstance].tmpGlobalId];
+                VGBaseDataModel* tmpModel = [self baseModelWithZeroValueForRow:self.user.rows[i] andColumn:self.user.columns[j] andId:[NSString stringWithFormat:@"tmp%d", ++[VGAppDelegate getInstance].tmpGlobalId]];
                 [self.user.dataSet addObject:tmpModel];
             }
             [self addSubview:cell];
@@ -175,30 +193,25 @@ static const NSInteger viewBoundY       = 488;
     self.contentSize = CGSizeMake(cellWidth + cellWidth * self.user.columns.count + offsetX , cellHeight * self.user.rows.count + offsetY + cellHeight);
 }
 
-- (void)drawRect:(CGRect)rect
+- (void) drawRect:(CGRect)rect
 {
     [self reloadData];
 }
 
-- (void)dealloc
-{
-    colPlistName = nil;
-    rowPlistName = nil;
-    self.parentViewController = nil;
-    detailViewController = nil;
-    self.user = nil;
-    tmpString = nil;
-    btnAddCol = nil;
-    btnAddRow = nil;
-    self.popover = nil;
-    [super dealloc];
+- (VGBaseDataModel*) baseModelWithZeroValueForRow:(id<VGTableVariable>)row andColumn:(id<VGTableVariable>)column andId:(NSString*)dataId {
+    VGBaseDataModel* model = [[VGBaseDataModel new] autorelease];
+    model.row = row;
+    model.col = column;
+    model.value = [NSString stringWithFormat:@"%d", 0];
+    model.dataId = dataId;
+    return model;
 }
 
 #pragma mark - Text field delegate
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     NSInteger differece = (textField.frame.origin.y - viewFrameOffsetY > viewBoundY) ? textField.frame.origin.y - viewFrameOffsetY - viewBoundY : 0;
-    tmpString = textField.text;
+    self.temporaryString = textField.text;
     NSInteger tmpvalue = keyHeight - (textField.frame.origin.y + textField.frame.size.height) + differece;
     if (tmpvalue < 0) {
         [self animateChangeOriginYView:self forValue: (tmpvalue - textField.frame.size.height)];
@@ -218,7 +231,7 @@ static const NSInteger viewBoundY       = 488;
     }
     
     if ([textField.text floatValue] > 100) {
-        textField.text = tmpString;
+        textField.text = self.temporaryString;
     } else if ([textField.text floatValue] >= 0) {
         textField.text = [NSString stringWithFormat:@"%d", [textField.text integerValue]];
     }
@@ -226,7 +239,7 @@ static const NSInteger viewBoundY       = 488;
     if (self.tableDetegate != nil) {
         NSInteger rowIndex = textField.tag / self.user.columns.count;
         NSInteger colIndex = textField.tag % self.user.columns.count;
-        [self.tableDetegate cellDidChangedAtRow:self.user.rows[rowIndex] andColIndex:self.user.columns[colIndex] withValue:textField.text andWithOldValue: tmpString];
+        [self.tableDetegate cellDidChangedAtRow:self.user.rows[rowIndex] andColIndex:self.user.columns[colIndex] withValue:textField.text andWithOldValue: self.temporaryString];
     }
     
     return YES;
@@ -246,33 +259,33 @@ static const NSInteger viewBoundY       = 488;
 #pragma mark - Edit mode 
 
 - (void) edtiMode:(BOOL)value {
-    canEdit = value;
+    self.canEdit = value;
     for (UIView * textField in self.subviews) {
         if ([textField isKindOfClass: [UITextField class]]) {
-            ((UITextField*)textField).enabled = canEdit;
-            ((UITextField*)textField).backgroundColor = (canEdit) ? [UIColor whiteColor] : [UIColor grayColor];
+            ((UITextField*)textField).enabled = self.canEdit;
+            ((UITextField*)textField).backgroundColor = (self.canEdit) ? [UIColor whiteColor] : [UIColor grayColor];
         }
     }
-    btnAddCol.enabled = canEdit;
-    btnAddRow.enabled = canEdit;
+    self.btnAddCol.enabled = self.canEdit;
+    self.btnAddRow.enabled = self.canEdit;
 }
 
 #pragma mark - Actions
 
 - (void) clickRowHeader:(UIButton*)sender {
-    [self detailWithPushingForExistObject:self.user.rows[sender.tag - 2000]  andPlistName:rowPlistName];
+    [self detailWithPushingForExistObject:self.user.rows[sender.tag - 2000]  andPlistName:self.rowPlistName];
 }
 
 - (void) clickColumnHeader:(UIButton*)sender {
-    [self detailWithPushingForExistObject: self.user.columns[sender.tag - 1000] andPlistName:colPlistName];
+    [self detailWithPushingForExistObject: self.user.columns[sender.tag - 1000] andPlistName: self.colPlistName];
 }
 
-- (void) detailWithPushingForExistObject:(VGObject*) object andPlistName:(NSString*) name {
+- (void) detailWithPushingForExistObject:(id<VGTableVariable>) object andPlistName:(NSString*) name {
     NSMutableArray* fields = [self fieldsFromPlistNameWithName:name];
-    detailViewController = [[[VGDetailViewController alloc] initForChooseExistObject:[object class]] autorelease];
-    detailViewController.object = object;
-    detailViewController.fields = fields;
-    [self.parentViewController.navigationController pushViewController:detailViewController animated:YES];
+    self.detailViewController = [[[VGDetailViewController alloc] initWithEditState:[object class]] autorelease];
+    self.detailViewController.object = object;
+    self.detailViewController.fields = fields;
+    [self.parentViewController.navigationController pushViewController:self.detailViewController animated:YES];
 }
 
 - (NSMutableArray*) fieldsFromPlistNameWithName:(NSString*) name {
@@ -283,8 +296,8 @@ static const NSInteger viewBoundY       = 488;
     return [contentDictionary objectForKey:@"Fields"];
 }
 
-- (void) addToTableMethod:(VGObject*)object {
-    if (buttonClickedType == VGButtonClickedTypeRow) {
+- (void) addToTableMethod:(id<VGTableVariable>)object {
+    if (self.buttonClickedType == VGButtonClickedTypeRow) {
         [self.user.rows addObject:object];
         if (self.tableDetegate != nil) {
             [self.tableDetegate rowDidAddWithName:object];
@@ -300,48 +313,56 @@ static const NSInteger viewBoundY       = 488;
     self.popover = nil;
 }
 
-- (void) presentExistingObject:(VGObject*)object {
+- (void) presentExistingObject:(id<VGTableVariable>)object {
     [self.popover dismissPopoverAnimated:YES];
-    if (buttonClickedType == VGButtonClickedTypeRow) {
-        [self detailWithPushingForExistObject:object andPlistName:rowPlistName];
+    if (self.buttonClickedType == VGButtonClickedTypeRow) {
+        [self detailWithPushingForExistObject:object andPlistName:self.rowPlistName];
     } else {
-        [self detailWithPushingForExistObject:object  andPlistName:colPlistName];
+        [self detailWithPushingForExistObject:object  andPlistName: self.colPlistName];
     }
 }
 
 - (void) clickAddRow {
-    if (self.tableDetegate != nil) {
-        [self.tableDetegate cellWillChanging];
-    }
-    
-    buttonClickedType = VGButtonClickedTypeRow;
-    insideViewController = [[[VGAddToTableViewController alloc] initWithExistArray:self.user.rows andFlag:YES] autorelease];
-    insideViewController.method = @selector(presentExistingObject:);
-    insideViewController.target = self;
-    
-    self.popover = [[[UIPopoverController alloc] initWithContentViewController:insideViewController] autorelease];
-    [self.popover setPopoverContentSize:CGSizeMake(320, 480)];
-    [self.popover presentPopoverFromRect: CGRectMake(25, 55, 1, 1)
-                             inView: self
-           permittedArrowDirections: UIPopoverArrowDirectionUp
-                                animated: YES];
+    [self baseAddWithClickedType:VGButtonClickedTypeRow];
 }
 
 - (void) clickAddCol {
+    [self baseAddWithClickedType:VGButtonClickedTypeCol];
+}
+
+- (void) baseAddWithClickedType:(VGButtonClickedType)clickedType {
     if (self.tableDetegate != nil) {
         [self.tableDetegate cellWillChanging];
     }
     
-    buttonClickedType = VGButtonClickedTypeCol;
-    insideViewController = [[[VGAddToTableViewController alloc] initWithExistArray:self.user.columns andFlag:NO] autorelease];
-    insideViewController.method = @selector(presentExistingObject:);
-    insideViewController.target = self;
+    NSMutableArray* globaleArray = nil;
+    self.buttonClickedType = clickedType;
     
-    self.popover = [[[UIPopoverController alloc] initWithContentViewController:insideViewController] autorelease];
+    switch (self.user.credential) {
+        case VGCredentilasTypeSecretar:
+            globaleArray = (self.buttonClickedType == VGButtonClickedTypeRow) ? [NSMutableArray arrayWithArray: [VGAppDelegate getInstance].allSubjects] : [NSMutableArray arrayWithArray: [VGAppDelegate getInstance].allStudents];
+            break;
+            
+        case VGCredentilasTypeExpert:
+            globaleArray = (self.buttonClickedType == VGButtonClickedTypeRow) ? [NSMutableArray arrayWithArray:[VGAppDelegate getInstance].allSkills] : [NSMutableArray arrayWithArray:[VGAppDelegate getInstance].allSubjects];
+            break;
+            
+        case VGCredentilasTypeEmployer:
+            globaleArray = (self.buttonClickedType == VGButtonClickedTypeRow) ? [NSMutableArray arrayWithArray:[VGAppDelegate getInstance].allVacancies] : [NSMutableArray arrayWithArray:[VGAppDelegate getInstance].allSkills];
+            break;
+            
+        default:
+            break;
+    }
+    
+    self.insideViewController = [[[VGAddToTableViewController alloc] initWithExistArray:(self.buttonClickedType == VGButtonClickedTypeRow) ? self.user.rows : self.user.columns
+                                                                                andFlag:(self.buttonClickedType == VGButtonClickedTypeRow) ? YES : NO andGlobalArray:globaleArray] autorelease];
+    self.insideViewController.target = self;
+    self.popover = [[[UIPopoverController alloc] initWithContentViewController:self.insideViewController] autorelease];
     [self.popover setPopoverContentSize:CGSizeMake(320, 480)];
-    [self.popover presentPopoverFromRect: CGRectMake(90, 15, 1, 1)
+    [self.popover presentPopoverFromRect: (self.buttonClickedType == VGButtonClickedTypeRow) ? CGRectMake(25, 55, 1, 1) : CGRectMake(90, 15, 1, 1)
                                   inView: self
-                permittedArrowDirections: UIPopoverArrowDirectionLeft
+                permittedArrowDirections: UIPopoverArrowDirectionUp
                                 animated: YES];
 }
 
@@ -349,10 +370,10 @@ static const NSInteger viewBoundY       = 488;
 
 - (void) createNewObjectWithFlag:(NSNumber*) isRow {
     [self.popover dismissPopoverAnimated:YES];
-    detailViewController = [[[VGDetailViewController alloc] initForAddNewObject:([isRow boolValue]) ? [self.user.rows[0] class] : [self.user.columns[0] class]] autorelease];
-    NSMutableArray* fields = [self fieldsFromPlistNameWithName:([isRow boolValue]) ? rowPlistName : colPlistName];
-    detailViewController.fields = fields;
-    [self.parentViewController.navigationController pushViewController:detailViewController animated:YES];
+    self.detailViewController = [[[VGDetailViewController alloc] initWithEditState:([isRow boolValue]) ? [self.user.rows[0] class] : [self.user.columns[0] class]] autorelease];
+    NSMutableArray* fields = [self fieldsFromPlistNameWithName:([isRow boolValue]) ? self.rowPlistName : self.colPlistName];
+    self.detailViewController.fields = fields;
+    [self.parentViewController.navigationController pushViewController:self.detailViewController animated:YES];
 }
 
 @end

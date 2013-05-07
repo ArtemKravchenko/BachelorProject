@@ -17,4 +17,8 @@
 
 + (NSMutableDictionary*) screenMapping;
 
++ (void) showResultButton;
+
++ (void) hideResultButton;
+
 @end

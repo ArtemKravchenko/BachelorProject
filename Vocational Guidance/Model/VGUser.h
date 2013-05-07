@@ -7,8 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "VGAppDelegate.h"
-#import "VGObject.h"
+#import "VGSide.h"
 
 typedef enum
 {
@@ -19,16 +18,32 @@ typedef enum
     VGCredentilasTypeStudent = 5
 } VGCredentilasType;
 
-@interface VGUser : VGObject
 
-@property (nonatomic, retain) NSString*         surname;
-@property (nonatomic, retain) NSString*         side;
+@protocol VGTableVariable <NSObject>
+
+@property (nonatomic, retain) NSString* objectId;
+@property (nonatomic, retain) NSString* name;
+@property (nonatomic, retain) NSString* description;
+
+@end
+
+@protocol VGPerson <NSObject, VGTableVariable>
+
+@property (nonatomic, retain) NSString* firstName;
+@property (nonatomic, retain) NSString* secondName;
+@property (nonatomic, retain) NSString* age;
+@property (nonatomic, retain) VGSide*   side;
+
+@end
+
+@interface VGUser : NSObject <VGPerson, VGObjectToJSON>
+
 @property (nonatomic, retain) NSString*         login;
 @property (nonatomic, retain) NSString*         password;
-@property (nonatomic, assign) VGCredentilasType credential;
 @property (nonatomic, retain) NSMutableArray*   dataSet;
 @property (nonatomic, retain) NSMutableArray*   rows;
 @property (nonatomic, retain) NSMutableArray*   columns;
+@property (nonatomic, assign) VGCredentilasType credential;
 
 @property (readonly, retain) NSString* credentialToString;
 @end

@@ -16,7 +16,7 @@ static NSString* const kSearchPersonsUrlRoute =              @"";
 {
     self = [super init];
     if (self) {
-        self.params = [NSString stringWithFormat:@"%@/%@/%@/%@/%@/%@", kSearchPersonsUrlRoute, user.login, user.password, user.side, user.surname, user.name];
+        self.params = [NSString stringWithFormat:@"%@/%@/%@/%@/%@/%@", kSearchPersonsUrlRoute, user.login, user.password, user.side, user.secondName, user.firstName];
     }
     return self;
 }

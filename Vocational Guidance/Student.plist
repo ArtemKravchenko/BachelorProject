@@ -2,15 +2,48 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Can be empty</key>
+	<array>
+		<string>description</string>
+	</array>
 	<key>Fields</key>
 	<array>
-		<string>cardNumber</string>
-		<string>studentName</string>
-		<string>studentSurname</string>
-		<string>email</string>
-		<string>side</string>
-		<string>age</string>
-		<string>description</string>
+		<dict>
+			<key>field name</key>
+			<string>Card number</string>
+			<key>property name</key>
+			<string>objectId</string>
+		</dict>
+		<dict>
+			<key>property name</key>
+			<string>firstName</string>
+			<key>field name</key>
+			<string>Student name</string>
+		</dict>
+		<dict>
+			<key>field name</key>
+			<string>Student surname</string>
+			<key>property name</key>
+			<string>secondName</string>
+		</dict>
+		<dict>
+			<key>property name</key>
+			<string>side.name</string>
+			<key>field name</key>
+			<string>Side</string>
+		</dict>
+		<dict>
+			<key>property name</key>
+			<string>age</string>
+			<key>field name</key>
+			<string>Age</string>
+		</dict>
+		<dict>
+			<key>field name</key>
+			<string>Description</string>
+			<key>property name</key>
+			<string>description</string>
+		</dict>
 	</array>
 	<key>Icons</key>
 	<dict>

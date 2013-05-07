@@ -12,7 +12,7 @@
 
 @optional
 
-- (void) requestDidFinishSuccessful;
+- (void) requestDidFinishSuccessful:(NSData*)data;
 - (void) requestDidFinishFail:(NSError**)error;
 
 @end

@@ -7,22 +7,17 @@
 //
 
 #import "VGBaseViewController.h"
-#import "VGObject.h"
 #import "VGAppDelegate.h"
 
 @interface VGDetailViewController : VGBaseViewController
 
-@property (nonatomic, retain) VGObject* object;
+@property (nonatomic, retain) id<VGTableVariable> object;
 @property (nonatomic, retain) NSMutableArray* fields;
-@property (retain, nonatomic) IBOutlet UIButton *btnViewTable;
-@property (retain, nonatomic) IBOutlet UIButton *btnEdit;
-@property (retain, nonatomic) IBOutlet UIButton *btnBack;
-@property (retain, nonatomic) IBOutlet UIButton *btnAdd;
-@property (nonatomic, assign) SEL initMethod;
+@property (retain, nonatomic) Class classValue;
 
-// Factory
+// Factory methods
 
-- (id) initForAddNewObject:(Class)classValue;
-- (id) initForChooseExistObject:(Class)classValue;
+- (id) initWithChooseState:(Class) classValue;
+- (id) initWithEditState:(Class)classValue;
 
 @end

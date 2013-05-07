@@ -7,16 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "VGObject.h"
+#import "VGUser.h"
 
-@interface VGStudent : VGObject
 
-@property (nonatomic, retain) NSString* cardNumber;
-@property (nonatomic, retain) NSString* studentName;
-@property (nonatomic, retain) NSString* studentSurname;
-@property (nonatomic, retain) NSString* email;
-@property (nonatomic, retain) NSString* side;
-@property (nonatomic, assign) NSString* age;
-@property (nonatomic, retain) NSString* description;
+@interface VGStudent : NSObject <VGPerson, VGObjectToJSON>
 
 @end

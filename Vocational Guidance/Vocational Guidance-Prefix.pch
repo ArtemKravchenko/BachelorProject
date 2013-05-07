@@ -16,8 +16,6 @@
 
 #define PO_NAV_OPTIONS                              1001
 
-static NSString* const kSkills                              = @"skills";
-
 static NSInteger const TS_ADDED_ROW                         = 1;
 static NSInteger const TS_ADDED_COL                         = 2;
 static NSInteger const TS_CHANGED_CELL                      = 3;
@@ -30,3 +28,15 @@ static NSString* const VG_OBJECT_NAME                       = @"obj_name";
 static NSString* const VG_OLD_VALUE                         = @"old_value";
 
 static NSString* const VG_BASE_URL                          = @"";
+
+static NSString* const kObject                              = @"object";
+static NSString* const kFields                              = @"fields";
+static NSString* const kEmptyFields                         = @"empty fields";
+static NSString* const kStudent                             = @"Student";
+static NSString* const kResults                             = @"Results";
+static NSString* const kEdit                                = @"Edit";
+static NSString* const kObjectsType                         = @"objects type";
+static NSString* const kStudentList                         = @"Students List";
+static NSString* const kExpertList                          = @"Experts List";
+static NSString* const kEmployerList                        = @"Employers List";
+static NSString* const kUser                                = @"User";

@@ -161,7 +161,7 @@ static NSString * CellIdentifier = @"GraphCell";
     for (NSInteger i = 0; i < self.user.columns.count; i++) {
         originX = offsetX + graphItemWidth  * i;
         originY = offsetY;
-        [self addItemWithOriginX:originX andOriginY:originY andValue: ((VGObject*)self.user.columns[i]).name];
+        [self addItemWithOriginX:originX andOriginY:originY andValue: ((id<VGTableVariable>)self.user.columns[i]).name];
         offsetX += deltaX;
         fullOffsetCol = originX;
     }
@@ -172,7 +172,7 @@ static NSString * CellIdentifier = @"GraphCell";
         originX = offsetX + graphItemWidth  * i;
         originY = offsetY;
         
-        [self addItemWithOriginX:originX andOriginY:originY andValue: ((VGObject*)self.user.rows[i]).name];
+        [self addItemWithOriginX:originX andOriginY:originY andValue: ((id<VGTableVariable>)self.user.rows[i]).name];
         offsetX += deltaX;
         fullOffsetRow = originX;
     }
@@ -207,7 +207,7 @@ static NSString * CellIdentifier = @"GraphCell";
             offsetX = startOffset;
             offsetY = startOffset;
             for (NSInteger j = 0; j < self.user.columns.count; j++) {
-                NSPredicate* predicate = [NSPredicate predicateWithFormat:@"%K LIKE %@ && %K LIKE %@", @"row.object_id", ((VGObject*)self.user.rows[i]).object_id, @"col.object_id", ((VGObject*)self.user.columns[j]).object_id];
+                NSPredicate* predicate = [NSPredicate predicateWithFormat:@"%K LIKE %@ && %K LIKE %@", @"row.objectId", ((id<VGTableVariable>)self.user.rows[i]).objectId, @"col.objectId", ((id<VGTableVariable>)self.user.columns[j]).objectId];
                 NSMutableArray *tmpArray = [NSMutableArray arrayWithArray: self.tableValues];
                 [tmpArray filterUsingPredicate:predicate];
                 if (tmpArray.count) {

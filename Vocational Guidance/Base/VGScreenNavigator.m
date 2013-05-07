@@ -16,12 +16,14 @@
 #import "VGPresentViewController.h"
 #import "VGUser.h"
 #import "VGDetailViewController.h"
+#import "VGResultViewController.h"
+#import "VGUtilities.h"
+
+static NSString* const kMyDetails = @"My Details";
+static NSString* const kMyUserList = @"Users List";
+
 
 static NSMutableDictionary *screenMapping = nil;
-
-@interface VGScreenNavigator ()
-
-@end
 
 @implementation VGScreenNavigator
 
@@ -39,128 +41,39 @@ static NSMutableDictionary *screenMapping = nil;
 + (void) initStartScreenMapping {
     screenMapping = [[NSMutableDictionary alloc] init];
     
-    VGCredentilasType credential = [VGAppDelegate getInstance].currentUser.credential;
+    [self fillScreenMappingWitCredentialType:[VGAppDelegate getInstance].currentUser.credential];
+}
+
++ (void) fillScreenMappingWitCredentialType:(VGCredentilasType)credentialType {
+    VGSavedScreenInfo *screenInfo = nil;
+    screenInfo = [VGSavedScreenInfo new];
     
-    switch (credential) {
-        case VGCredentilasTypeExpert:
-            [self fillScreenMappingWithCredentialTypeExpert];
-            break;
+    if (credentialType != VGCredentilasTypeManager) {
         
-        case VGCredentilasTypeManager:
-            [self fillScreenMappingWithCredentialTypeManager];
-            break;
-            
-        case VGCredentilasTypeSecretar:
-            [self fillScreenMappingWithCredentialTypeSecretar];
-            break;
-            
-        case VGCredentilasTypeEmployer:
-            [self fillScreenMappingWithCredentialTypeEmployer];
-            break;
-            
-        default:
-            [self fillScreenMappingWithCredentialTypeAnonymous];
-            break;
+        // Set class value
+        screenInfo.classValue = [VGDetailViewController class];
+        // Set title
+        screenInfo.title = kMyDetails;
+        // Set params
+        NSMutableDictionary* params = [NSMutableDictionary dictionary];
+        [params setObject:[VGAppDelegate getInstance].currentUser forKey:kObject];
+        NSMutableDictionary* allFields = [VGUtilities fieldsForCredentialType:credentialType];
+        [params setObject:allFields[kFields] forKey:kFields];
+        [params setObject:allFields[kEmptyFields] forKey:kEmptyFields];
+        screenInfo.params = params;
+        
+        [screenMapping setObject:screenInfo forKey: kMyDetails];
+        
+    } else {
+        
+        // Set clas value
+        screenInfo.classValue = [VGSearchViewController class];
+        // Set title
+        screenInfo.title = kMyUserList;
+        
+        [screenMapping setObject:screenInfo forKey: kMyUserList];
+        
     }
-}
-
-+ (NSArray*) fieldsForCredentialType:(VGCredentilasType)credentialType {
-    NSArray* fields = nil;
-    NSDictionary* contentDictionary = nil;
-    
-    NSString* credentialName = nil;
-    switch (credentialType) {
-        case VGCredentilasTypeEmployer:
-            credentialName = @"User";
-            break;
-            
-        case VGCredentilasTypeExpert:
-            credentialName = @"User";
-            break;
-            
-        case VGCredentilasTypeManager:
-            credentialName = @"User";
-            break;
-            
-        case VGCredentilasTypeSecretar:
-            credentialName = @"User";
-            break;
-            
-        default:
-            credentialName = @"Student";
-            break;
-    }
-    
-    if (credentialName != nil) {
-        NSString* plistPath = [[NSBundle mainBundle] pathForResource:credentialName ofType:@"plist"];
-        contentDictionary = [NSDictionary dictionaryWithContentsOfFile:plistPath];
-        fields = [contentDictionary objectForKey:@"Fields"];
-        NSDictionary* iconDictionary = [contentDictionary objectForKey:@"Icons"];
-        [VGAppDelegate getInstance].iconName = [iconDictionary objectForKey:[VGAppDelegate getInstance].currentUser.credentialToString];
-    }
-    return fields;
-}
-
-+ (void) fillScreenMappingWithCredentialTypeManager {
-    
-    VGSavedScreenInfo *screenInfo = nil;
-    
-    screenInfo = [VGSavedScreenInfo new];
-    screenInfo.classValue = [VGSearchViewController class];
-    screenInfo.title = @"Users List";
-    [screenMapping setObject:screenInfo forKey: @"Users List"];
-    [screenInfo release];
-}
-
-+ (void) fillScreenMappingWithCredentialTypeEmployer {
-    
-    VGSavedScreenInfo *screenInfo = nil;
-    
-    screenInfo = [VGSavedScreenInfo new];
-    screenInfo.classValue = [VGDetailViewController class];
-    screenInfo.title = @"My Detail's";
-    NSMutableDictionary* params = [NSMutableDictionary dictionary];
-    [params setObject:[VGAppDelegate getInstance].currentUser forKey:@"object"];
-    NSArray* fields = [self fieldsForCredentialType:VGCredentilasTypeEmployer];
-    [params setObject:fields forKey:@"fields"];
-    screenInfo.params = params;
-    [screenMapping setObject:screenInfo forKey: @"My Detail's"];
-    [screenInfo release];
-    
-    [self fillScreenMappingWithCredentialTypeAnonymous];
-}
-
-+ (void) fillScreenMappingWithCredentialTypeExpert {
-    
-    VGSavedScreenInfo *screenInfo = nil;
-    
-    screenInfo = [VGSavedScreenInfo new];
-    screenInfo.classValue = [VGDetailViewController class];
-    screenInfo.title = @"My Detail's";
-    NSMutableDictionary* params = [NSMutableDictionary dictionary];
-    [params setObject:[VGAppDelegate getInstance].currentUser forKey:@"object"];
-    NSArray* fields = [self fieldsForCredentialType:VGCredentilasTypeExpert];
-    [params setObject:fields forKey:@"fields"];
-    screenInfo.params = params;
-    [screenMapping setObject:screenInfo forKey: @"My Detail's"];
-    [screenInfo release];
-    
-    [self fillScreenMappingWithCredentialTypeAnonymous];
-}
-
-+ (void) fillScreenMappingWithCredentialTypeSecretar {
-    
-    VGSavedScreenInfo *screenInfo = nil;
-    
-    screenInfo = [VGSavedScreenInfo new];
-    screenInfo.classValue = [VGDetailViewController class];
-    screenInfo.title = @"My Detail's";
-    NSMutableDictionary* params = [NSMutableDictionary dictionary];
-    [params setObject:[VGAppDelegate getInstance].currentUser forKey:@"object"];
-    NSArray* fields = [self fieldsForCredentialType:VGCredentilasTypeSecretar];
-    [params setObject:fields forKey:@"fields"];
-    screenInfo.params = params;
-    [screenMapping setObject:screenInfo forKey: @"My Detail's"];
     [screenInfo release];
     
     [self fillScreenMappingWithCredentialTypeAnonymous];
@@ -169,62 +82,64 @@ static NSMutableDictionary *screenMapping = nil;
 + (void) fillScreenMappingWithCredentialTypeAnonymous {
     
     VGSavedScreenInfo *screenInfo = nil;
-    NSMutableDictionary* autoblankFields = nil;
     
     screenInfo = [VGSavedScreenInfo new];
     screenInfo.classValue = [VGSearchViewController class];
-    screenInfo.title = @"Students List";
+    screenInfo.title = kStudentList;
     NSMutableDictionary* params = [NSMutableDictionary dictionary];
-    NSArray* fields = [self fieldsForCredentialType:VGCredentilasTypeStudent];
-    [params setObject:fields forKey:@"fields"];
-    
-    // Set autoblank fields
-    autoblankFields = [NSMutableDictionary dictionary];
-    [autoblankFields setObject:@"Students" forKey:@"description"];
-    [params setObject:autoblankFields forKey:@"autoblank"];
+    NSMutableDictionary* allFields = [VGUtilities fieldsForCredentialType:VGCredentilasTypeStudent];
+    [params setObject:[VGStudent class] forKey: kObjectsType];
+    [params setObject:allFields[kFields] forKey:kFields];
+    [params setObject:allFields[kEmptyFields] forKey:kEmptyFields];
     
     screenInfo.params = params;
-    screenInfo.params = params;
-    [screenMapping setObject:screenInfo forKey: @"Students List"];
+    [screenMapping setObject:screenInfo forKey: kStudentList];
     [screenInfo release];
     
     screenInfo = [VGSavedScreenInfo new];
     screenInfo.classValue = [VGSearchViewController class];
-    screenInfo.title = @"Experts List";
+    screenInfo.title = kExpertList;
     params = [NSMutableDictionary dictionary];
-    fields = [self fieldsForCredentialType:VGCredentilasTypeExpert];
-    [params setObject:fields forKey:@"fields"];
-    
-    // Set autoblank fields
-    autoblankFields = [NSMutableDictionary dictionary];
-    [autoblankFields setObject:@"Expert" forKey:@"credential"];
-    [autoblankFields setObject:@"Expert" forKey:@"description"];
-    [autoblankFields setObject:@"Expert" forKey:@"login"];
-    [autoblankFields setObject:@"Expert" forKey:@"password"];
-    [params setObject:autoblankFields forKey:@"autoblank"];
+    allFields = [VGUtilities fieldsForCredentialType:VGCredentilasTypeExpert];
+    [params setObject:[VGUser class] forKey: kObjectsType];
+    [params setObject:allFields[kFields] forKey:kFields];
+    [params setObject:allFields[kEmptyFields] forKey:kEmptyFields];
     
     screenInfo.params = params;
-    [screenMapping setObject:screenInfo forKey: @"Experts List"];
+    [screenMapping setObject:screenInfo forKey: kExpertList];
     [screenInfo release];
     
     screenInfo = [VGSavedScreenInfo new];
     screenInfo.classValue = [VGSearchViewController class];
-    screenInfo.title = @"Employers List";
+    screenInfo.title = kEmployerList;
     params = [NSMutableDictionary dictionary];
-    fields = [self fieldsForCredentialType:VGCredentilasTypeEmployer];
-    [params setObject:fields forKey:@"fields"];
-    
-    // Set autoblank fields
-    autoblankFields = [NSMutableDictionary dictionary];
-    [autoblankFields setObject:@"Emploer" forKey:@"credential"];
-    [autoblankFields setObject:@"Employer" forKey:@"description"];
-    [autoblankFields setObject:@"Employer" forKey:@"login"];
-    [autoblankFields setObject:@"Employer" forKey:@"password"];
-    [params setObject:autoblankFields forKey:@"autoblank"];
+    allFields = [VGUtilities fieldsForCredentialType:VGCredentilasTypeEmployer];
+    [params setObject:[VGUser class] forKey: kObjectsType];
+    [params setObject:allFields[kFields] forKey:kFields];
+    [params setObject:allFields[kEmptyFields] forKey:kEmptyFields];
     
     screenInfo.params = params;
-    [screenMapping setObject:screenInfo forKey: @"Employers List"];
+    [screenMapping setObject:screenInfo forKey: kEmployerList];
     [screenInfo release];
+}
+
++ (void) showResultButton {
+    VGSavedScreenInfo *screenInfo = nil;
+    
+    screenInfo = [VGSavedScreenInfo new];
+    screenInfo.classValue = [VGResultViewController class];
+    screenInfo.title = kResults;
+    NSMutableDictionary* params = [NSMutableDictionary dictionary];
+    
+    [params setObject:[VGAppDelegate getInstance].results forKey:kResults];
+    
+    screenInfo.params = params;
+    [screenMapping setObject:screenInfo forKey: kResults];
+    [screenInfo release];
+}
+
++ (void) hideResultButton {
+    [screenMapping removeObjectForKey:kResults];
 }
 
 #pragma mark - Navigate functions

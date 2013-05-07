@@ -8,6 +8,7 @@
 
 #import "VGLoginPopupViewController.h"
 #import "VGScreenNavigator.h"
+#import "VGAppDelegate.h"
 
 @interface VGLoginPopupViewController () {
     NSInteger viewFrameIsChanged;
@@ -88,7 +89,7 @@
                      animations:^(void)
      {
          CGRect frame = view.frame;
-         frame.origin.x += value;
+         frame.origin.x += ([[UIApplication sharedApplication] statusBarOrientation] == 3) ? value : 0 - value;
          view.frame = frame;
      }
                      completion:nil];

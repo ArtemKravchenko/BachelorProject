@@ -7,19 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "VGObject.h"
+#import "VGStudent.h"
 
-@interface VGFieldsListViewController : UIViewController
+@interface VGFieldsListViewController : UIViewController < UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, retain) VGObject* object;
+@property (nonatomic, retain) id<VGTableVariable> object;
 @property (nonatomic, retain) NSMutableArray* fields;
 @property (nonatomic, retain) UIScrollView* fieldsView;
+@property (nonatomic, retain) NSMutableArray* emptyFields;
+@property (nonatomic, retain) UIButton* cellValueButton;
 @property (nonatomic, assign) NSInteger cellWidth;
 @property (nonatomic, assign) BOOL editMode;
-@property (nonatomic, retain) NSMutableDictionary* autoBlankFields;
 @property (nonatomic, assign) Class classValue;
 
-- (void) initFieldsWithFrame:(CGRect)frame ;
+- (void) initFieldsWithFrame:(CGRect)frame;
 - (BOOL) saveDataToObject;
 
 @end

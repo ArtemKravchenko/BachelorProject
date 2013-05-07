@@ -10,6 +10,10 @@
 #import "VGAppDelegate.h"
 #import "VGScreenNavigator.h"
 #import "VGPresentViewController.h"
+#import "VGGetPersonRequest.h"
+#import "VGRequestQueue.h"
+#import "VGAlertView.h"
+#import "VGUtilities.h"
 
 @interface VGLoginViewController () {
     VGLoginPopupViewController *popup;
@@ -36,6 +40,11 @@
 #pragma mark - Login popup delegate
 
 - (void) popupDidCloseWithLogin:(NSString *)login andPassword:(NSString *)password {
+    /*
+    VGGetPersonRequest* request = [[[VGGetPersonRequest alloc] initWithLogin:login andPassword:password] autorelease];
+    [[VGRequestQueue queue] addRequest:request];
+    */
+    [VGAlertView showPleaseWaitState];
     [popup dismissViewControllerAnimated:YES completion:nil];
     [VGAppDelegate getInstance].isLogin = YES;
     
@@ -48,25 +57,12 @@
     if (tmpArray.count) {
         [VGAppDelegate getInstance].currentUser = tmpArray[0];
         
-        switch ([VGAppDelegate getInstance].currentUser.credential) {
-            case VGCredentilasTypeEmployer:
-                [VGAppDelegate getInstance].allRows = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"jobs"]];
-                [VGAppDelegate getInstance].allColumns = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"skills"]];
-                break;
-                
-            case VGCredentilasTypeExpert:
-                [VGAppDelegate getInstance].allRows = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"skills"]];
-                [VGAppDelegate getInstance].allColumns = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"subjects"]];
-                break;
-                
-            case VGCredentilasTypeSecretar:
-                [VGAppDelegate getInstance].allRows = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"subjects"]];
-                [VGAppDelegate getInstance].allColumns = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"students"]];
-                break;
-                
-            default:
-                break;
-        }
+        [VGAppDelegate getInstance].allStudents = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"students"]];
+        [VGAppDelegate getInstance].allSubjects = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"subjects"]];
+        [VGAppDelegate getInstance].allSkills = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"skills"]];
+        [VGAppDelegate getInstance].allVacancies = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"jobs"]];
+        [VGAppDelegate getInstance].allSides = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"sides"]];
+        
     } else {
         return;
     }
@@ -77,7 +73,24 @@
     [[VGAppDelegate getInstance].navigationController pushViewController:presentVC animated:YES];
 }
 
-#pragma View controller life cycle
+#pragma mark - Request delegate
+
+
+- (void) requestDidFinishSuccessful:(NSData *)data {
+    [VGScreenNavigator initStartScreenMapping];
+    
+    VGPresentViewController *presentVC = [[VGPresentViewController new] autorelease];
+    [[VGAppDelegate getInstance].navigationController pushViewController:presentVC animated:YES];
+    
+    [VGAppDelegate getInstance].currentUser = [VGUtilities userFromJsonData:data];
+    // TODO
+}
+
+- (void) requestDidFinishFail:(NSError**)error {
+    // TODO
+}
+
+#pragma mark - View controller life cycle
 
 - (void)viewDidLoad
 {

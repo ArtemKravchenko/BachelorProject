@@ -8,9 +8,10 @@
 
 #import "VGBaseViewController.h"
 
-@interface VGSearchViewController : VGBaseViewController
+@interface VGSearchViewController : VGBaseViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, retain) NSMutableArray* fieldsList;
-@property (nonatomic, retain) NSMutableDictionary* autoblank;
+@property (nonatomic, retain) NSMutableArray* emptyFields;
+@property (retain, nonatomic) Class objectsType;
 
 @end

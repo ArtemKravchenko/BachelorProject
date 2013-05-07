@@ -13,6 +13,7 @@
 #import "VGScreenNavigator.h"
 #import "VGDetailViewController.h"
 #import "VGSearchViewController.h"
+#import "VGResultViewController.h"
 
 @interface VGBaseViewController ()
 
@@ -24,7 +25,6 @@
 {
     [super viewDidLoad];
     [self initNavigationBar];
-    // Do any additional setup after loading the view from its nib.
 }
 
 #pragma mark Navigation bar
@@ -83,14 +83,15 @@
     VGBaseViewController *secondController = (VGBaseViewController*)[screenInfo.classValue new];
     
     if (screenInfo.classValue == [VGDetailViewController class]) {
-        ((VGDetailViewController*)secondController).object = [screenInfo.params objectForKey:@"object"];
-        NSMutableArray* tmpFields = [screenInfo.params objectForKey:@"fields"];
-        ((VGDetailViewController*)secondController).fields = [NSMutableArray arrayWithArray:tmpFields];
+        ((VGDetailViewController*)secondController).object = [screenInfo.params objectForKey:kObject];
+        ((VGDetailViewController*)secondController).classValue = [[screenInfo.params objectForKey:kObject] class];
+        ((VGDetailViewController*)secondController).fields = [NSMutableArray arrayWithArray:[screenInfo.params objectForKey:kFields]];
     } else if (screenInfo.classValue == [VGSearchViewController class]) {
-        NSMutableArray* tmpFields = [screenInfo.params objectForKey:@"fields"];
-        ((VGSearchViewController*)secondController).fieldsList = [NSMutableArray arrayWithArray:tmpFields];
-        NSMutableDictionary* tmpAutoblank = [screenInfo.params objectForKey:@"autoblank"];
-        ((VGSearchViewController*)secondController).autoblank = [NSMutableDictionary dictionaryWithDictionary:tmpAutoblank];
+        ((VGSearchViewController*)secondController).fieldsList = [NSMutableArray arrayWithArray:[screenInfo.params objectForKey:kFields]];
+        ((VGSearchViewController*)secondController).emptyFields = [NSMutableArray arrayWithArray:[screenInfo.params objectForKey:kEmptyFields]];
+        ((VGSearchViewController*)secondController).objectsType = [screenInfo.params objectForKey:kObjectsType];
+    } else if (screenInfo.classValue == [VGResultViewController class]) {
+        ((VGResultViewController*)secondController).results = [screenInfo.params objectForKey:kResults];
     }
     
     [controllers addObject: secondController];

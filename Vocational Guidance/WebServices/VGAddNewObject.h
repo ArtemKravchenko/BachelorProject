@@ -7,11 +7,11 @@
 //
 
 #import "VGBaseRequest.h"
-#import "VGObject.h"
 #import "VGStudent.h"
+#import "VGAppDelegate.h"
 
 @interface VGAddNewObject : VGBaseRequest
 
-- (id)initWithObject:(VGObject*)object;
+- (id)initWithObject:(id<VGTableVariable>)object;
 
 @end

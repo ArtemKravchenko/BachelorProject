@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "VGObject.h"
+#import "VGAppDelegate.h"
+#import "VGUser.h"
 
-@interface VGJob : VGObject
+@interface VGJob : NSObject<VGTableVariable, VGObjectToJSON>
 
 @end

@@ -12,13 +12,13 @@ static NSString* const kAddNewObjectUrlRoute =              @"";
 
 @implementation VGAddNewObject
 
-- (id)initWithObject:(VGObject*)object
+- (id)initWithObject:(id<VGTableVariable>)object
 {
     self = [super init];
     if (self) {
         NSMutableString* tmpParams = [NSMutableString stringWithFormat:@"%@/%@", kAddNewObjectUrlRoute, object.description];
         if ([[object class] isSubclassOfClass:[VGStudent class]]) {
-            [tmpParams appendFormat:@"/%@/%@/%@/%@/%@", ((VGStudent*)object).studentName, ((VGStudent*)object).studentSurname, ((VGStudent*)object).email, ((VGStudent*)object).side, ((VGStudent*)object).age];
+            [tmpParams appendFormat:@"/%@/%@/%@/%@/", ((VGStudent*)object).firstName, ((VGStudent*)object).secondName, ((VGStudent*)object).side.name, ((VGStudent*)object).age];
         } else {
             [tmpParams appendFormat:@"/%@", object.name];
         }

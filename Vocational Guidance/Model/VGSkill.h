@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "VGObject.h"
+#import "VGStudent.h"
 
-@interface VGSkill : VGObject
+@interface VGSkill : NSObject<VGTableVariable, VGObjectToJSON>
 
 @end

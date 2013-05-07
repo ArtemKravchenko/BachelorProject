@@ -13,7 +13,6 @@
 
 -(void)main
 {
-    
     NSString *tmpRequestURL = VG_BASE_URL;
     tmpRequestURL = [NSString stringWithFormat:@"%@/%@", tmpRequestURL, self.params];
     
@@ -29,7 +28,7 @@
              }
              else
              {
-                 [self.delegate requestDidFinishSuccessful];
+                 [self.delegate requestDidFinishSuccessful:data];
              }
          }
      }];

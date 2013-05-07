@@ -23,16 +23,16 @@ static NSString * CellIdentifier = @"AddToTableCell";
 
 @implementation VGAddToTableViewController
 
-- (id)initWithExistArray:(NSMutableArray*) existArray andFlag:(BOOL)isRow
+- (id)initWithExistArray:(NSMutableArray*) existArray andFlag:(BOOL)isRow andGlobalArray:(NSMutableArray*)globalArray
 {
     self = [super initWithNibName:@"VGAddToTableViewController" bundle:[NSBundle mainBundle]];
     if (self) {
         self.isRow = isRow;
         self.tableData = [NSMutableArray array];
-        for (VGObject* globalObject in (isRow) ? [VGAppDelegate getInstance].allRows : [VGAppDelegate getInstance].allColumns) {
+        for (id<VGTableVariable> globalObject in globalArray) {
             BOOL isObjectExist = NO;
-            for (VGObject* localObject in existArray) {
-                if ([localObject.object_id isEqualToString:globalObject.object_id]) {
+            for (id<VGTableVariable> localObject in existArray) {
+                if ([localObject.objectId isEqualToString:globalObject.objectId]) {
                     isObjectExist = YES;
                     break;
                 } 
@@ -67,7 +67,7 @@ static NSString * CellIdentifier = @"AddToTableCell";
         cell = [[[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: CellIdentifier] autorelease];
     }
     
-    NSString *text = ((VGObject*)[self.tableData objectAtIndex:indexPath.row]).name;
+    NSString *text = ((id<VGTableVariable>)[self.tableData objectAtIndex:indexPath.row]).name;
     
     cell.textLabel.text = text;
     

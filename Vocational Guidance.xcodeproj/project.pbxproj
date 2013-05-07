@@ -50,6 +50,7 @@
 		8496AAF516F73E3E001E1184 /* VGChooseStudentRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8496AAF416F73E3D001E1184 /* VGChooseStudentRequest.m */; };
 		8496AAF816F73F28001E1184 /* VGChooseMyDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8496AAF716F73F27001E1184 /* VGChooseMyDataRequest.m */; };
 		849BEB3B16F3339C001868D3 /* VGRequestQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 849BEB3A16F3339C001868D3 /* VGRequestQueue.m */; };
+		849D25AE1728184D00F9EB73 /* VGSide.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D25AD1728184D00F9EB73 /* VGSide.m */; };
 		849E569F16DF6450009E9AB6 /* graph-badge.png in Resources */ = {isa = PBXBuildFile; fileRef = 849E569D16DF6450009E9AB6 /* graph-badge.png */; };
 		849E56A016DF6450009E9AB6 /* graph-badge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 849E569E16DF6450009E9AB6 /* graph-badge@2x.png */; };
 		849E56A816DF8FC4009E9AB6 /* VGGraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 849E56A616DF8FC3009E9AB6 /* VGGraphViewController.m */; };
@@ -72,11 +73,22 @@
 		849FF19E16E89B2E006984AC /* Skill.plist in Resources */ = {isa = PBXBuildFile; fileRef = 849FF19D16E89B2E006984AC /* Skill.plist */; };
 		849FF1A016E89BD0006984AC /* Job.plist in Resources */ = {isa = PBXBuildFile; fileRef = 849FF19F16E89BD0006984AC /* Job.plist */; };
 		849FF1A216E89CB1006984AC /* Student.plist in Resources */ = {isa = PBXBuildFile; fileRef = 849FF1A116E89CB1006984AC /* Student.plist */; };
-		849FF1A516E8A425006984AC /* VGObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 849FF1A416E8A423006984AC /* VGObject.m */; };
 		849FF1A716E8DBFA006984AC /* User.plist in Resources */ = {isa = PBXBuildFile; fileRef = 849FF1A616E8DBFA006984AC /* User.plist */; };
+		84A2C86C16F873EF00DA12D5 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A2C86B16F873EF00DA12D5 /* CFNetwork.framework */; };
+		84A2C86E16F873FC00DA12D5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A2C86D16F873FC00DA12D5 /* SystemConfiguration.framework */; };
+		84A2C87016F8740600DA12D5 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A2C86F16F8740600DA12D5 /* MobileCoreServices.framework */; };
+		84A2C88616F8AD8500DA12D5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A2C88516F8AD8500DA12D5 /* Security.framework */; };
+		84A2C88816F8AD9400DA12D5 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A2C88716F8AD9400DA12D5 /* libxml2.dylib */; };
 		84A47E4A16DE39D100A78089 /* VGTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A47E4916DE39D100A78089 /* VGTableView.m */; };
 		84A47E5316DE5ABB00A78089 /* VGAddToTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A47E5116DE5ABB00A78089 /* VGAddToTableViewController.m */; };
 		84A47E5416DE5ABB00A78089 /* VGAddToTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A47E5216DE5ABB00A78089 /* VGAddToTableViewController.xib */; };
+		84A4F1CA1738E96700173FC8 /* VGStudentsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A4F1C91738E96700173FC8 /* VGStudentsCell.m */; };
+		84A4F1CC1738E98B00173FC8 /* VGSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A4F1CB1738E98B00173FC8 /* VGSearchCell.xib */; };
+		84A4F1D21738F04D00173FC8 /* VGPersonsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A4F1D11738F04D00173FC8 /* VGPersonsCell.m */; };
+		84DB318D1733A479002833A3 /* VGAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB318C1733A479002833A3 /* VGAlertView.m */; };
+		84DB31901733A976002833A3 /* VGUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB318F1733A976002833A3 /* VGUtilities.m */; };
+		84DB31941733ADA2002833A3 /* VGResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB31921733ADA2002833A3 /* VGResultViewController.m */; };
+		84DB31951733ADA2002833A3 /* VGResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84DB31931733ADA2002833A3 /* VGResultViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -150,6 +162,8 @@
 		8496AAF716F73F27001E1184 /* VGChooseMyDataRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGChooseMyDataRequest.m; path = WebServices/VGChooseMyDataRequest.m; sourceTree = "<group>"; };
 		849BEB3916F3339C001868D3 /* VGRequestQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGRequestQueue.h; path = WebServices/VGRequestQueue.h; sourceTree = "<group>"; };
 		849BEB3A16F3339C001868D3 /* VGRequestQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGRequestQueue.m; path = WebServices/VGRequestQueue.m; sourceTree = "<group>"; };
+		849D25AC1728184D00F9EB73 /* VGSide.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGSide.h; path = Model/VGSide.h; sourceTree = "<group>"; };
+		849D25AD1728184D00F9EB73 /* VGSide.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGSide.m; path = Model/VGSide.m; sourceTree = "<group>"; };
 		849E569D16DF6450009E9AB6 /* graph-badge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "graph-badge.png"; path = "Imges/graph-badge.png"; sourceTree = "<group>"; };
 		849E569E16DF6450009E9AB6 /* graph-badge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "graph-badge@2x.png"; path = "Imges/graph-badge@2x.png"; sourceTree = "<group>"; };
 		849E56A516DF8FC1009E9AB6 /* VGGraphViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGGraphViewController.h; path = Screens/VGGraphViewController.h; sourceTree = "<group>"; };
@@ -178,14 +192,29 @@
 		849FF19D16E89B2E006984AC /* Skill.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Skill.plist; sourceTree = "<group>"; };
 		849FF19F16E89BD0006984AC /* Job.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Job.plist; sourceTree = "<group>"; };
 		849FF1A116E89CB1006984AC /* Student.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Student.plist; sourceTree = "<group>"; };
-		849FF1A316E8A422006984AC /* VGObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGObject.h; path = Model/VGObject.h; sourceTree = "<group>"; };
-		849FF1A416E8A423006984AC /* VGObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGObject.m; path = Model/VGObject.m; sourceTree = "<group>"; };
 		849FF1A616E8DBFA006984AC /* User.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = User.plist; sourceTree = "<group>"; };
+		84A2C86B16F873EF00DA12D5 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		84A2C86D16F873FC00DA12D5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		84A2C86F16F8740600DA12D5 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		84A2C88516F8AD8500DA12D5 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		84A2C88716F8AD9400DA12D5 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		84A47E4816DE39D100A78089 /* VGTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGTableView.h; path = "Custom Controls/VGTableView.h"; sourceTree = "<group>"; };
 		84A47E4916DE39D100A78089 /* VGTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGTableView.m; path = "Custom Controls/VGTableView.m"; sourceTree = "<group>"; };
 		84A47E5016DE5ABB00A78089 /* VGAddToTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGAddToTableViewController.h; path = Screens/VGAddToTableViewController.h; sourceTree = "<group>"; };
 		84A47E5116DE5ABB00A78089 /* VGAddToTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGAddToTableViewController.m; path = Screens/VGAddToTableViewController.m; sourceTree = "<group>"; };
 		84A47E5216DE5ABB00A78089 /* VGAddToTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VGAddToTableViewController.xib; path = Screens/VGAddToTableViewController.xib; sourceTree = "<group>"; };
+		84A4F1C81738E96700173FC8 /* VGStudentsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGStudentsCell.h; path = "Custom Controls/VGStudentsCell.h"; sourceTree = "<group>"; };
+		84A4F1C91738E96700173FC8 /* VGStudentsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGStudentsCell.m; path = "Custom Controls/VGStudentsCell.m"; sourceTree = "<group>"; };
+		84A4F1CB1738E98B00173FC8 /* VGSearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VGSearchCell.xib; path = "Custom Controls/VGSearchCell.xib"; sourceTree = "<group>"; };
+		84A4F1D01738F04D00173FC8 /* VGPersonsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGPersonsCell.h; path = "Custom Controls/VGPersonsCell.h"; sourceTree = "<group>"; };
+		84A4F1D11738F04D00173FC8 /* VGPersonsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGPersonsCell.m; path = "Custom Controls/VGPersonsCell.m"; sourceTree = "<group>"; };
+		84DB318B1733A479002833A3 /* VGAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGAlertView.h; path = "Custom Controls/VGAlertView.h"; sourceTree = "<group>"; };
+		84DB318C1733A479002833A3 /* VGAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGAlertView.m; path = "Custom Controls/VGAlertView.m"; sourceTree = "<group>"; };
+		84DB318E1733A976002833A3 /* VGUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGUtilities.h; path = "Vocational Guidance/Base/VGUtilities.h"; sourceTree = "<group>"; };
+		84DB318F1733A976002833A3 /* VGUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGUtilities.m; path = "Vocational Guidance/Base/VGUtilities.m"; sourceTree = "<group>"; };
+		84DB31911733ADA2002833A3 /* VGResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGResultViewController.h; path = Screens/VGResultViewController.h; sourceTree = "<group>"; };
+		84DB31921733ADA2002833A3 /* VGResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGResultViewController.m; path = Screens/VGResultViewController.m; sourceTree = "<group>"; };
+		84DB31931733ADA2002833A3 /* VGResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VGResultViewController.xib; path = Screens/VGResultViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +222,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84A2C88616F8AD8500DA12D5 /* Security.framework in Frameworks */,
+				84A2C88816F8AD9400DA12D5 /* libxml2.dylib in Frameworks */,
+				84A2C87016F8740600DA12D5 /* MobileCoreServices.framework in Frameworks */,
+				84A2C86E16F873FC00DA12D5 /* SystemConfiguration.framework in Frameworks */,
+				84A2C86C16F873EF00DA12D5 /* CFNetwork.framework in Frameworks */,
 				841AF4FB16DCF931008FCA42 /* QuartzCore.framework in Frameworks */,
 				841AF4B816DCAC90008FCA42 /* UIKit.framework in Frameworks */,
 				841AF4BA16DCAC90008FCA42 /* Foundation.framework in Frameworks */,
@@ -206,8 +240,6 @@
 		8413303B16E619D10098D7F8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				849FF1A316E8A422006984AC /* VGObject.h */,
-				849FF1A416E8A423006984AC /* VGObject.m */,
 				8413303C16E619FC0098D7F8 /* VGUser.h */,
 				8413303D16E619FC0098D7F8 /* VGUser.m */,
 				849FF17316E88D35006984AC /* VGStudent.h */,
@@ -220,6 +252,8 @@
 				849FF17D16E88F08006984AC /* VGJob.m */,
 				849FF18816E8959D006984AC /* VGBaseDataModel.h */,
 				849FF18916E8959E006984AC /* VGBaseDataModel.m */,
+				849D25AC1728184D00F9EB73 /* VGSide.h */,
+				849D25AD1728184D00F9EB73 /* VGSide.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -244,6 +278,11 @@
 		841AF4B616DCAC90008FCA42 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				84A2C88716F8AD9400DA12D5 /* libxml2.dylib */,
+				84A2C88516F8AD8500DA12D5 /* Security.framework */,
+				84A2C86F16F8740600DA12D5 /* MobileCoreServices.framework */,
+				84A2C86D16F873FC00DA12D5 /* SystemConfiguration.framework */,
+				84A2C86B16F873EF00DA12D5 /* CFNetwork.framework */,
 				841AF4FA16DCF931008FCA42 /* QuartzCore.framework */,
 				841AF4B716DCAC90008FCA42 /* UIKit.framework */,
 				841AF4B916DCAC90008FCA42 /* Foundation.framework */,
@@ -345,6 +384,8 @@
 				841AF4F616DCF35F008FCA42 /* VGSavedScreenInfo.m */,
 				841AF51516DD038D008FCA42 /* VGMessageHandlerViewController.h */,
 				841AF51616DD038D008FCA42 /* VGMessageHandlerViewController.m */,
+				84DB318E1733A976002833A3 /* VGUtilities.h */,
+				84DB318F1733A976002833A3 /* VGUtilities.m */,
 			);
 			name = "Base Classes";
 			path = ..;
@@ -380,6 +421,9 @@
 				849E56A516DF8FC1009E9AB6 /* VGGraphViewController.h */,
 				849E56A616DF8FC3009E9AB6 /* VGGraphViewController.m */,
 				849E56A716DF8FC3009E9AB6 /* VGGraphViewController.xib */,
+				84DB31911733ADA2002833A3 /* VGResultViewController.h */,
+				84DB31921733ADA2002833A3 /* VGResultViewController.m */,
+				84DB31931733ADA2002833A3 /* VGResultViewController.xib */,
 			);
 			name = Screens;
 			sourceTree = "<group>";
@@ -400,6 +444,13 @@
 				84A47E4916DE39D100A78089 /* VGTableView.m */,
 				849E56AA16DFA354009E9AB6 /* VGGraphItem.xib */,
 				8413304C16E63C7C0098D7F8 /* VGFieldView.xib */,
+				84DB318B1733A479002833A3 /* VGAlertView.h */,
+				84DB318C1733A479002833A3 /* VGAlertView.m */,
+				84A4F1C81738E96700173FC8 /* VGStudentsCell.h */,
+				84A4F1C91738E96700173FC8 /* VGStudentsCell.m */,
+				84A4F1CB1738E98B00173FC8 /* VGSearchCell.xib */,
+				84A4F1D01738F04D00173FC8 /* VGPersonsCell.h */,
+				84A4F1D11738F04D00173FC8 /* VGPersonsCell.m */,
 			);
 			name = "Custom Controls";
 			sourceTree = "<group>";
@@ -488,6 +539,8 @@
 				849FF1A016E89BD0006984AC /* Job.plist in Resources */,
 				849FF1A216E89CB1006984AC /* Student.plist in Resources */,
 				849FF1A716E8DBFA006984AC /* User.plist in Resources */,
+				84DB31951733ADA2002833A3 /* VGResultViewController.xib in Resources */,
+				84A4F1CC1738E98B00173FC8 /* VGSearchCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -521,7 +574,6 @@
 				849FF17B16E88EA4006984AC /* VGSkill.m in Sources */,
 				849FF17E16E88F08006984AC /* VGJob.m in Sources */,
 				849FF18A16E8959F006984AC /* VGBaseDataModel.m in Sources */,
-				849FF1A516E8A425006984AC /* VGObject.m in Sources */,
 				849BEB3B16F3339C001868D3 /* VGRequestQueue.m in Sources */,
 				8496AAE016F709C4001E1184 /* VGBaseRequest.m in Sources */,
 				8496AAE316F70CA1001E1184 /* VGGetPersonRequest.m in Sources */,
@@ -532,6 +584,12 @@
 				8496AAF216F73D98001E1184 /* VGChooseEmployerRequest.m in Sources */,
 				8496AAF516F73E3E001E1184 /* VGChooseStudentRequest.m in Sources */,
 				8496AAF816F73F28001E1184 /* VGChooseMyDataRequest.m in Sources */,
+				849D25AE1728184D00F9EB73 /* VGSide.m in Sources */,
+				84DB318D1733A479002833A3 /* VGAlertView.m in Sources */,
+				84DB31901733A976002833A3 /* VGUtilities.m in Sources */,
+				84DB31941733ADA2002833A3 /* VGResultViewController.m in Sources */,
+				84A4F1CA1738E96700173FC8 /* VGStudentsCell.m in Sources */,
+				84A4F1D21738F04D00173FC8 /* VGPersonsCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -610,7 +668,9 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Vocational Guidance/Vocational Guidance-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"";
 				INFOPLIST_FILE = "Vocational Guidance/Vocational Guidance-Info.plist";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -621,7 +681,9 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Vocational Guidance/Vocational Guidance-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"";
 				INFOPLIST_FILE = "Vocational Guidance/Vocational Guidance-Info.plist";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
