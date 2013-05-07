@@ -23,7 +23,7 @@ static NSString* const kCancel = @"Cancel";
 
 @implementation VGTableViewController
 
-- (id)initWithUser:(VGUser*)user
+- (id)initWithUser:(id<VGPerson>)user
 {
     self = [super initWithNibName:@"VGTableViewController" bundle:[NSBundle mainBundle]];
     if (self) {

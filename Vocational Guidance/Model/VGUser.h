@@ -33,6 +33,10 @@ typedef enum
 @property (nonatomic, retain) NSString* secondName;
 @property (nonatomic, retain) NSString* age;
 @property (nonatomic, retain) VGSide*   side;
+@property (nonatomic, retain) NSMutableArray* dataSet;
+@property (nonatomic, retain) NSMutableArray* rows;
+@property (nonatomic, retain) NSMutableArray* columns;
+@property (nonatomic, assign) VGCredentilasType credential;
 
 @end
 
@@ -40,10 +44,6 @@ typedef enum
 
 @property (nonatomic, retain) NSString*         login;
 @property (nonatomic, retain) NSString*         password;
-@property (nonatomic, retain) NSMutableArray*   dataSet;
-@property (nonatomic, retain) NSMutableArray*   rows;
-@property (nonatomic, retain) NSMutableArray*   columns;
-@property (nonatomic, assign) VGCredentilasType credential;
 
 @property (readonly, retain) NSString* credentialToString;
 @end

@@ -10,6 +10,7 @@
 #import "VGAppDelegate.h"
 #import "VGAddToTableViewController.h"
 #import "VGDetailViewController.h"
+#import "VGUser.h"
 
 typedef void (^addToTableBlockType)(NSString*, UIPopoverController* popover);
 
@@ -34,9 +35,9 @@ enum VGButtonClickedType : NSInteger {
 
 - (void) reloadData;
 - (void) edtiMode:(BOOL)canEdit;
-- (id)initWithFrame:(CGRect)frame andUser:(VGUser*) user;
+- (id)initWithFrame:(CGRect)frame andUser:(id<VGPerson>) user;
 
-@property (nonatomic, retain) VGUser* user;
+@property (nonatomic, retain) id<VGPerson> user;
 @property (nonatomic, assign) id<VGTableAddDelegate> tableDetegate;
 @property (nonatomic, retain) UIViewController* parentViewController;
 

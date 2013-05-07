@@ -32,6 +32,9 @@ static NSString* const kUserRows = @"user rows";
 @synthesize objectId;
 @synthesize name;
 @synthesize description;
+@synthesize rows;
+@synthesize columns;
+@synthesize credential;
 
 - (NSString *)credentialToString {
     NSString* stringCredential = nil;

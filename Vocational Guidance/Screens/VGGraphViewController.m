@@ -26,7 +26,7 @@ static NSString * CellIdentifier = @"GraphCell";
 
 @implementation VGGraphViewController
 
-- (id) initWIthUser:(VGUser*)user
+- (id) initWIthUser:(id<VGPerson>)user
 {
     self = [super initWithNibName:@"VGGraphViewController" bundle:[NSBundle mainBundle]];
     if (self) {

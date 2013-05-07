@@ -19,5 +19,6 @@
 
 - (id) initWithChooseState:(Class) classValue;
 - (id) initWithEditState:(Class)classValue;
+- (id) initWithViewState:(Class)classValue;
 
 @end

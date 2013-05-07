@@ -60,6 +60,20 @@ static NSString* const kChoose = @"Choose";
     return self;
 }
 
+- (id) initWithViewState:(Class)classValue {
+    self = [super initWithNibName:@"VGDetailViewController" bundle:[NSBundle mainBundle]];
+    if (self) {
+        self.initMethod = @selector(initForViewState);
+        self.classValue = classValue;
+    }
+    return self;
+}
+
+- (void) initForViewState {
+    self.btnAdd.hidden = YES;
+    self.btnEdit.hidden = YES;
+}
+
 - (void) intitForEditState {
     self.btnViewTable.hidden = YES;
     
