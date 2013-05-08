@@ -14,6 +14,7 @@
 @property (nonatomic, retain) id<VGTableVariable> object;
 @property (nonatomic, retain) NSMutableArray* fields;
 @property (retain, nonatomic) Class classValue;
+@property (nonatomic, retain) NSString* imageName;
 
 // Factory methods
 

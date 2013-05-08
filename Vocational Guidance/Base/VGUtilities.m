@@ -18,7 +18,7 @@
     return user;
 }
 
-+ (NSMutableDictionary*) fieldsForCredentialType:(VGCredentilasType)credentialType {
++ (NSMutableDictionary*) fieldsForCredentialType:(VGCredentilasType)credentialType{
     
     NSMutableDictionary* returnDictionary = [NSMutableDictionary dictionary];
     
@@ -35,15 +35,22 @@
     
     NSString* plistPath = [[NSBundle mainBundle] pathForResource:credentialName ofType:@"plist"];
     contentDictionary = [NSDictionary dictionaryWithContentsOfFile:plistPath];
-    fields = [contentDictionary objectForKey:@"Fields"];
-    NSDictionary* iconDictionary = [contentDictionary objectForKey:@"Icons"];
-    [VGAppDelegate getInstance].iconName = [iconDictionary objectForKey:[VGAppDelegate getInstance].currentUser.credentialToString];
+    fields = [contentDictionary objectForKey:kFields];
     [returnDictionary setObject:fields forKey:kFields];
+    
+    NSDictionary* iconDictionary = [contentDictionary objectForKey:kIcons];
+    [returnDictionary setObject:iconDictionary forKey:kIcons];
     
     emptyFields = [contentDictionary objectForKey:@"Can be empty"];
     [returnDictionary setObject:emptyFields forKey:kEmptyFields];
     
     return returnDictionary;
+}
+
++ (NSMutableDictionary*) fieldsFromPlistNameWithName:(NSString*) name {
+    NSString* plistPath = [[NSBundle mainBundle] pathForResource:name ofType:@"plist"];
+    NSMutableDictionary* contentDictionary = [NSDictionary dictionaryWithContentsOfFile:plistPath];
+    return contentDictionary;
 }
 
 @end

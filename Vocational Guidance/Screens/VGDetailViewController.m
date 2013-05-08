@@ -13,6 +13,7 @@
 static NSString* const kSave = @"Save";
 static NSString* const kAdd = @"Add";
 static NSString* const kChoose = @"Choose";
+static NSString* const kSaveChanges = @"Save changes";
 
 @interface VGDetailViewController ()
 
@@ -72,12 +73,16 @@ static NSString* const kChoose = @"Choose";
 - (void) initForViewState {
     self.btnAdd.hidden = YES;
     self.btnEdit.hidden = YES;
+    self.btnBack.hidden = NO;
 }
 
 - (void) intitForEditState {
     self.btnViewTable.hidden = YES;
     
-    self.btnAdd.hidden = NO;
+    self.btnAdd.hidden = (self.object != nil);
+    if (self.object != nil)  {
+        [self.btnAdd setTitle:kSaveChanges forState:UIControlStateNormal];
+    }
     self.btnBack.hidden = NO;
     self.btnEdit.hidden = NO;
 }
@@ -119,7 +124,7 @@ static NSString* const kChoose = @"Choose";
     // init self view
     
     [self performSelector:self.initMethod];
-    self.imgIcon.image = [UIImage imageNamed:[VGAppDelegate getInstance].iconName];
+    self.imgIcon.image = [UIImage imageNamed:self.imageName];
     [self initFieldsListViewController];
 }
 
@@ -135,13 +140,14 @@ static NSString* const kChoose = @"Choose";
     self.fieldsViewController = nil;
     self.tableViewController = nil;
     self.classValue = nil;
+    self.imageName = nil;
     [super dealloc];
 }
 
 #pragma mark - Actions
 
 - (IBAction)clickViewTable:(id)sender {
-    self.tableViewController = [[[VGTableViewController alloc] initWithUser:(VGUser*)self.object] autorelease];
+    self.tableViewController = [[[VGTableViewController alloc] initWithUser:(VGUser*)self.object andEditMode:(self.initMethod == @selector(intitForEditState))] autorelease];
     [self.navigationController pushViewController:self.tableViewController animated:YES];
 }
 
@@ -157,6 +163,7 @@ static NSString* const kChoose = @"Choose";
         }
     }
     [self.btnEdit setTitle: (editMode) ? kSave : kEdit forState:UIControlStateNormal];
+    self.btnAdd.hidden = editMode;
 }
 
 - (IBAction)clickEdit:(id)sender {
@@ -195,8 +202,20 @@ static NSString* const kChoose = @"Choose";
             NSLog(@"VGDetailViewContoller) Error: incorect type of object : %@", [self.object class]);
         }
         [[VGAppDelegate getInstance] checkoutSession];
+    } else if ([self.btnAdd.titleLabel.text isEqualToString:kSaveChanges]) {
+        if ([self.fieldsViewController saveDataToObject]) {
+            VGTableViewController* parentViewController = [self.navigationController viewControllers][[self.navigationController viewControllers].count - 2];
+            if ([parentViewController.tableView respondsToSelector:@selector(editObjectInTableMethod:)]) {
+                [parentViewController.tableView performSelector:@selector(editObjectInTableMethod:) withObject:self.fieldsViewController.object];
+                [self.navigationController popViewControllerAnimated:YES];
+            } else {
+                NSLog(@"Error: parentViewController can't respond selector(editObjectInTableMethod:)");
+            }
+        } else {
+            NSLog(@"(VGDetailViewContoller) Error: object is nill");
+        }
     } else {
-        NSLog(@"VGDetailViewContoller) Error: wrong button name : '%@' (should be 'Add' or 'Choose')", self.btnAdd.titleLabel.text);
+        NSLog(@"VGDetailViewContoller) Error: wrong button name : '%@' (should be 'Add' or 'Choose' or '')", self.btnAdd.titleLabel.text);
     }
 }
 @end

@@ -19,7 +19,6 @@
 @property (nonatomic, assign) NSInteger tmpGlobalId;
 @property (assign, nonatomic) BOOL isLogin;
 @property (strong, nonatomic) NSString* currentScreen;
-@property (nonatomic, retain) NSString* iconName;
 
 #pragma mark - Session values
 

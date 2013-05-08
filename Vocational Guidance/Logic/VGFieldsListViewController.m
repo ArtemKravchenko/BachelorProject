@@ -91,7 +91,6 @@ static const NSInteger cellValueTag             = 300;
                             property = [NSString stringWithFormat:@"%@ToString",property];
                             cellValue = [self cellTextFieldWithOriginY:0 withValue:[self.object performSelector:NSSelectorFromString(property)]];
                         } else {
-                            NSLog(@"%@", [self.object performSelector:NSSelectorFromString(property)]);
                             cellValue = [self cellTextFieldWithOriginY:0 withValue:[self.object performSelector:NSSelectorFromString(property)]];
                         }
                     }

@@ -17,18 +17,20 @@ static NSString* const kCancel = @"Cancel";
 @property (retain, nonatomic) IBOutlet UIView *presentionView;
 @property (retain, nonatomic) IBOutlet UIButton *btnEdit;
 @property (retain, nonatomic) IBOutlet UIButton *btnSave;
+@property (assign, nonatomic) BOOL editMode;
 
 - (IBAction)clickViewTransition:(id)sender;
 @end
 
 @implementation VGTableViewController
 
-- (id)initWithUser:(id<VGPerson>)user
+- (id)initWithUser:(id<VGPerson>)user andEditMode:(BOOL)editMode
 {
     self = [super initWithNibName:@"VGTableViewController" bundle:[NSBundle mainBundle]];
     if (self) {
         isSomethingWasChanged = NO;
         self.user = user;
+        self.editMode = editMode;
     }
     return self;
 }
@@ -36,6 +38,7 @@ static NSString* const kCancel = @"Cancel";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.btnEdit.hidden = !self.editMode;
     self.tableView = [[[VGTableView alloc] initWithFrame: CGRectMake(0, 0, self.presentionView.frame.size.width, self.presentionView.frame.size.height) andUser:self.user] autorelease];
     self.tableView.bounces = NO;
     self.tableView.parentViewController = self;

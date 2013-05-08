@@ -60,6 +60,7 @@ static NSMutableDictionary *screenMapping = nil;
         NSMutableDictionary* allFields = [VGUtilities fieldsForCredentialType:credentialType];
         [params setObject:allFields[kFields] forKey:kFields];
         [params setObject:allFields[kEmptyFields] forKey:kEmptyFields];
+        [params setObject:allFields[kIcons] forKey:kIcons];
         screenInfo.params = params;
         
         [screenMapping setObject:screenInfo forKey: kMyDetails];

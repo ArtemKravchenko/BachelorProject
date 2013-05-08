@@ -17,6 +17,6 @@
 @property (nonatomic, retain) VGGraphViewController *graphViewController;
 @property (nonatomic, assign) id<VGPerson> user;
 
-- (id)initWithUser:(VGUser*)user;
+- (id)initWithUser:(id<VGPerson>)user andEditMode:(BOOL)editMode;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "VGTableView.h"
 #import "VGBaseDataModel.h"
+#import "VGUtilities.h"
 
 static const NSInteger cellWidth        = 95;
 static const NSInteger cellHeight       = 59;
@@ -57,7 +58,7 @@ static const NSInteger viewBoundY       = 488;
         self.user = user;
         
         // init columns plist name
-        switch ([VGAppDelegate getInstance].currentUser.credential) {
+        switch (self.user.credential) {
             case VGCredentilasTypeEmployer:
                 self.colPlistName = @"Skill";
                 break;
@@ -74,9 +75,8 @@ static const NSInteger viewBoundY       = 488;
                 break;
         }
         
-        
         // init rows plist name
-        switch ([VGAppDelegate getInstance].currentUser.credential) {
+        switch (self.user.credential) {
             case VGCredentilasTypeEmployer:
                 self.rowPlistName = @"Job";
                 break;
@@ -273,29 +273,24 @@ static const NSInteger viewBoundY       = 488;
 #pragma mark - Actions
 
 - (void) clickRowHeader:(UIButton*)sender {
+    self.buttonClickedType = VGButtonClickedTypeRow;
     [self detailWithPushingForExistObject:self.user.rows[sender.tag - 2000]  andPlistName:self.rowPlistName];
 }
 
 - (void) clickColumnHeader:(UIButton*)sender {
+    self.buttonClickedType = VGButtonClickedTypeCol;
     [self detailWithPushingForExistObject: self.user.columns[sender.tag - 1000] andPlistName: self.colPlistName];
 }
 
 - (void) detailWithPushingForExistObject:(id<VGTableVariable>) object andPlistName:(NSString*) name {
-    NSMutableArray* fields = [self fieldsFromPlistNameWithName:name];
+    NSMutableDictionary* allFields = [VGUtilities fieldsFromPlistNameWithName: name];
     self.detailViewController = ([self.parentViewController.navigationController.viewControllers[1] isKindOfClass:[VGDetailViewController class]]) ?
                                 [[[VGDetailViewController alloc] initWithEditState:[object class]] autorelease] :
                                 [[[VGDetailViewController alloc] initWithViewState:[object class]] autorelease];
     self.detailViewController.object = object;
-    self.detailViewController.fields = fields;
+    self.detailViewController.fields = allFields[kFields];
+    self.detailViewController.imageName = allFields[kIcons][name];
     [self.parentViewController.navigationController pushViewController:self.detailViewController animated:YES];
-}
-
-- (NSMutableArray*) fieldsFromPlistNameWithName:(NSString*) name {
-    NSString* plistPath = [[NSBundle mainBundle] pathForResource:name ofType:@"plist"];
-    NSMutableDictionary* contentDictionary = [NSDictionary dictionaryWithContentsOfFile:plistPath];
-    NSDictionary* iconDictionary = [contentDictionary objectForKey:@"Icons"];
-    [VGAppDelegate getInstance].iconName = [iconDictionary objectForKey:name];
-    return [contentDictionary objectForKey:@"Fields"];
 }
 
 - (void) addToTableMethod:(id<VGTableVariable>)object {
@@ -313,6 +308,16 @@ static const NSInteger viewBoundY       = 488;
     [self reloadData];
     [self.popover dismissPopoverAnimated:YES];
     self.popover = nil;
+}
+
+- (void) editObjectInTableMethod:(id<VGTableVariable>)object {
+    NSMutableArray* tmpArray = (self.buttonClickedType == VGButtonClickedTypeRow) ? self.user.rows: self.user.columns;
+    for (id<VGTableVariable> variable in tmpArray) {
+        if ([variable.objectId isEqualToString: object.objectId]) {
+            variable = object;
+            break;
+        }
+    }
 }
 
 - (void) presentExistingObject:(id<VGTableVariable>)object {
@@ -373,8 +378,9 @@ static const NSInteger viewBoundY       = 488;
 - (void) createNewObjectWithFlag:(NSNumber*) isRow {
     [self.popover dismissPopoverAnimated:YES];
     self.detailViewController = [[[VGDetailViewController alloc] initWithEditState:([isRow boolValue]) ? [self.user.rows[0] class] : [self.user.columns[0] class]] autorelease];
-    NSMutableArray* fields = [self fieldsFromPlistNameWithName:([isRow boolValue]) ? self.rowPlistName : self.colPlistName];
-    self.detailViewController.fields = fields;
+    NSMutableDictionary* allFields = [VGUtilities fieldsFromPlistNameWithName:([isRow boolValue]) ? self.rowPlistName : self.colPlistName];
+    self.detailViewController.fields = allFields[kFields];
+    self.detailViewController.imageName = allFields[kIcons][([isRow boolValue]) ? self.rowPlistName : self.colPlistName];
     [self.parentViewController.navigationController pushViewController:self.detailViewController animated:YES];
 }
 

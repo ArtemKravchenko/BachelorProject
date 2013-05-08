@@ -43,15 +43,29 @@ static NSString* const kStudentDescription = @"student description";
     return jsonInfo;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+    id copy = [[[self class] allocWithZone:zone] init];
+    [copy setObjectId:[self objectId]];
+    [copy setFirstName:[self firstName]];
+    [copy setSecondName:[self secondName]];
+    [copy setAge:[self age]];
+    [copy setSide:[self side]];
+    [copy setCredential:[self credential]];
+    [copy setDescription:[self description]];
+    return copy;
+}
+
 - (NSMutableArray*) columns {
     // TEMPORARY STUPID SOLUTION
-    if (_columns == nil) {
-        _columns = [NSMutableArray arrayWithObject:self];
-    } else if (_columns.count == 0) {
-        _columns = [NSMutableArray arrayWithObject:self];
-    }
+//    if (_columns == nil) {
+//        _columns = [NSMutableArray arrayWithObject:[[self copy] autorelease]];
+//    } else if (![_columns isKindOfClass:[NSMutableArray class]]) {
+//        _columns = [NSMutableArray arrayWithObject:[[self copy] autorelease]];
+//    } else if (_columns.count == 0) {
+//        _columns = [NSMutableArray arrayWithObject:[[self copy] autorelease]];
+//    }
     
-    return _columns;
+    return [NSMutableArray arrayWithObject:[[self copy] autorelease]];
 }
 
 - (NSMutableArray*) rows {

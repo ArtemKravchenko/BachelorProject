@@ -80,12 +80,13 @@
     NSMutableArray * controllers = [[NSMutableArray alloc] init];
     [controllers addObject: [navController.viewControllers objectAtIndex: 0]]; // login controller
     
-    VGBaseViewController *secondController = (VGBaseViewController*)[screenInfo.classValue new];
+    VGBaseViewController *secondController = [(VGBaseViewController*)[screenInfo.classValue new] autorelease]; // TODO (maybe excess autorelease)
     
     if (screenInfo.classValue == [VGDetailViewController class]) {
         ((VGDetailViewController*)secondController).object = [screenInfo.params objectForKey:kObject];
         ((VGDetailViewController*)secondController).classValue = [[screenInfo.params objectForKey:kObject] class];
         ((VGDetailViewController*)secondController).fields = [NSMutableArray arrayWithArray:[screenInfo.params objectForKey:kFields]];
+        ((VGDetailViewController*)secondController).imageName = [screenInfo.params objectForKey:kIcons][[((VGUser*)[screenInfo.params objectForKey:kObject]) credentialToString]];
     } else if (screenInfo.classValue == [VGSearchViewController class]) {
         ((VGSearchViewController*)secondController).fieldsList = [NSMutableArray arrayWithArray:[screenInfo.params objectForKey:kFields]];
         ((VGSearchViewController*)secondController).emptyFields = [NSMutableArray arrayWithArray:[screenInfo.params objectForKey:kEmptyFields]];

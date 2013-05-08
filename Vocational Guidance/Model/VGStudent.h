@@ -10,6 +10,6 @@
 #import "VGUser.h"
 
 
-@interface VGStudent : NSObject <VGPerson, VGObjectToJSON>
+@interface VGStudent : NSObject <VGPerson, VGObjectToJSON, NSCopying>
 
 @end

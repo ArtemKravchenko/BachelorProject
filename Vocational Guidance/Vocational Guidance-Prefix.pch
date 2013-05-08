@@ -30,7 +30,7 @@ static NSString* const VG_OLD_VALUE                         = @"old_value";
 static NSString* const VG_BASE_URL                          = @"";
 
 static NSString* const kObject                              = @"object";
-static NSString* const kFields                              = @"fields";
+static NSString* const kFields                              = @"Fields";
 static NSString* const kEmptyFields                         = @"empty fields";
 static NSString* const kStudent                             = @"Student";
 static NSString* const kResults                             = @"Results";
@@ -40,3 +40,4 @@ static NSString* const kStudentList                         = @"Students List";
 static NSString* const kExpertList                          = @"Experts List";
 static NSString* const kEmployerList                        = @"Employers List";
 static NSString* const kUser                                = @"User";
+static NSString* const kIcons                               = @"Icons";

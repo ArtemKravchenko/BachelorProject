@@ -30,7 +30,6 @@
     self.allSkills = nil;
     self.allVacancies = nil;
     self.allSides = nil;
-    self.iconName = nil;
     self.currentUser = nil;
     self.currentStudent = nil;
     self.currentExpert = nil;

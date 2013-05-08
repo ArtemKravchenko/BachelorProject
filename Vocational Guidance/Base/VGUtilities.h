@@ -13,5 +13,6 @@
 
 + (VGUser*)userFromJsonData:(NSData*)data;
 + (NSMutableDictionary*) fieldsForCredentialType:(VGCredentilasType)credentialType;
++ (NSMutableDictionary*) fieldsFromPlistNameWithName:(NSString*) name;
 
 @end

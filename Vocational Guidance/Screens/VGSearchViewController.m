@@ -97,12 +97,14 @@ static NSString* const kCardNumberLabel = @"lblCardNumber";
 #pragma mark table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    self.objecectDetailController = [[VGDetailViewController alloc] initWithChooseState:self.objectsType];
+    NSMutableDictionary* allFields = [VGUtilities fieldsForCredentialType:VGCredentilasTypeEmployer];
+    self.objecectDetailController = [[[VGDetailViewController alloc] initWithChooseState:self.objectsType] autorelease];
     self.objecectDetailController.object = self.objectsList[indexPath.row];
     self.objecectDetailController.fields = ([self.objectsType isSubclassOfClass:[VGStudent class]]) ?
-            [VGUtilities fieldsForCredentialType:VGCredentilasTypeStudent][kFields]: ([self.navigationItem.title isEqualToString:kExpertList]) ?
-            [VGUtilities fieldsForCredentialType:VGCredentilasTypeExpert][kFields]:
-            [VGUtilities fieldsForCredentialType:VGCredentilasTypeEmployer][kFields];
+            allFields[kFields]: ([self.navigationItem.title isEqualToString:kExpertList]) ?
+            allFields[kFields]:
+            allFields[kFields];
+    self.objecectDetailController.imageName = [allFields[kIcons] objectForKey:[VGAppDelegate getInstance].currentUser.credentialToString];
     [self.navigationController pushViewController:self.objecectDetailController animated:YES];
 }
 
@@ -149,7 +151,6 @@ static NSString* const kCardNumberLabel = @"lblCardNumber";
     } else {
         NSPredicate* predicate = nil;
         NSMutableArray* tmpPersons = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"persons"]];
-        NSLog(@"%@", self.navigationItem.title);
         if ([self.navigationItem.title isEqualToString:kExpertList]) {
             predicate = [NSPredicate predicateWithFormat:@"%K == %d", @"credential", 2];
         } else {
