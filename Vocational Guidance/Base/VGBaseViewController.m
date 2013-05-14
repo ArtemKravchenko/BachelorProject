@@ -14,6 +14,12 @@
 #import "VGDetailViewController.h"
 #import "VGSearchViewController.h"
 #import "VGResultViewController.h"
+#import "VGLoginViewController.h"
+#import "VGUtilities.h"
+
+static NSString* const kMenu = @"Menu";
+static NSString* const kLogout = @"Logout";
+static NSString* const kGoToLogin = @"Go to login";
 
 @interface VGBaseViewController ()
 
@@ -24,6 +30,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [self initNavigationBar];
 }
 
@@ -31,21 +41,37 @@
 
 - (void) initNavigationBar {
     self.navigationItem.rightBarButtonItem = [self rightNaigationButton];
-    if ([VGAppDelegate getInstance].isLogin) {
+    if (![self.navigationController.viewControllers.lastObject isKindOfClass:[VGLoginViewController class]]) {
         self.navigationItem.leftBarButtonItem = [self leftNaigationButton];
     }
-    
-    self.navigationItem.title =[VGAppDelegate getInstance].currentScreen;
+    if ([VGAppDelegate getInstance].currentStudent != nil || [VGAppDelegate getInstance].currentExpert != nil || [VGAppDelegate getInstance].currentEmployer != nil) {
+        NSString* titleString = @"";
+        int flag = 0;
+        if ([VGAppDelegate getInstance].currentStudent != nil) {
+            titleString = [NSString stringWithFormat:@"CURRENT STUDENT - %@ %@", [VGAppDelegate getInstance].currentStudent.firstName, [VGAppDelegate getInstance].currentStudent.secondName];
+            flag++;
+        }
+        if ([VGAppDelegate getInstance].currentExpert != nil) {
+            titleString = [NSString stringWithFormat:@"%@  %@  CURRENT EXPERT - %@ %@", titleString, (flag > 0) ? @"|" : @"",[VGAppDelegate getInstance].currentExpert.firstName, [VGAppDelegate getInstance].currentExpert.secondName];
+            flag++;
+        }
+        if ([VGAppDelegate getInstance].currentEmployer != nil) {
+            titleString = [NSString stringWithFormat:@"%@  %@  CURRENT EMPLOYER - %@ %@", titleString, (flag > 0) ? @"|" : @"", [VGAppDelegate getInstance].currentEmployer.firstName, [VGAppDelegate getInstance].currentEmployer.secondName];
+        }
+        self.navigationItem.titleView = [VGUtilities changeTitleNameWithText:titleString];
+    } else {
+        self.navigationItem.title =[VGAppDelegate getInstance].currentScreen;
+    }
 }
 
 - (UIBarButtonItem*) rightNaigationButton {
-    UIBarButtonItem* right = [[[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStyleBordered target:self action:@selector(clickRightBarButton)] autorelease];
+    UIBarButtonItem* right = [[[UIBarButtonItem alloc] initWithTitle:kMenu style:UIBarButtonItemStyleBordered target:self action:@selector(clickRightBarButton)] autorelease];
     return  right;
 }
 
 - (UIBarButtonItem*) leftNaigationButton {
-    UIBarButtonItem* right = [[[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStyleBordered target:self action:@selector(clickLeftBarButton)] autorelease];
-    return  right;
+    UIBarButtonItem* left = [[[UIBarButtonItem alloc] initWithTitle: ([VGAppDelegate getInstance].isLogin) ? kLogout : kGoToLogin style:UIBarButtonItemStyleBordered target:self action:@selector(clickLeftBarButton)] autorelease];
+    return  left;
 }
 
 - (void) clickRightBarButton {
@@ -58,7 +84,7 @@
         [options addObject:screenInfo.title];
     }
     
-    popover = [VGOptionsViewController newPopoverWithTitle:@"Main Menu" options:options delegate:self tag:PO_NAV_OPTIONS];
+    popover = [VGOptionsViewController newPopoverWithTitle:kMainMenu options:options delegate:self tag:PO_NAV_OPTIONS];
     [popover presentPopoverFromRect: CGRectMake(990, 54, 1, 1)
                                        inView: self.navigationController.view
                      permittedArrowDirections: UIPopoverArrowDirectionUp
@@ -67,8 +93,8 @@
 }
 
 - (void) clickLeftBarButton {
-    if ([self.navigationItem.leftBarButtonItem.title isEqualToString:@"Logout"]) {
-        [VGAppDelegate getInstance].isLogin = NO;
+    if ([self.navigationItem.leftBarButtonItem.title isEqualToString:kLogout] || [self.navigationItem.leftBarButtonItem.title isEqualToString:kGoToLogin]) {
+        [[VGAppDelegate getInstance] clearSession];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
@@ -80,13 +106,13 @@
     NSMutableArray * controllers = [[NSMutableArray alloc] init];
     [controllers addObject: [navController.viewControllers objectAtIndex: 0]]; // login controller
     
-    VGBaseViewController *secondController = [(VGBaseViewController*)[screenInfo.classValue new] autorelease]; // TODO (maybe excess autorelease)
+    VGBaseViewController *secondController = [(VGBaseViewController*)[screenInfo.classValue new] autorelease];
     
     if (screenInfo.classValue == [VGDetailViewController class]) {
         ((VGDetailViewController*)secondController).object = [screenInfo.params objectForKey:kObject];
         ((VGDetailViewController*)secondController).classValue = [[screenInfo.params objectForKey:kObject] class];
         ((VGDetailViewController*)secondController).fields = [NSMutableArray arrayWithArray:[screenInfo.params objectForKey:kFields]];
-        ((VGDetailViewController*)secondController).imageName = [screenInfo.params objectForKey:kIcons][[((VGUser*)[screenInfo.params objectForKey:kObject]) credentialToString]];
+        ((VGDetailViewController*)secondController).imageName = [screenInfo.params objectForKey:kIcons][[((id<VGPerson>)[screenInfo.params objectForKey:kObject]) credentialToString]];
     } else if (screenInfo.classValue == [VGSearchViewController class]) {
         ((VGSearchViewController*)secondController).fieldsList = [NSMutableArray arrayWithArray:[screenInfo.params objectForKey:kFields]];
         ((VGSearchViewController*)secondController).emptyFields = [NSMutableArray arrayWithArray:[screenInfo.params objectForKey:kEmptyFields]];

@@ -33,6 +33,9 @@ static NSString* const kObject                              = @"object";
 static NSString* const kFields                              = @"Fields";
 static NSString* const kEmptyFields                         = @"empty fields";
 static NSString* const kStudent                             = @"Student";
+static NSString* const kSubject                             = @"Subject";
+static NSString* const kSkill                               = @"Skill";
+static NSString* const kVacancy                             = @"Vacancy";
 static NSString* const kResults                             = @"Results";
 static NSString* const kEdit                                = @"Edit";
 static NSString* const kObjectsType                         = @"objects type";
@@ -41,3 +44,18 @@ static NSString* const kExpertList                          = @"Experts List";
 static NSString* const kEmployerList                        = @"Employers List";
 static NSString* const kUser                                = @"User";
 static NSString* const kIcons                               = @"Icons";
+
+
+static NSString* const kFirstName                           = @"firstName";
+static NSString* const kSecondName                          = @"secondName";
+static NSString* const kSideId                              = @"sideId";
+static NSString* const kSide                                = @"Side";
+static NSString* const kStudentId                           = @"studentId";
+static NSString* const kSubjectId                           = @"subjectId";
+static NSString* const kSkillId                             = @"skillId";
+static NSString* const kVacancyId                           = @"vacancyId";
+static NSString* const kAge                                 = @"age";
+static NSString* const kName                                = @"name";
+static NSString* const kDescription                         = @"description";
+
+static NSString* const kMainMenu                            = @"Main Menu";

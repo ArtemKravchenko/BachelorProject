@@ -8,7 +8,13 @@
 
 #import "VGGetPersonRequest.h"
 
-static NSString* const kGetPersonUrlRoute =              @"";
+static NSString* const kGetPersonUrlRoute =                 @"";
+static NSString* const kGetPersonByIdUrlRoute =             @"";
+static NSString* const kGetStudentByIdUrlRoute =            @"";
+
+static NSString* const kLogin             =                 @"login";
+static NSString* const kPassword          =                 @"password";
+static NSString* const kPersonId          =                 @"personId";
 
 @implementation VGGetPersonRequest
 
@@ -16,7 +22,23 @@ static NSString* const kGetPersonUrlRoute =              @"";
 {
     self = [super init];
     if (self) {
-        self.params = [NSString stringWithFormat:@"%@/%@/%@", kGetPersonUrlRoute, login, password];
+        self.params = [NSString stringWithFormat:@"%@?%@=%@&%@=%@", kGetPersonUrlRoute, kLogin, login, kPassword, password];
+    }
+    return self;
+}
+
+- (id)initWithPersonId:(NSString*) personId {
+    self = [super init];
+    if (self) {
+        self.params = [NSString stringWithFormat:@"%@?%@=%@", kGetPersonByIdUrlRoute, kPersonId, personId];
+    }
+    return self;
+}
+
+- (id)initWithStudentId:(NSString*) studentId {
+    self = [super init];
+    if (self) {
+        self.params = [NSString stringWithFormat:@"%@?%@=%@", kGetStudentByIdUrlRoute, kStudentId, studentId];
     }
     return self;
 }

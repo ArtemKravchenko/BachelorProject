@@ -12,6 +12,18 @@
 
 @interface VGAddNewObject : VGBaseRequest
 
-- (id)initWithObject:(id<VGTableVariable>)object;
+- (id)initWithNewStudentToSecretarData:(NSString*)studentId firstName:(NSString*)firstName secondName:(NSString*)secondName side:(NSString*)sideId age:(NSString*)age;
+- (id)initWithNewSubjectToSecretarData:(NSString*)name description:(NSString*)description;
+- (id)initWithNewSubjectToExpertData:(NSString*)name description:(NSString*)description;
+- (id)initWithNewSkillToExpertData:(NSString*)name description:(NSString*)description;
+- (id)initWithNewSkillToEmployerData:(NSString*)name description:(NSString*)description;
+- (id)initWithNewVacancyToEmployerData:(NSString*)name description:(NSString*)description;
+
+- (id)initWithExistStudentToSecretarData:(NSString*)studentId;
+- (id)initWithExistSubjectToSecretarData:(NSString*)subjectId;
+- (id)initWithExistSubjectToExpertData:(NSString*)subjectId;
+- (id)initWithExistSkillToExpertData:(NSString*)skillId;
+- (id)initWithExistSkillToEmployerData:(NSString*)skillId;
+- (id)initWithExistVacancyToEmployerData:(NSString*)vacancyId;
 
 @end

@@ -12,5 +12,6 @@
 
 + (void) showPleaseWaitState;
 + (void) hidePleaseWaitState;
++ (BOOL) isShowing;
 
 @end

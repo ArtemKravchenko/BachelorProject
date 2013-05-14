@@ -15,6 +15,7 @@ static const NSInteger cellHeight       = 59;
 static const NSInteger keyHeight        = 352;
 static const NSInteger viewFrameOffsetY = 61;
 static const NSInteger viewBoundY       = 488;
+static NSString* const kJob             = @"Job";
 
 @interface VGTableView ()
 
@@ -57,40 +58,45 @@ static const NSInteger viewBoundY       = 488;
         self.canEdit = NO;
         self.user = user;
         
-        // init columns plist name
-        switch (self.user.credential) {
-            case VGCredentilasTypeEmployer:
-                self.colPlistName = @"Skill";
-                break;
-                
-            case VGCredentilasTypeExpert:
-                self.colPlistName = @"Subject";
-                break;
-                
-            case VGCredentilasTypeSecretar:
-                self.colPlistName = @"Student";
-                break;
-                
-            default:
-                break;
-        }
-        
-        // init rows plist name
-        switch (self.user.credential) {
-            case VGCredentilasTypeEmployer:
-                self.rowPlistName = @"Job";
-                break;
-                
-            case VGCredentilasTypeExpert:
-                self.rowPlistName = @"Skill";
-                break;
-                
-            case VGCredentilasTypeSecretar:
-                self.rowPlistName = @"Subject";
-                break;
-                
-            default:
-                break;
+        if (self.user != nil) {
+            // init columns plist name
+            switch (self.user.credential) {
+                case VGCredentilasTypeEmployer:
+                    self.colPlistName = kJob;
+                    break;
+                    
+                case VGCredentilasTypeExpert:
+                    self.colPlistName = kSubject;
+                    break;
+                    
+                case VGCredentilasTypeSecretar:
+                    self.colPlistName = kStudent;
+                    break;
+                    
+                default:
+                    break;
+            }
+            
+            // init rows plist name
+            switch (self.user.credential) {
+                case VGCredentilasTypeEmployer:
+                    self.rowPlistName = kSkill;
+                    break;
+                    
+                case VGCredentilasTypeExpert:
+                    self.rowPlistName = kSkill;
+                    break;
+                    
+                case VGCredentilasTypeSecretar:
+                    self.rowPlistName = kSubject;
+                    break;
+                    
+                default:
+                    break;
+            }
+        } else {
+            self.rowPlistName = kJob;
+            self.colPlistName = kStudent;
         }
     }
     return self;

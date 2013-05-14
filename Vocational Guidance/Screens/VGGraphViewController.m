@@ -202,6 +202,7 @@ static NSString * CellIdentifier = @"GraphCell";
 - (void) reloadData {
     NSInteger offsetX = 0;
     NSInteger offsetY = 0;
+    NSLog(@"%d", self.tableValues.count);
     if (self.tableValues != nil) {
         for (NSInteger i = 0; i < self.user.rows.count; i++) {
             offsetX = startOffset;

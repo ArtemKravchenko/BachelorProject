@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "VGUser.h"
+#import "VGSavedScreenInfo.h"
 
 @interface VGScreenNavigator : NSObject
 
@@ -20,5 +21,9 @@
 + (void) showResultButton;
 
 + (void) hideResultButton;
+
++ (void) fillDetailsScreenWitCredentialType:(VGCredentilasType)credentialType withObject:(id<VGPerson>) person forKey:(NSString*)key;
+
++ (void) fillSearchScreenWithCredentialType:(VGCredentilasType)credentialType forKey:(NSString*)key;
 
 @end

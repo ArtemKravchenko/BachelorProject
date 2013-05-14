@@ -12,11 +12,10 @@ static NSString* const kChangeCellUrlRoute =              @"";
 
 @implementation VGChangeCellRequest
 
-- (id)initWithRow:(id<VGTableVariable>)row andColumn:(id<VGTableVariable>)column andValue:(NSString*)value
-{
+- (id)initWithPersonId:(NSString*)personId andTransactionList:(NSDictionary*)transactionList {
     self = [super init];
     if (self) {
-        self.params = [NSString stringWithFormat:@"/%@/%@/%@/%@", kChangeCellUrlRoute, row.objectId, column.objectId, value];
+        // TODO : special case, needs POST request
     }
     return self;
 }

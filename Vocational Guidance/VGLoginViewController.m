@@ -44,28 +44,42 @@
     VGGetPersonRequest* request = [[[VGGetPersonRequest alloc] initWithLogin:login andPassword:password] autorelease];
     [[VGRequestQueue queue] addRequest:request];
     */
-    [VGAlertView showPleaseWaitState];
-    [popup dismissViewControllerAnimated:YES completion:nil];
-    [VGAppDelegate getInstance].isLogin = YES;
-    
-    // ----------- TEMPORARY -----------------
-    
-    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"%K LIKE %@ AND %K LIKE %@", @"login", login, @"password", password];
-    NSMutableArray* tmpArray = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"persons"]];
-    
-    [tmpArray filterUsingPredicate:predicate];
-    if (tmpArray.count) {
-        [VGAppDelegate getInstance].currentUser = tmpArray[0];
-        
-        [VGAppDelegate getInstance].allStudents = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"students"]];
-        [VGAppDelegate getInstance].allSubjects = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"subjects"]];
-        [VGAppDelegate getInstance].allSkills = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"skills"]];
-        [VGAppDelegate getInstance].allVacancies = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"jobs"]];
-        [VGAppDelegate getInstance].allSides = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"sides"]];
-        
+    if ([login isEqualToString:@""] && [password isEqualToString:@""]) {
+        [popup dismissViewControllerAnimated:YES completion:nil];
+        [VGAppDelegate getInstance].isLogin = NO;
     } else {
-        return;
+        [popup dismissViewControllerAnimated:YES completion:nil];
+        [VGAppDelegate getInstance].isLogin = YES;
+        
+        // ----------- TEMPORARY -----------------
+        
+        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"%K LIKE %@ AND %K LIKE %@", @"login", login, @"password", password];
+        NSMutableArray* tmpArray = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"persons"]];
+        
+        [tmpArray filterUsingPredicate:predicate];
+        if (tmpArray.count) {
+            [VGAppDelegate getInstance].currentUser = tmpArray[0];
+            
+            [VGAppDelegate getInstance].allStudents = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"students"]];
+            [VGAppDelegate getInstance].allSubjects = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"subjects"]];
+            [VGAppDelegate getInstance].allSkills = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"skills"]];
+            [VGAppDelegate getInstance].allVacancies = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"jobs"]];
+            [VGAppDelegate getInstance].allSides = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"sides"]];
+            
+        } else {
+            if ([VGAlertView isShowing]) {
+                [VGAlertView hidePleaseWaitState];
+            }
+            return;
+        }
     }
+    [VGAlertView showPleaseWaitState];
+    
+    [VGAppDelegate getInstance].allStudents = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"students"]];
+    [VGAppDelegate getInstance].allSubjects = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"subjects"]];
+    [VGAppDelegate getInstance].allSkills = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"skills"]];
+    [VGAppDelegate getInstance].allVacancies = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"jobs"]];
+    [VGAppDelegate getInstance].allSides = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"sides"]];
     
     [VGScreenNavigator initStartScreenMapping];
     
@@ -75,15 +89,63 @@
 
 #pragma mark - Request delegate
 
-
 - (void) requestDidFinishSuccessful:(NSData *)data {
-    [VGScreenNavigator initStartScreenMapping];
+    NSError* error;
+    NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     
-    VGPresentViewController *presentVC = [[VGPresentViewController new] autorelease];
-    [[VGAppDelegate getInstance].navigationController pushViewController:presentVC animated:YES];
-    
-    [VGAppDelegate getInstance].currentUser = [VGUtilities userFromJsonData:data];
-    // TODO
+    if (jsonData[kUser] != nil) {
+        
+        [VGScreenNavigator initStartScreenMapping];
+        
+        // Filling all array side
+        [VGAppDelegate getInstance].allSides = [NSMutableArray array];
+        
+        for (NSDictionary* data in jsonData[@"all sides"]) {
+            [[VGAppDelegate getInstance].allSides addObject:[VGUtilities tableVariableFromJsonData:data withClassType:[VGSide class]]];
+        }
+        
+        // Filling all rows and all columns
+        //
+        
+        NSString* credentilId = ((NSDictionary*)jsonData[kUser])[@"PersonCredentialId"];
+        VGCredentilasType credential = ([credentilId isEqualToString:@"2"]) ? VGCredentilasTypeSecretar: ([credentilId isEqualToString:@"3"]) ? VGCredentilasTypeExpert: VGCredentilasTypeEmployer;
+        
+        NSMutableArray* allRows = nil;
+        NSMutableArray* allColumns = nil;
+        
+        if([credentilId isEqualToString:@"2"]) {
+            [VGAppDelegate getInstance].allStudents = [NSMutableArray array];
+            [VGAppDelegate getInstance].allSubjects = [NSMutableArray array];
+            allRows = [VGAppDelegate getInstance].allStudents;
+            allColumns = [VGAppDelegate getInstance].allSubjects;
+        } else if ([credentilId isEqualToString:@"3"]) {
+            [VGAppDelegate getInstance].allSubjects = [NSMutableArray array];
+            [VGAppDelegate getInstance].allSkills = [NSMutableArray array];
+            allRows = [VGAppDelegate getInstance].allSubjects;
+            allColumns = [VGAppDelegate getInstance].allSkills;
+        } else if ([credentilId isEqualToString:@"4"]) {
+            [VGAppDelegate getInstance].allSkills = [NSMutableArray array];
+            [VGAppDelegate getInstance].allVacancies = [NSMutableArray array];
+            allRows = [VGAppDelegate getInstance].allVacancies;
+            allColumns = [VGAppDelegate getInstance].allSkills;
+        } else {
+            NSLog(@"(VGUtilities) Error : Wrong user credentials");
+        }
+        
+        for (NSDictionary* row in ((NSMutableArray*)jsonData[@"all rows"])) {
+            [allRows addObject:[VGUtilities baseDataModelFromJsonData:row withCredentialType:credential]];
+        }
+        
+        for (NSDictionary* col in ((NSMutableArray*)jsonData[@"all columns"])) {
+            [allColumns addObject:[VGUtilities baseDataModelFromJsonData:col withCredentialType:credential]];
+        }
+        
+        // Filling current user
+        [VGAppDelegate getInstance].currentUser = [VGUtilities userFromJsonData:jsonData[kUser]];
+        
+        VGPresentViewController *presentVC = [[VGPresentViewController new] autorelease];
+        [[VGAppDelegate getInstance].navigationController pushViewController:presentVC animated:YES];
+    }
 }
 
 - (void) requestDidFinishFail:(NSError**)error {

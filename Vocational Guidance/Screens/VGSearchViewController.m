@@ -97,14 +97,15 @@ static NSString* const kCardNumberLabel = @"lblCardNumber";
 #pragma mark table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSMutableDictionary* allFields = [VGUtilities fieldsForCredentialType:VGCredentilasTypeEmployer];
+    NSMutableDictionary* allFields = [VGUtilities fieldsForCredentialType:((id<VGPerson>)self.objectsList[indexPath.row]).credential];
     self.objecectDetailController = [[[VGDetailViewController alloc] initWithChooseState:self.objectsType] autorelease];
     self.objecectDetailController.object = self.objectsList[indexPath.row];
     self.objecectDetailController.fields = ([self.objectsType isSubclassOfClass:[VGStudent class]]) ?
             allFields[kFields]: ([self.navigationItem.title isEqualToString:kExpertList]) ?
             allFields[kFields]:
             allFields[kFields];
-    self.objecectDetailController.imageName = [allFields[kIcons] objectForKey:[VGAppDelegate getInstance].currentUser.credentialToString];
+    self.objecectDetailController.imageName = [allFields[kIcons] objectForKey: ([self.objectsList[indexPath.row] isKindOfClass:[VGUser class]]) ? ((VGUser*)self.objectsList[indexPath.row]).credentialToString : kStudent];
+    
     [self.navigationController pushViewController:self.objecectDetailController animated:YES];
 }
 
@@ -151,16 +152,28 @@ static NSString* const kCardNumberLabel = @"lblCardNumber";
     } else {
         NSPredicate* predicate = nil;
         NSMutableArray* tmpPersons = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"persons"]];
-        if ([self.navigationItem.title isEqualToString:kExpertList]) {
+        if ([[VGAppDelegate getInstance].currentScreen isEqualToString:kExpertList]) {
             predicate = [NSPredicate predicateWithFormat:@"%K == %d", @"credential", 2];
         } else {
             predicate = [NSPredicate predicateWithFormat:@"%K == %d", @"credential", 4];
         }
-        //predicate = ([self.navigationItem.title isEqualToString:kExpertList]) ? [NSPredicate predicateWithFormat:@"%K == %@", @"credential", 2]: [NSPredicate predicateWithFormat:@"%K == %@", @"credential", 4];
         [tmpPersons filterUsingPredicate:predicate];
         self.objectsList = tmpPersons;
     }
     [self.tableView reloadData];
+}
+
+#pragma mark - Request delegate
+
+- (void)requestDidFinishSuccessful:(NSData *)data {
+    NSError* error;
+    NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    
+    
+}
+
+- (void)requestDidFinishFail:(NSError **)error {
+    
 }
 
 @end

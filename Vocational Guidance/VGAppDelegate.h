@@ -43,6 +43,7 @@
 - (void) cancelTransaction;
 - (NSMutableArray*) stringValuesFromDataArray:(NSMutableArray*)arrayValues;
 - (void) checkoutSession;
+- (void) clearSession;
 
 @property (nonatomic, retain) NSMutableDictionary* mockData;
 

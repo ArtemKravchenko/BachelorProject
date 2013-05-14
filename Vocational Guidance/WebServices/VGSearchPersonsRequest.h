@@ -11,6 +11,10 @@
 
 @interface VGSearchPersonsRequest : VGBaseRequest
 
-- (id)initWithUser:(VGUser*)user;
+- (id)initWithFirstName:(NSString*) firstName secondName:(NSString*) secondName sideId:(NSString*)sideId;
+- (id) initWithFirstName:(NSString *)firstName secondName:(NSString *)secondName sideId:(NSString *)sideId cardNumber:(NSString*) studentId age:(NSString*) age;
+- (id) initWithAllStudents;
+- (id) initWithAllExperts;
+- (id) initWithAllEmployers;
 
 @end

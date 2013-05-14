@@ -8,22 +8,7 @@
 
 #import "VGBaseDataModel.h"
 
-static NSString* const kDataId = @"data id";
-static NSString* const kDataValue = @"data value";
-static NSString* const kDataRow = @"data row";
-static NSString* const kDataCol = @"data col";
-
 @implementation VGBaseDataModel
-
--(NSDictionary*) jsonFromObject {
-    NSDictionary* jsonInfo = @{
-                               kDataId : self.dataId,
-                               kDataValue : self.value,
-                               kDataCol : self.col,
-                               kDataRow : self.row
-                               };
-    return jsonInfo;
-}
 
 - (void)dealloc
 {

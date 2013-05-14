@@ -9,6 +9,9 @@
 #import "VGDetailViewController.h"
 #import "VGFieldsListViewController.h"
 #import "VGTableViewController.h"
+#import "VGScreenNavigator.h"
+#import "VGSearchViewController.h"
+#import "VGUtilities.h"
 
 static NSString* const kSave = @"Save";
 static NSString* const kAdd = @"Add";
@@ -38,7 +41,7 @@ static NSString* const kSaveChanges = @"Save changes";
 {
     self = [super initWithNibName:@"VGDetailViewController" bundle:[NSBundle mainBundle]];
     if (self) {
-        self.initMethod = @selector(initForCurrentUserState);
+        self.initMethod = ([self.navigationController.viewControllers[self.navigationController.viewControllers.count - 1] isKindOfClass:[VGSearchViewController class]]) ? @selector(initForCurrentUserState) : @selector(initForChooseState);
     }
     return self;
 }
@@ -100,6 +103,7 @@ static NSString* const kSaveChanges = @"Save changes";
 
 - (void) initForChooseState {
     [self initBase];
+    self.btnAdd.hidden = NO;
     self.btnBack.hidden = NO;
 }
 
@@ -147,7 +151,7 @@ static NSString* const kSaveChanges = @"Save changes";
 #pragma mark - Actions
 
 - (IBAction)clickViewTable:(id)sender {
-    self.tableViewController = [[[VGTableViewController alloc] initWithUser:(VGUser*)self.object andEditMode:(self.initMethod == @selector(intitForEditState))] autorelease];
+    self.tableViewController = [[[VGTableViewController alloc] initWithUser:(id<VGPerson>)self.object andEditMode:(self.initMethod == @selector(intitForEditState))] autorelease];
     [self.navigationController pushViewController:self.tableViewController animated:YES];
 }
 
@@ -171,7 +175,11 @@ static NSString* const kSaveChanges = @"Save changes";
 }
 
 - (IBAction)clickBack:(id)sender {
+    if ([self.navigationController viewControllers][[self.navigationController viewControllers].count - 2] && [VGAppDelegate getInstance].currentStudent != nil) {
+        //[VGScreenNavigator fillSearchScreenWithCredentialType:((id<VGPerson>)self.object).credential forKey: (((id<VGPerson>)self.object).credential == VGCredentilasTypeStudent) ? kStudentList : (((id<VGPerson>)self.object).credential == VGCredentilasTypeExpert) ? kExpertList: kEmployerList];
+    }
     [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 - (IBAction)clickAdd:(id)sender {
@@ -191,16 +199,20 @@ static NSString* const kSaveChanges = @"Save changes";
         if ([self.object isKindOfClass:[VGUser class]]) {
             if (((VGUser*)self.object).credential == VGCredentilasTypeExpert) {
                 [VGAppDelegate getInstance].currentExpert = (VGUser*)self.object;
+                //[VGScreenNavigator fillDetailsScreenWitCredentialType:VGCredentilasTypeExpert withObject:[VGAppDelegate getInstance].currentExpert forKey:kExpertList];
             } else if (((VGUser*)self.object).credential == VGCredentilasTypeEmployer) {
-                [VGAppDelegate getInstance].currentEmployer = (VGUser*)self.object; 
+                [VGAppDelegate getInstance].currentEmployer = (VGUser*)self.object;
+                //[VGScreenNavigator fillDetailsScreenWitCredentialType:VGCredentilasTypeEmployer withObject:[VGAppDelegate getInstance].currentEmployer forKey:kEmployerList];
             } else {
                 NSLog(@"VGDetailViewContoller) Error: incorect credential type of object : %u", ((VGUser*)self.object).credential);
             }
         } else if ([self.object isKindOfClass:[VGStudent class]]) {
             [VGAppDelegate getInstance].currentStudent = (VGStudent*)self.object;
+            //[VGScreenNavigator fillDetailsScreenWitCredentialType:VGCredentilasTypeStudent withObject:[VGAppDelegate getInstance].currentStudent forKey:kStudentList];
         } else {
             NSLog(@"VGDetailViewContoller) Error: incorect type of object : %@", [self.object class]);
         }
+        [self initNavigationBar];
         [[VGAppDelegate getInstance] checkoutSession];
     } else if ([self.btnAdd.titleLabel.text isEqualToString:kSaveChanges]) {
         if ([self.fieldsViewController saveDataToObject]) {
@@ -218,4 +230,21 @@ static NSString* const kSaveChanges = @"Save changes";
         NSLog(@"VGDetailViewContoller) Error: wrong button name : '%@' (should be 'Add' or 'Choose' or '')", self.btnAdd.titleLabel.text);
     }
 }
+
+#pragma mark - Request delegate
+
+- (void)requestDidFinishSuccessful:(NSData *)data {
+    NSError* error;
+    NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    
+    // Filling current user
+    [VGAppDelegate getInstance].currentUser = [VGUtilities userFromJsonData:jsonData[kUser]];
+    
+    [self reloadInputViews];
+}
+
+- (void)requestDidFinishFail:(NSError **)error {
+    
+}
+
 @end

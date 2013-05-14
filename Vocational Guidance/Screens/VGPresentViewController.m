@@ -18,7 +18,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [VGAlertView hidePleaseWaitState];
+    if ([VGAlertView isShowing]) {
+        [VGAlertView hidePleaseWaitState];
+    }
     // Do any additional setup after loading the view from its nib.
 }
 

@@ -14,5 +14,6 @@
 @interface VGBaseViewController : VGMessageHandlerViewController <VGBaseRequestDelegate>
 
 - (void) sendNewNavigationStack: (VGSavedScreenInfo *) screenInfo toObject: (id) target action: (SEL) action;
+- (void) initNavigationBar;
 
 @end

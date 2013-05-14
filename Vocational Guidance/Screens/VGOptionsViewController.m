@@ -32,7 +32,7 @@ static NSString * CellIdentifier = @"OptionCell";
     UIPopoverController             * popoverController;
     
 	optionsController = [[VGOptionsViewController alloc] init];
-	optionsController.title = @"Main Menu";
+	optionsController.title = kMainMenu;
 	optionsController.arrayOptions = options;
 	optionsController.delegate = delegate;
 	

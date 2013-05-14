@@ -8,24 +8,12 @@
 
 #import "VGSkill.h"
 
-static NSString* const kSkillId = @"skill id";
-static NSString* const kSkillName = @"skill name";
-static NSString* const kSkillDescription = @"skill description";
-
 @implementation VGSkill
 
 @synthesize objectId;
 @synthesize name;
 @synthesize description;
 
--(NSDictionary*) jsonFromObject {
-    NSDictionary* jsonInfo = @{
-                               kSkillId : self.objectId,
-                               kSkillName : self.name,
-                               kSkillDescription : self.description
-                               };
-    return jsonInfo;
-}
 
 - (void)dealloc
 {

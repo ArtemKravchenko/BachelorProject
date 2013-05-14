@@ -8,17 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol VGObjectToJSON <NSObject>
+@protocol VGTableVariable <NSObject>
 
-@required
--(NSDictionary*)jsonFromObject;
+@property (nonatomic, retain) NSString* objectId;
+@property (nonatomic, retain) NSString* name;
+@property (nonatomic, retain) NSString* description;
 
 @end
 
-
-@interface VGSide : NSObject <VGObjectToJSON>
-
-@property (nonatomic, retain) NSString* sideId;
-@property (nonatomic, retain) NSString* name;
+@interface VGSide : NSObject <VGTableVariable>
 
 @end

@@ -18,15 +18,6 @@ typedef enum
     VGCredentilasTypeStudent = 5
 } VGCredentilasType;
 
-
-@protocol VGTableVariable <NSObject>
-
-@property (nonatomic, retain) NSString* objectId;
-@property (nonatomic, retain) NSString* name;
-@property (nonatomic, retain) NSString* description;
-
-@end
-
 @protocol VGPerson <NSObject, VGTableVariable>
 
 @property (nonatomic, retain) NSString* firstName;
@@ -37,13 +28,13 @@ typedef enum
 @property (nonatomic, retain) NSMutableArray* rows;
 @property (nonatomic, retain) NSMutableArray* columns;
 @property (nonatomic, assign) VGCredentilasType credential;
+@property (readonly, retain) NSString* credentialToString;
 
 @end
 
-@interface VGUser : NSObject <VGPerson, VGObjectToJSON>
+@interface VGUser : NSObject <VGPerson>
 
 @property (nonatomic, retain) NSString*         login;
 @property (nonatomic, retain) NSString*         password;
 
-@property (readonly, retain) NSString* credentialToString;
 @end

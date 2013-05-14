@@ -8,21 +8,28 @@
 
 #import "VGAlertView.h"
 
-static VGAlertView *alert;
+static VGAlertView *_alert;
+static BOOL _isShowing;
 
 @implementation VGAlertView
 
 + (void) showPleaseWaitState {
-    alert = [[[VGAlertView alloc] initWithTitle:@"Please Wait"
-                                        message:@""
+    _alert = [[[VGAlertView alloc] initWithTitle:@"Processing"
+                                        message:@"Please Wait..."
                                        delegate:nil
                               cancelButtonTitle:nil
-                              otherButtonTitles:nil, nil] autorelease];
-    [alert show];
+                               otherButtonTitles:nil] autorelease];
+    _isShowing = YES;
+    [_alert show];
 }
 
 + (void) hidePleaseWaitState {
-    [alert dismissWithClickedButtonIndex:0 animated:YES];
+    _isShowing = NO;
+    [_alert dismissWithClickedButtonIndex:0 animated:YES];
+}
+
++ (BOOL) isShowing {
+    return _isShowing;
 }
 
 @end

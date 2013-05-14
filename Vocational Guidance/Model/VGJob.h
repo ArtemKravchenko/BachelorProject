@@ -10,6 +10,6 @@
 #import "VGAppDelegate.h"
 #import "VGUser.h"
 
-@interface VGJob : NSObject<VGTableVariable, VGObjectToJSON>
+@interface VGJob : NSObject<VGTableVariable>
 
 @end

@@ -8,24 +8,11 @@
 
 #import "VGJob.h"
 
-static NSString* const kJobId = @"job id";
-static NSString* const kJobName = @"job name";
-static NSString* const kJobDescription = @"job description";
-
 @implementation VGJob
 
 @synthesize objectId;
 @synthesize name;
 @synthesize description;
-
--(NSDictionary*) jsonFromObject {
-    NSDictionary* jsonInfo = @{
-                               kJobId : self.objectId,
-                               kJobName : self.name,
-                               kJobDescription : self.description
-                               };
-    return jsonInfo;
-}
 
 - (void)dealloc
 {

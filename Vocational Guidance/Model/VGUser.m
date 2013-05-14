@@ -9,19 +9,6 @@
 #import "VGUser.h"
 #import "VGBaseDataModel.h"
 
-static NSString* const kUserId = @"user id";
-static NSString* const kUserFirstName = @"user first name";
-static NSString* const kUserSecondName = @"user second name";
-static NSString* const kUserLogin = @"user login";
-static NSString* const kUserPassword = @"user password";
-static NSString* const kUserDataSet = @"user data set";
-static NSString* const kUserAge = @"user age";
-static NSString* const kUserSide = @"user side";
-static NSString* const kUserCredential = @"user credeential";
-static NSString* const kUserDescription = @"user descriprion";
-static NSString* const kUserColumns = @"user columns";
-static NSString* const kUserRows = @"user rows";
-
 @implementation VGUser
 
 @synthesize dataSet = _dataSet;
@@ -60,24 +47,6 @@ static NSString* const kUserRows = @"user rows";
             break;
     }
     return stringCredential;
-}
-
--(NSDictionary*) jsonFromObject {
-    NSDictionary* jsonInfo = @{
-                               kUserId : self.objectId,
-                               kUserFirstName : self.firstName,
-                               kUserSecondName : self.secondName,
-                               kUserLogin : self.login,
-                               kUserPassword : self.password,
-                               kUserDataSet : self.dataSet,
-                               kUserAge : self.age,
-                               kUserSide : [self.side jsonFromObject],
-                               kUserCredential : [NSNumber numberWithInt: self.credential],
-                               kUserDescription : self.description,
-                               kUserColumns : self.columns,
-                               kUserRows : self.rows
-                               };
-    return jsonInfo;
 }
 
 -(NSString*) name {

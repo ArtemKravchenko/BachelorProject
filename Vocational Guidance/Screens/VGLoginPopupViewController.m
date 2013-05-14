@@ -10,6 +10,9 @@
 #import "VGScreenNavigator.h"
 #import "VGAppDelegate.h"
 
+static NSString* const kLogin = @"Login";
+static NSString* const kEnterAnonymously = @"Enter anonymously";
+
 @interface VGLoginPopupViewController () {
     NSInteger viewFrameIsChanged;
 }
@@ -40,28 +43,29 @@
 }
 
 - (IBAction)clickLogin:(id)sender {
-    [self.btnLogin setSelected:YES];
-    [self.delegate popupDidCloseWithLogin:self.txtLogin.text andPassword:self.txtPassword.text];
+    if ([[[self.btnLogin titleLabel] text] isEqualToString:kLogin]) {
+        [self.btnLogin setSelected:YES];
+        [self.delegate popupDidCloseWithLogin:self.txtLogin.text andPassword:self.txtPassword.text];
+    } else if ([[[self.btnLogin titleLabel] text] isEqualToString:kEnterAnonymously]) {
+        [self.delegate popupDidCloseWithLogin:@"" andPassword:@""];
+    }
 }
-
 
 #pragma mark Text field delegate
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    
     if (![[textField.text stringByReplacingCharactersInRange:range withString:string] isEqualToString:@""] &&
         ![[textField.text stringByReplacingCharactersInRange:range withString:string] isEqualToString:@"\n"] &&
         ![[textField.text stringByReplacingCharactersInRange:range withString:string] isEqualToString:@"\t"] ){
-        [self.btnLogin setTitle:@"Login" forState:UIControlStateNormal];
+        [self.btnLogin setTitle:kLogin forState:UIControlStateNormal];
     } else {
-        [self.btnLogin setTitle:@"Register" forState:UIControlStateNormal];
+        [self.btnLogin setTitle:kEnterAnonymously forState:UIControlStateNormal];
     }
     
     return YES;
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    
     if (viewFrameIsChanged == 0) {
         [self animateChangeOriginYView:self.view.superview forValue:100];
         viewFrameIsChanged = 1;
@@ -73,11 +77,10 @@
 }
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
-    
     if (viewFrameIsChanged == 1 && !self.btnLogin.isSelected) {
         [self animateChangeOriginYView:self.view.superview forValue:-100];
         viewFrameIsChanged = 0;
-    } else if(viewFrameIsChanged == 2){
+    } else if(viewFrameIsChanged == 2) {
         viewFrameIsChanged = 1;
     }
     
@@ -102,7 +105,7 @@
     [super viewDidLoad];
     self.txtLogin.delegate  = self;
     self.txtPassword.delegate  = self;
-    [self.btnLogin setTitle:@"Register" forState:UIControlStateNormal];
+    [self.btnLogin setTitle:kEnterAnonymously forState:UIControlStateNormal];
 }
 
 - (void) viewWillAppear:(BOOL)animated {

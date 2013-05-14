@@ -7,6 +7,7 @@
 //
 
 #import "VGTableViewController.h"
+#import "VGUtilities.h"
 
 static NSString* const kCancel = @"Cancel";
 
@@ -87,7 +88,7 @@ static NSString* const kCancel = @"Cancel";
                     }
                     completion:^(BOOL finished){
                         if (!isPressentTable) {
-                            [self.graphViewController reloadDataWithArray:[VGAppDelegate getInstance].currentUser.dataSet];
+                            [self.graphViewController reloadDataWithArray:self.user.dataSet];
                         } else {
                             [self.tableView reloadData];
                         }
@@ -118,6 +119,22 @@ static NSString* const kCancel = @"Cancel";
     }
     isSomethingWasChanged = NO;
     [self editMode:NO];
+}
+
+#pragma mark - Request delegate
+
+- (void)requestDidFinishSuccessful:(NSData *)data {
+    NSError* error;
+    NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    
+    // Filling current user
+    [VGAppDelegate getInstance].currentUser = [VGUtilities userFromJsonData:jsonData[kUser]];
+    
+    [self reloadInputViews];
+}
+
+- (void)requestDidFinishFail:(NSError **)error {
+    
 }
 
 #pragma mark - Send request

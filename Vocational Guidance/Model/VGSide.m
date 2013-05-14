@@ -10,15 +10,14 @@
 
 @implementation VGSide
 
--(NSDictionary*) jsonFromObject {
-    NSMutableDictionary* jsonInfo = [NSMutableDictionary dictionary];
-    
-    return jsonInfo;
-}
+@synthesize objectId;
+@synthesize name;
+@synthesize description;
 
 -(void)dealloc {
     self.name = nil;
-    self.sideId = nil;
+    self.objectId = nil;
+    self.description = nil;
     [super dealloc];
 }
 

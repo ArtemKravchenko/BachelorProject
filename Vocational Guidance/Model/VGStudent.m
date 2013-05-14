@@ -9,13 +9,6 @@
 #import "VGStudent.h"
 #import "VGAppDelegate.h"
 
-static NSString* const kStudentId = @"student id";
-static NSString* const kStudentFirstName = @"student first name";
-static NSString* const kStudentSecondName = @"student second name";
-static NSString* const kStudentAge = @"student age";
-static NSString* const kStudentSide = @"student side";
-static NSString* const kStudentDescription = @"student description";
-
 @implementation VGStudent
 
 @synthesize objectId;
@@ -30,17 +23,13 @@ static NSString* const kStudentDescription = @"student description";
 @synthesize columns = _columns;
 @synthesize credential;
 
-- (NSDictionary*) jsonFromObject {
-    NSDictionary* jsonInfo = @{
-                               kStudentId : self.objectId,
-                               kStudentFirstName : self.firstName,
-                               kStudentSecondName : self.secondName,
-                               kStudentAge : self.age,
-                               kStudentSide : [self.side jsonFromObject],
-                               kStudentDescription : self.description
-                               };
-    
-    return jsonInfo;
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        self.credential = VGCredentilasTypeStudent;
+    }
+    return self;
 }
 
 - (id)copyWithZone:(NSZone *)zone {
@@ -56,16 +45,11 @@ static NSString* const kStudentDescription = @"student description";
 }
 
 - (NSMutableArray*) columns {
-    // TEMPORARY STUPID SOLUTION
-//    if (_columns == nil) {
-//        _columns = [NSMutableArray arrayWithObject:[[self copy] autorelease]];
-//    } else if (![_columns isKindOfClass:[NSMutableArray class]]) {
-//        _columns = [NSMutableArray arrayWithObject:[[self copy] autorelease]];
-//    } else if (_columns.count == 0) {
-//        _columns = [NSMutableArray arrayWithObject:[[self copy] autorelease]];
-//    }
-    
     return [NSMutableArray arrayWithObject:[[self copy] autorelease]];
+}
+
+- (NSString *)credentialToString {
+    return @"Student";
 }
 
 - (NSMutableArray*) rows {
@@ -78,13 +62,13 @@ static NSString* const kStudentDescription = @"student description";
 
 - (NSMutableArray*) dataSet {
     // TEMPORARY STUPID SOLUTION
-    if (_dataSet == nil) {
-        NSMutableArray* persons = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"persons"]];
-        VGUser* tmpUser = persons[2];
-        _dataSet = [NSMutableArray arrayWithArray: tmpUser.dataSet];
-        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"%K LIKE %@", @"col.objectId", self.objectId];
-        [_dataSet filterUsingPredicate:predicate];
-    }
+    
+    NSMutableArray* persons = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"persons"]];
+    VGUser* tmpUser = persons[2];
+    _dataSet = [NSMutableArray arrayWithArray: tmpUser.dataSet];
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"%K LIKE %@", @"col.objectId", self.objectId];
+    [_dataSet filterUsingPredicate:predicate];
+    
     return _dataSet;
 }
 

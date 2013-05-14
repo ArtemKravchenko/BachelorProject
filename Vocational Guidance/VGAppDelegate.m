@@ -45,14 +45,29 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     VGLoginViewController *loginView = [[[VGLoginViewController alloc] init] autorelease];
-    self.currentScreen = @"Login";
+    [self clearSession];
     [self initTmpUser];
     self.navigationController = [[[UINavigationController alloc] initWithRootViewController:loginView] autorelease];
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
-    self.transactionsList = [NSMutableArray array];
     
     return YES;
+}
+
+- (void) clearSession {
+    self.isLogin = NO;
+    self.currentUser = nil;
+    self.currentEmployer = nil;
+    self.currentExpert = nil;
+    self.currentStudent = nil;
+    self.transactionsList = [NSMutableArray array];
+    self.results = nil;
+    self.allSides = nil;
+    self.allSkills = nil;
+    self.allStudents = nil;
+    self.allSubjects = nil;
+    self.allVacancies = nil;
+    self.currentScreen = @"Login";
 }
 
 + (VGAppDelegate*)getInstance {
@@ -166,7 +181,7 @@
     NSMutableArray* sides = [NSMutableArray array];
     
     VGSide* side = [[VGSide new] autorelease];
-    side.sideId = @"1";
+    side.objectId = @"1";
     side.name = @"KHAI";
     
     [sides addObject:side];
@@ -182,6 +197,7 @@
     student.secondName = @"Kukushkin";
     student.side = sides[0];
     student.age = @"20";
+    student.credential = VGCredentilasTypeStudent;
     [students addObject:student];
     
     student = [[VGStudent new] autorelease];
@@ -190,6 +206,7 @@
     student.secondName = @"Obama";
     student.side = sides[0];
     student.age = @"20";
+    student.credential = VGCredentilasTypeStudent;
     [students addObject:student];
     
     student = [[VGStudent new] autorelease];
@@ -198,6 +215,7 @@
     student.secondName = @"Obama";
     student.side = sides[0];
     student.age = @"20";
+    student.credential = VGCredentilasTypeStudent;
     [students addObject:student];
     
     student = [[VGStudent new] autorelease];
@@ -206,6 +224,7 @@
     student.secondName = @"Kirkorov";
     student.side = sides[0];
     student.age = @"20";
+    student.credential = VGCredentilasTypeStudent;
     [students addObject:student];
     
     student = [[VGStudent new] autorelease];
@@ -214,6 +233,7 @@
     student.secondName = @"Mercury";
     student.side = sides[0];
     student.age = @"20";
+    student.credential = VGCredentilasTypeStudent;
     [students addObject:student];
     
     student = [[VGStudent new] autorelease];
@@ -222,6 +242,7 @@
     student.secondName = @"Katushkin";
     student.side = sides[0];
     student.age = @"20";
+    student.credential = VGCredentilasTypeStudent;
     [students addObject:student];
     
     student = [[VGStudent new] autorelease];
@@ -230,6 +251,7 @@
     student.secondName = @"Yanukovich";
     student.side = sides[0];
     student.age = @"20";
+    student.credential = VGCredentilasTypeStudent;
     [students addObject:student];
     
     student = [[VGStudent new] autorelease];
@@ -238,6 +260,7 @@
     student.secondName = @"Medvedev";
     student.side = sides[0];
     student.age = @"20";
+    student.credential = VGCredentilasTypeStudent;
     [students addObject:student];
     
     student = [[VGStudent new] autorelease];
@@ -246,6 +269,7 @@
     student.secondName = @"Putin";
     student.side = sides[0];
     student.age = @"20";
+    student.credential = VGCredentilasTypeStudent;
     [students addObject:student];
     
     // init jobs

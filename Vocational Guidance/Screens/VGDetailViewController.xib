@@ -424,30 +424,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">VGDetailViewController</string>
 					<string key="superclassName">VGBaseViewController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="clickAdd:">id</string>
-						<string key="clickBack:">id</string>
-						<string key="clickEdit:">id</string>
-						<string key="clickViewTable:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="clickAdd:">
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">clickAdd:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">clickAdd:</string>
+						<object class="IBActionInfo" key="NS.object.0">
 							<string key="name">clickAdd:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="clickBack:">
-							<string key="name">clickBack:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="clickEdit:">
-							<string key="name">clickEdit:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="clickViewTable:">
-							<string key="name">clickViewTable:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
+					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="btnAdd">UIButton</string>
 						<string key="btnBack">UIButton</string>

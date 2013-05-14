@@ -8,11 +8,16 @@
 
 #import <Foundation/Foundation.h>
 #import "VGUser.h"
+#import "VGBaseDataModel.h"
 
 @interface VGUtilities : NSObject
 
 + (VGUser*)userFromJsonData:(NSData*)data;
 + (NSMutableDictionary*) fieldsForCredentialType:(VGCredentilasType)credentialType;
 + (NSMutableDictionary*) fieldsFromPlistNameWithName:(NSString*) name;
++ (UILabel*) changeTitleNameWithText:(NSString*) text;
++ (VGBaseDataModel*) baseDataModelFromJsonData:(NSDictionary*)jsonInfo withCredentialType:(VGCredentilasType)credentialType;
++ (id<VGTableVariable>) tableVariableFromJsonData:(NSDictionary*)jsonInfo withClassType:(Class)type;
++ (NSMutableArray*) arrayUsersFromResultData:(NSDictionary*)jsonInfo;
 
 @end

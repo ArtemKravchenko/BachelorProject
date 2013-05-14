@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "VGUser.h"
 
-@interface VGBaseDataModel : NSObject <VGObjectToJSON>
+@interface VGBaseDataModel : NSObject
 
 @property (nonatomic, assign) NSString* dataId;
 @property (nonatomic, retain) NSString* value;

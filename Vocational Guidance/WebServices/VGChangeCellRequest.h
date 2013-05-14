@@ -11,6 +11,6 @@
 
 @interface VGChangeCellRequest : VGBaseRequest
 
-- (id)initWithRow:(id<VGTableVariable>)row andColumn:(id<VGTableVariable>)column andValue:(NSString*)value;
+- (id)initWithPersonId:(NSString*)personId andTransactionList:(NSDictionary*)transactionList;
 
 @end

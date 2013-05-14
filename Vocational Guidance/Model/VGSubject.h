@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "VGStudent.h"
 
-@interface VGSubject : NSObject<VGTableVariable, VGObjectToJSON>
+@interface VGSubject : NSObject<VGTableVariable>
 
 @end

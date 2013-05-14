@@ -7,9 +7,10 @@
 //
 
 #import "VGBaseViewController.h"
+#import "VGUser.h"
 
 @interface VGResultViewController : VGBaseViewController
 
-@property (nonatomic, retain) NSDictionary* results;
+@property (nonatomic, retain) NSMutableDictionary* results;
 
 @end
