@@ -137,6 +137,12 @@ static const NSInteger cellValueTag             = 300;
     return NO;
 }
 
+- (NSDictionary*) fieldsForSearch {
+    NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
+    
+    return dictionary;
+}
+
 - (BOOL) saveDataToObject {
     // Tmp
     if (self.object == nil) {
@@ -159,11 +165,13 @@ static const NSInteger cellValueTag             = 300;
                 if ([self.object respondsToSelector:NSSelectorFromString(property)]) {
                     [self.object performSelector:NSSelectorFromString(property) withObject: value];
                 } else {
+                    [VGAlertView showError:[NSString stringWithFormat:@"(VGFieldsListViewController) Error: can't response selector (%@)", property]];
                     NSLog(@"(VGFieldsListViewController) Error: can't response selector (%@)", property);
                     return NO;
                 }
             } else {
                 if (![property isEqualToString:@"setDescription:"]) {
+                    [VGAlertView showError:[NSString stringWithFormat:@"(VGFieldsListViewController) Error: property %@ value is nil", property]];
                     NSLog(@"(VGFieldsListViewController) Error: property %@ value is nil", property);
                     return NO;
                 }

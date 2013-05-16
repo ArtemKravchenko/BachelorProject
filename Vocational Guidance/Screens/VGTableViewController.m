@@ -7,7 +7,8 @@
 //
 
 #import "VGTableViewController.h"
-#import "VGUtilities.h"
+#import "VGRequestQueue.h"
+#import "VGChangeCellRequest.h"
 
 static NSString* const kCancel = @"Cancel";
 
@@ -133,15 +134,28 @@ static NSString* const kCancel = @"Cancel";
     [self reloadInputViews];
 }
 
-- (void)requestDidFinishFail:(NSError **)error {
-    
-}
-
 #pragma mark - Send request
 
 - (void) sendSaveRequest {
     // Fake functionality
     [[VGAppDelegate getInstance] executingTransation];
+    /*
+     NSMutableDictionary* transactionList = [NSMutableDictionary dictionary];
+     NSMutableArray* transactionArray = [NSMutableArray array];
+     
+     for (NSDictionary* dictionary in [VGAppDelegate getInstance].transactionsList) {
+     NSMutableDictionary* transactionElement = [NSMutableDictionary dictionary];
+     [transactionElement setObject:[NSNumber numberWithInt:[((id<VGTableVariable>)dictionary[VG_ROW_OBJECT]).objectId intValue]] forKey:@"Row"];
+     [transactionElement setObject:[NSNumber numberWithInt:[((id<VGTableVariable>)dictionary[VG_COL_OBJECT]).objectId intValue]] forKey:@"Col"];
+     [transactionElement setObject:[NSNumber numberWithInt:[((id<VGTableVariable>)dictionary[VG_CELL_VALUE]).objectId intValue]] forKey:@"Value"];
+     [transactionArray addObject:transactionElement];
+     }
+     
+     [transactionList setObject:transactionArray forKey:@"TransactionLists"];
+     
+     VGChangeCellRequest* request = [[[VGChangeCellRequest alloc] initWithPersonId:[VGAppDelegate getInstance].currentUser.objectId andTransactionList:transactionList] autorelease];
+     [[VGRequestQueue queue] addRequest:request];
+    */
 }
 
 #pragma mark - VGTable delegate

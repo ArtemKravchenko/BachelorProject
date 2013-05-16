@@ -7,13 +7,10 @@
 //
 
 #import "VGLoginViewController.h"
-#import "VGAppDelegate.h"
 #import "VGScreenNavigator.h"
 #import "VGPresentViewController.h"
 #import "VGGetPersonRequest.h"
 #import "VGRequestQueue.h"
-#import "VGAlertView.h"
-#import "VGUtilities.h"
 
 @interface VGLoginViewController () {
     VGLoginPopupViewController *popup;
@@ -33,7 +30,7 @@
 }
 
 - (UIBarButtonItem*) rightNaigationButton {
-    UIBarButtonItem* right = [[[UIBarButtonItem alloc] initWithTitle:@"Login" style:UIBarButtonItemStyleBordered target:self action:@selector(clickRightBarButton)] autorelease];
+    UIBarButtonItem* right = [[[UIBarButtonItem alloc] initWithTitle:kLogin style:UIBarButtonItemStyleBordered target:self action:@selector(clickRightBarButton)] autorelease];
     return  right;
 }
 
@@ -54,7 +51,7 @@
         // ----------- TEMPORARY -----------------
         
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"%K LIKE %@ AND %K LIKE %@", @"login", login, @"password", password];
-        NSMutableArray* tmpArray = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"persons"]];
+        NSMutableArray* tmpArray = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:kPersons]];
         
         [tmpArray filterUsingPredicate:predicate];
         if (tmpArray.count) {
@@ -146,10 +143,6 @@
         VGPresentViewController *presentVC = [[VGPresentViewController new] autorelease];
         [[VGAppDelegate getInstance].navigationController pushViewController:presentVC animated:YES];
     }
-}
-
-- (void) requestDidFinishFail:(NSError**)error {
-    // TODO
 }
 
 #pragma mark - View controller life cycle

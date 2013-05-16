@@ -15,7 +15,7 @@
 
 + (VGRequestQueue*)queue;
 
-- (void)addRequest:(VGBaseRequest*)request;
+- (void)addRequest:(NSOperation*)request;
 - (void)cancelRequst;
 
 

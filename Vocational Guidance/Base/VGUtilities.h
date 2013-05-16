@@ -12,7 +12,7 @@
 
 @interface VGUtilities : NSObject
 
-+ (VGUser*)userFromJsonData:(NSData*)data;
++ (VGUser*)userFromJsonData:(NSDictionary*)data;
 + (NSMutableDictionary*) fieldsForCredentialType:(VGCredentilasType)credentialType;
 + (NSMutableDictionary*) fieldsFromPlistNameWithName:(NSString*) name;
 + (UILabel*) changeTitleNameWithText:(NSString*) text;

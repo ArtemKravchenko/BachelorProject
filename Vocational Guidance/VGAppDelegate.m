@@ -67,7 +67,7 @@
     self.allStudents = nil;
     self.allSubjects = nil;
     self.allVacancies = nil;
-    self.currentScreen = @"Login";
+    self.currentScreen = kLogin;
 }
 
 + (VGAppDelegate*)getInstance {

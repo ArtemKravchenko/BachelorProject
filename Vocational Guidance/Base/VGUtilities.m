@@ -75,24 +75,34 @@
     user.login = jsonInfo[@"PersonLogin"];
     user.password = jsonInfo[@"PersonPassword"];
     // TODO : add table data, rows and cols
-    NSMutableArray* dataSet = [NSMutableArray arrayWithArray:jsonInfo[@"PersonTableData"]];
-    NSMutableArray* rows = [NSMutableArray arrayWithArray:jsonInfo[@"Rows"]];
-    NSMutableArray* cols = [NSMutableArray arrayWithArray:jsonInfo[@"Cols"]];
-    
-    user.dataSet = [NSMutableArray array];
-    user.rows = [NSMutableArray array];
-    user.columns = [NSMutableArray array];
-    
-    for (NSDictionary* data in rows) {
-        [user.rows addObject: [self tableVariableFromJsonData:data withClassType:(user.credential == VGCredentilasTypeSecretar) ? [VGStudent class] : (user.credential == VGCredentilasTypeExpert) ? [VGSubject class] : [VGJob class]]];
+    if (jsonInfo[@"Rows"] != nil) {
+        NSMutableArray* rows = [NSMutableArray arrayWithArray:jsonInfo[@"Rows"]];
+        
+        user.rows = [NSMutableArray array];
+        
+        for (NSDictionary* data in rows) {
+            [user.rows addObject: [self tableVariableFromJsonData:data withClassType:(user.credential == VGCredentilasTypeSecretar) ? [VGStudent class] : (user.credential == VGCredentilasTypeExpert) ? [VGSubject class] : [VGJob class]]];
+        }
     }
     
-    for (NSDictionary* data in cols) {
-        [user.columns addObject: [self tableVariableFromJsonData:data withClassType:(user.credential == VGCredentilasTypeSecretar) ? [VGSubject class] : (user.credential == VGCredentilasTypeExpert) ? [VGSkill class] : [VGSkill class]]];
+    if (jsonInfo[@"Cols"] != nil) {
+        NSMutableArray* cols = [NSMutableArray arrayWithArray:jsonInfo[@"Cols"]];
+        
+        user.columns = [NSMutableArray array];
+        
+        for (NSDictionary* data in cols) {
+            [user.columns addObject: [self tableVariableFromJsonData:data withClassType:(user.credential == VGCredentilasTypeSecretar) ? [VGSubject class] : (user.credential == VGCredentilasTypeExpert) ? [VGSkill class] : [VGSkill class]]];
+        }
     }
     
-    for (NSDictionary* data in dataSet) {
-        [user.dataSet addObject: [self baseDataModelFromJsonData:data withCredentialType:user.credential]];
+    if (jsonInfo[@"PersonTableData"] != nil) {
+        NSMutableArray* dataSet = [NSMutableArray arrayWithArray:jsonInfo[@"PersonTableData"]];
+        
+        user.dataSet = [NSMutableArray array];
+        
+        for (NSDictionary* data in dataSet) {
+            [user.dataSet addObject: [self baseDataModelFromJsonData:data withCredentialType:user.credential]];
+        }
     }
     
     return user;
@@ -146,8 +156,39 @@
 
 + (NSMutableArray*) arrayUsersFromResultData:(NSDictionary*)jsonInfo {
     NSMutableArray* usersArray = [NSMutableArray array];
+
+    for (NSDictionary* array in ((NSArray*)jsonInfo[@"solution"])) {
+        VGUser* user = [[VGUser new] autorelease];
+        
+        // We fill user's rows and columns in reverse style, because students count always will been 1, but we have a lot of vacancy
+        
+        // filling rows
+        for (NSDictionary* data in ((NSArray*)jsonInfo[@"columns"])) {
+            [user.rows addObject: [self tableVariableFromJsonData:data withClassType:[VGStudent class]]];
+        }
+        // filling columns
+        for (NSDictionary* data in ((NSArray*)jsonInfo[@"rows"])) {
+            [user.columns addObject:[self tableVariableFromJsonData:data withClassType:[VGJob class]]];
+        }
+        // filling data set
+        for (NSDictionary* data in ((NSArray*)array)) {
+            [user.dataSet addObject:[self baseDataModelFromResultCell:data]];
+        }
+        
+        [usersArray addObject:user];
+    }
     
     return usersArray;
+}
+
++ (VGBaseDataModel*) baseDataModelFromResultCell:(NSDictionary*) jsonInfo{
+    VGBaseDataModel* dataModel = [[VGBaseDataModel new] autorelease];
+    
+    dataModel.value = [NSString stringWithFormat:@"%@", jsonInfo[@"Value"]];
+    dataModel.col = [self tableVariableFromJsonData:jsonInfo[@"X1"] withClassType:[VGStudent class]];
+    dataModel.row = [self tableVariableFromJsonData:jsonInfo[@"X2"] withClassType:[VGJob class]];
+    
+    return dataModel;
 }
 
 + (VGSide*) objectForId:(NSString*)sideId fromArray:(NSMutableArray*)array {

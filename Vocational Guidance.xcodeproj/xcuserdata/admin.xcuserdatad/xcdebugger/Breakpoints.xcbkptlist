@@ -34,24 +34,24 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Vocational Guidance/Screens/VGTableViewController.m"
-         timestampString = "389281898.238515"
+         timestampString = "390303404.874842"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "38"
-         endingLineNumber = "38"
-         landmarkName = "-viewDidLoad"
-         landmarkType = "5">
+         startingLineNumber = "40"
+         endingLineNumber = "40"
+         landmarkName = "@implementation VGTableViewController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Vocational Guidance/Screens/VGTableViewController.m"
-         timestampString = "389613955.434768"
+         timestampString = "390303404.874842"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "69"
-         endingLineNumber = "69"
+         startingLineNumber = "71"
+         endingLineNumber = "71"
          landmarkName = "-clickBack:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -73,11 +73,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Vocational Guidance/Screens/VGTableViewController.m"
-         timestampString = "389613955.434768"
+         timestampString = "390303404.874842"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "85"
-         endingLineNumber = "85"
+         startingLineNumber = "87"
+         endingLineNumber = "87"
          landmarkName = "-presentionViewTransition:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -151,13 +151,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Vocational Guidance/Screens/VGTableViewController.m"
-         timestampString = "389613955.434768"
+         timestampString = "390303404.874842"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "105"
-         endingLineNumber = "105"
-         landmarkName = "@implementation VGTableViewController"
-         landmarkType = "3">
+         startingLineNumber = "107"
+         endingLineNumber = "107"
+         landmarkName = "-editMode:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -238,32 +238,6 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Vocational Guidance/WebServices/VGRequestQueue.m"
-         timestampString = "385288836.722231"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "25"
-         endingLineNumber = "25"
-         landmarkName = "+initialize"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Vocational Guidance/WebServices/VGRequestQueue.m"
-         timestampString = "385288837.985727"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "37"
-         endingLineNumber = "37"
-         landmarkName = "-init"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
@@ -281,25 +255,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Vocational Guidance/Screens/VGDetailViewController.m"
-         timestampString = "390139491.864058"
+         timestampString = "390303404.874842"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "50"
-         endingLineNumber = "50"
-         landmarkName = "-initWithChooseState:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Vocational Guidance/Screens/VGTableViewController.m"
-         timestampString = "389613955.434768"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "139"
-         endingLineNumber = "139"
-         landmarkName = "-rowDidAddWithName:"
+         startingLineNumber = "51"
+         endingLineNumber = "51"
+         landmarkName = "-init"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -312,7 +273,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "247"
          endingLineNumber = "247"
-         landmarkName = "-cellTextFieldWithOriginY:withValue:"
+         landmarkName = "-cellLabelWithValue:andWidth:andOriginX:andOriginY:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -325,7 +286,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "142"
          endingLineNumber = "142"
-         landmarkName = "-saveDataToObject"
+         landmarkName = "-fieldsForSearch"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -346,12 +307,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Vocational Guidance/Screens/VGDetailViewController.m"
-         timestampString = "390139491.864058"
+         timestampString = "390303404.874842"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "106"
-         endingLineNumber = "106"
-         landmarkName = "-initForChooseState"
+         startingLineNumber = "107"
+         endingLineNumber = "107"
+         landmarkName = "-initForCurrentUserState"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -359,12 +320,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Vocational Guidance/Screens/VGDetailViewController.m"
-         timestampString = "390139491.864058"
+         timestampString = "390303404.874842"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "154"
-         endingLineNumber = "154"
-         landmarkName = "-clickViewTable:"
+         startingLineNumber = "159"
+         endingLineNumber = "159"
+         landmarkName = "-dealloc"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -385,13 +346,26 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Vocational Guidance/Screens/VGDetailViewController.m"
-         timestampString = "390139491.864058"
+         timestampString = "390303404.874842"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "198"
-         endingLineNumber = "198"
+         startingLineNumber = "203"
+         endingLineNumber = "203"
          landmarkName = "-clickAdd:"
          landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Vocational Guidance/Screens/VGSearchViewController.m"
+         timestampString = "390303402.706098"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "101"
+         endingLineNumber = "101"
+         landmarkName = "@implementation VGSearchViewController"
+         landmarkType = "3">
       </FileBreakpoint>
    </FileBreakpoints>
    <ExceptionBreakpoints>

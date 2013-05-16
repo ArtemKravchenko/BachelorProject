@@ -8,19 +8,20 @@
 
 #import "VGSearchPersonsRequest.h"
 
-static NSString* const kSearchPersonsUrlRoute =                 @"";
-static NSString* const kSearchStudentsUrlRoute =                @"";
+static NSString* const kSearchExpertsUrlRoute =                 @"getexpertsforcorrespondingparameters";
+static NSString* const kSearchEmployersUrlRoute =               @"getemployersforcorrespondingparameters";
+static NSString* const kSearchStudentsUrlRoute =                @"getstudentsforcurrentcriteria";
 static NSString* const kSearchAllStudents =                     @"";
 static NSString* const kSearchAllExperts =                      @"";
 static NSString* const kSearchAllEmployers =                    @"";
 
 @implementation VGSearchPersonsRequest
 
-- (id) initWithFirstName:(NSString*) firstName secondName:(NSString*) secondName sideId:(NSString*)sideId
+- (id) initWithFirstName:(NSString*) firstName secondName:(NSString*) secondName sideId:(NSString*)sideId andCredentialType:(VGCredentilasType)credentialType
 {
     self = [super init];
     if (self) {
-        self.params = [NSString stringWithFormat:@"%@?%@=%@&%@=%@&%@=%@", kSearchPersonsUrlRoute, kFirstName, firstName, kSecondName, secondName, kSideId, sideId];
+        self.params = [NSString stringWithFormat:@"%@?%@=%@&%@=%@&%@=%@", (credentialType == VGCredentilasTypeExpert) ? kSearchExpertsUrlRoute: kSearchEmployersUrlRoute, kFirstName, firstName, kSecondName, secondName, kSideId, sideId];
     }
     return self;
 }
@@ -28,7 +29,7 @@ static NSString* const kSearchAllEmployers =                    @"";
 - (id) initWithFirstName:(NSString *)firstName secondName:(NSString *)secondName sideId:(NSString *)sideId cardNumber:(NSString*) studentId age:(NSString*) age {
     self = [super init];
     if (self) {
-        self.params = [NSString stringWithFormat:@"%@?%@=%@&%@=%@&%@=%@&%@=%@&%@=%@", kStudentId, studentId, kSearchPersonsUrlRoute, kFirstName, firstName, kSecondName, secondName, kSideId, sideId, kAge, age];
+        self.params = [NSString stringWithFormat:@"%@?%@=%d&%@=%@&%@=%@&%@=%d&%@=%d", kSearchStudentsUrlRoute ,kCardNumber, ([studentId isEqualToString:@""]) ? -1 : [studentId intValue], kFirstName, firstName, kSecondName, secondName, kSideId, ([sideId isEqualToString:@""]) ? -1 : [sideId intValue], kAge, [age isEqualToString:@""] ? -1 : [age intValue]];
     }
     return self;
 }

@@ -7,7 +7,6 @@
 //
 
 #import "VGPresentViewController.h"
-#import "VGAlertView.h"
 
 @interface VGPresentViewController ()
 

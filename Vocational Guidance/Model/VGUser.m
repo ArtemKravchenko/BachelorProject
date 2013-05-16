@@ -27,19 +27,19 @@
     NSString* stringCredential = nil;
     switch (self.credential) {
         case VGCredentilasTypeEmployer:
-            stringCredential = @"Employer";
+            stringCredential = kEmployer;
             break;
             
         case VGCredentilasTypeExpert:
-            stringCredential = @"Expert";
+            stringCredential = kExpert;
             break;
             
         case VGCredentilasTypeManager:
-            stringCredential = @"Manager";
+            stringCredential = kManager;
             break;
             
         case VGCredentilasTypeSecretar:
-            stringCredential = @"Secretar";
+            stringCredential = kSecretar;
             break;
             
         default:

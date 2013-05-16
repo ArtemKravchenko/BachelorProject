@@ -52,10 +52,14 @@
     return @"Student";
 }
 
+- (VGCredentilasType) credential {
+    return VGCredentilasTypeStudent;
+}
+
 - (NSMutableArray*) rows {
     // TEMPORARY STUPID SOLUTION
     if (_rows == nil) {
-        _rows = [[NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"persons"]][2] performSelector:NSSelectorFromString(@"rows")];
+        _rows = [[NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:kPersons]][2] performSelector:NSSelectorFromString(@"rows")];
     }
     return _rows;
 }
@@ -63,7 +67,7 @@
 - (NSMutableArray*) dataSet {
     // TEMPORARY STUPID SOLUTION
     
-    NSMutableArray* persons = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"persons"]];
+    NSMutableArray* persons = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:kPersons]];
     VGUser* tmpUser = persons[2];
     _dataSet = [NSMutableArray arrayWithArray: tmpUser.dataSet];
     NSPredicate* predicate = [NSPredicate predicateWithFormat:@"%K LIKE %@", @"col.objectId", self.objectId];

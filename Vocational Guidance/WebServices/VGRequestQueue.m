@@ -7,12 +7,14 @@
 //
 
 #import "VGRequestQueue.h"
+#import "VGReachability.h"
+#import "VGAlertView.h"
 
 static VGRequestQueue *requestsQueue = nil;
 
 @interface VGRequestQueue ()
 
-@property (nonatomic, retain) VGBaseRequest *currentRequest;
+@property (nonatomic, retain) NSOperation *currentRequest;
 
 @end
 
@@ -39,8 +41,13 @@ static VGRequestQueue *requestsQueue = nil;
     return self;
 }
 
-- (void)addRequest:(VGBaseRequest*)request
+- (void)addRequest:(NSOperation*)request
 {
+    if(![[VGReachability reachability] isReachable])
+    {
+        [VGAlertView showError:@"There is no Internet connection detected!"];
+		return;
+	}
     self.currentRequest = request;
 	[self.operationQueue addOperation:self.currentRequest];
 }
@@ -55,6 +62,7 @@ static VGRequestQueue *requestsQueue = nil;
 
 -(void)dealloc
 {
+	[requestsQueue cancelRequst];
     self.currentRequest = nil;
     [super dealloc];
 }

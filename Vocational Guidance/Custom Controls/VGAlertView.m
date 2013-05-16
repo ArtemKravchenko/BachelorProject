@@ -32,4 +32,13 @@ static BOOL _isShowing;
     return _isShowing;
 }
 
++ (void) showError:(NSString*)message {
+    _alert = [[[VGAlertView alloc] initWithTitle:@"Error"
+                                         message:message
+                                        delegate:nil
+                               cancelButtonTitle:@"OK"
+                               otherButtonTitles:nil] autorelease];
+    [_alert show];
+}
+
 @end

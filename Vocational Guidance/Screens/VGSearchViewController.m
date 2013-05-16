@@ -12,13 +12,17 @@
 #import "VGPersonsCell.h"
 #import "VGUser.h"
 #import "VGDetailViewController.h"
-#import "VGUtilities.h"
+#import "VGGetPersonRequest.h"
+#import "VGSearchPersonsRequest.h"
+#import "VGRequestQueue.h"
 
 static NSString* const kFirstNameLabel = @"lblFirstName";
 static NSString* const kSecondNameLabel = @"lblSecondName";
 static NSString* const kSideLabel = @"lblSide";
 static NSString* const kAgeLabel = @"lblAge";
 static NSString* const kCardNumberLabel = @"lblCardNumber";
+static NSString* const kStudentCellIdentifier = @"Students_Cell";
+static NSString* const kPersonCellIdentifier = @"Persons_Cell";
 
 @interface VGSearchViewController ()
 
@@ -63,6 +67,7 @@ static NSString* const kCardNumberLabel = @"lblCardNumber";
     } else if ([self.objectsType isSubclassOfClass:[VGUser class]]) {
         [self.headersView addSubview: self.personsHeadersView];
     } else {
+        [VGAlertView showError:@"(SearchViewConrtroller) Error: Wrong object type"];
         NSLog(@"(SearchViewConrtroller) Error: Wrong object type");
     }
     // init fields view controller
@@ -100,13 +105,20 @@ static NSString* const kCardNumberLabel = @"lblCardNumber";
     NSMutableDictionary* allFields = [VGUtilities fieldsForCredentialType:((id<VGPerson>)self.objectsList[indexPath.row]).credential];
     self.objecectDetailController = [[[VGDetailViewController alloc] initWithChooseState:self.objectsType] autorelease];
     self.objecectDetailController.object = self.objectsList[indexPath.row];
-    self.objecectDetailController.fields = ([self.objectsType isSubclassOfClass:[VGStudent class]]) ?
-            allFields[kFields]: ([self.navigationItem.title isEqualToString:kExpertList]) ?
-            allFields[kFields]:
-            allFields[kFields];
+    self.objecectDetailController.fields = allFields[kFields];
     self.objecectDetailController.imageName = [allFields[kIcons] objectForKey: ([self.objectsList[indexPath.row] isKindOfClass:[VGUser class]]) ? ((VGUser*)self.objectsList[indexPath.row]).credentialToString : kStudent];
     
     [self.navigationController pushViewController:self.objecectDetailController animated:YES];
+    
+    /*
+     NSMutableDictionary* allFields = [VGUtilities fieldsForCredentialType:((id<VGPerson>)self.objectsList[indexPath.row]).credential];
+     self.objecectDetailController = [[[VGDetailViewController alloc] initWithChooseState:self.objectsType] autorelease];
+     self.objecectDetailController.fields = allFields[kFields];
+     self.objecectDetailController.imageName = [allFields[kIcons] objectForKey: ([self.objectsList[indexPath.row] isKindOfClass:[VGUser class]]) ? ((VGUser*)self.objectsList[indexPath.row]).credentialToString : kStudent];
+     
+     VGGetPersonRequest* request = [[[VGGetPersonRequest alloc] initWithPersonId: ((id<VGPerson>)self.objectsList[indexPath.row]).objectId] autorelease];
+     [[VGRequestQueue queue] addRequest:request];
+     */
 }
 
 #pragma mark Table data source
@@ -120,9 +132,9 @@ static NSString* const kCardNumberLabel = @"lblCardNumber";
     id<VGPerson> currentPerson = self.objectsList[indexPath.row];
     
     if ([self.objectsType isSubclassOfClass:[VGStudent class]]) {
-        cell = [self.tableView dequeueReusableCellWithIdentifier:@"Students_Cell"];
+        cell = [self.tableView dequeueReusableCellWithIdentifier:kStudentCellIdentifier];
     } else {
-        cell = [self.tableView dequeueReusableCellWithIdentifier:@"Persons_Cell"];
+        cell = [self.tableView dequeueReusableCellWithIdentifier:kPersonCellIdentifier];
     }
     if (cell == nil) {
         [[NSBundle mainBundle] loadNibNamed:@"VGSearchCell" owner:self options:nil];
@@ -146,12 +158,23 @@ static NSString* const kCardNumberLabel = @"lblCardNumber";
 
 #pragma mark - Actions
 
+- (IBAction)clickSearch:(id)sender {
+    /*
+     NSDictionary* fields = [self.fieldsViewController fieldsForSearch];
+     VGSearchPersonsRequest* request = nil;
+     request = ([self.objectsType isSubclassOfClass:[VGUser class]]) ? [[[VGSearchPersonsRequest alloc] initWithFirstName:fields[@"firstName"] secondName:fields[@"secondName"] sideId:fields[@"sideId"] andCredentialType:([[VGAppDelegate getInstance].currentScreen isEqualToString:kExpertList]) ? VGCredentilasTypeExpert : VGCredentilasTypeEmployer] autorelease] :
+     [[[VGSearchPersonsRequest alloc] initWithFirstName:fields[@"firstName"] secondName:fields[@"secondName"] sideId:fields[@"sideId"] cardNumber:fields[@"cardNumber"] age:fields[@"age"]] autorelease];
+     [[VGRequestQueue queue] addRequest:request];
+     */
+    
+}
+
 - (IBAction)clickViewAll:(id)sender {
     if ([self.objectsType isSubclassOfClass:[VGStudent class]]) {
         self.objectsList = [NSMutableArray arrayWithArray:[VGAppDelegate getInstance].allStudents];
     } else {
         NSPredicate* predicate = nil;
-        NSMutableArray* tmpPersons = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"persons"]];
+        NSMutableArray* tmpPersons = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:kPersons]];
         if ([[VGAppDelegate getInstance].currentScreen isEqualToString:kExpertList]) {
             predicate = [NSPredicate predicateWithFormat:@"%K == %d", @"credential", 2];
         } else {
@@ -161,6 +184,12 @@ static NSString* const kCardNumberLabel = @"lblCardNumber";
         self.objectsList = tmpPersons;
     }
     [self.tableView reloadData];
+    /*
+     VGSearchPersonsRequest* request = ([self.objectsType isSubclassOfClass:[VGStudent class]]) ? [[[VGSearchPersonsRequest alloc] initWithAllStudents] autorelease] :
+     ([[VGAppDelegate getInstance].currentScreen isEqualToString:kExpertList]) ? [[[VGSearchPersonsRequest alloc] initWithAllExperts] autorelease] :
+     [[[VGSearchPersonsRequest alloc] initWithAllEmployers] autorelease];
+     [[VGRequestQueue queue] addRequest:request];
+     */
 }
 
 #pragma mark - Request delegate
@@ -169,11 +198,23 @@ static NSString* const kCardNumberLabel = @"lblCardNumber";
     NSError* error;
     NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     
-    
-}
-
-- (void)requestDidFinishFail:(NSError **)error {
-    
+    if (jsonData[kUser] == nil) {
+        self.objectsList = [NSMutableArray array];
+        
+        if ([self.objectsType isSubclassOfClass:[VGStudent class]]) {
+            for (NSDictionary* jsonInfo in jsonData) {
+                [self.objectsList addObject:[VGUtilities tableVariableFromJsonData:jsonInfo withClassType: [VGStudent class]]];
+            }
+        } else {
+            for (NSDictionary * jsonInfo in jsonData) {
+                [self.objectsList addObject:[VGUtilities userFromJsonData: jsonInfo]];
+            }
+        }
+    } else {
+        // Filling user for detail
+        self.objecectDetailController.object = [VGUtilities userFromJsonData:jsonData[kUser]];
+        [self.navigationController pushViewController:self.objecectDetailController animated:YES];
+    }
 }
 
 @end

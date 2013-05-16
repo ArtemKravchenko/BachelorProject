@@ -13,9 +13,13 @@ static NSString* const kChangeCellUrlRoute =              @"";
 @implementation VGChangeCellRequest
 
 - (id)initWithPersonId:(NSString*)personId andTransactionList:(NSDictionary*)transactionList {
-    self = [super init];
+    NSString *tmpRequestURL = [NSString stringWithFormat:@"%@/%@", VG_BASE_URL, kChangeCellUrlRoute];
+    DLog(@"%@", tmpRequestURL);
+    self = [[ASIHTTPRequest requestWithURL:[NSURL URLWithString:tmpRequestURL]] retain];
     if (self) {
-        // TODO : special case, needs POST request
+        self.requestMethod = @"POST";
+        [self setPostValue:transactionList forKey: @"transactions"];
+        [self setPostValue:[NSNumber numberWithInt:[personId intValue]] forKey:@"personId"];
     }
     return self;
 }

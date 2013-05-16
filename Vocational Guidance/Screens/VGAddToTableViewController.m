@@ -7,7 +7,6 @@
 //
 
 #import "VGAddToTableViewController.h"
-#import "VGAppDelegate.h"
 #import "VGDetailViewController.h"
 #import "VGTableView.h"
 

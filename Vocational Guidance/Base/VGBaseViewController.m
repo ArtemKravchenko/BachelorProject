@@ -8,14 +8,12 @@
 
 #import "VGBaseViewController.h"
 #import "VGSavedScreenInfo.h"
-#import "VGAppDelegate.h"
 #import "VGOptionsViewController.h"
 #import "VGScreenNavigator.h"
 #import "VGDetailViewController.h"
 #import "VGSearchViewController.h"
 #import "VGResultViewController.h"
 #import "VGLoginViewController.h"
-#import "VGUtilities.h"
 
 static NSString* const kMenu = @"Menu";
 static NSString* const kLogout = @"Logout";
@@ -97,6 +95,11 @@ static NSString* const kGoToLogin = @"Go to login";
         [[VGAppDelegate getInstance] clearSession];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
+}
+#pragma mark - Request delegate
+
+- (void)requestDidFinishFail:(NSError *)error {
+    [VGAlertView showError: [NSString stringWithFormat:@"%@", error]];
 }
 
 #pragma mark Navigate between controllers

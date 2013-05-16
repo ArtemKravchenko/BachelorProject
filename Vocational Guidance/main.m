@@ -16,3 +16,7 @@ int main(int argc, char *argv[])
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([VGAppDelegate class]));
     }
 }
+
+void breakpoint(){
+	return;
+}

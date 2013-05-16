@@ -9,7 +9,6 @@
 #import "VGBaseViewController.h"
 #import "VGTableView.h"
 #import "VGGraphViewController.h"
-#import "VGAppDelegate.h"
 
 @interface VGTableViewController : VGBaseViewController <VGTableAddDelegate>
 

@@ -10,6 +10,9 @@
 #import "VGSavedScreenInfo.h"
 #import "VGMessageHandlerViewController.h"
 #import "VGBaseRequest.h"
+#import "VGAlertView.h"
+#import "VGAppDelegate.h"
+#import "VGUtilities.h"
 
 @interface VGBaseViewController : VGMessageHandlerViewController <VGBaseRequestDelegate>
 

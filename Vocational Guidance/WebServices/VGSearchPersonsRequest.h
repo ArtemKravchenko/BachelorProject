@@ -11,7 +11,7 @@
 
 @interface VGSearchPersonsRequest : VGBaseRequest
 
-- (id)initWithFirstName:(NSString*) firstName secondName:(NSString*) secondName sideId:(NSString*)sideId;
+- (id) initWithFirstName:(NSString*) firstName secondName:(NSString*) secondName sideId:(NSString*)sideId  andCredentialType:(VGCredentilasType)credentialType;
 - (id) initWithFirstName:(NSString *)firstName secondName:(NSString *)secondName sideId:(NSString *)sideId cardNumber:(NSString*) studentId age:(NSString*) age;
 - (id) initWithAllStudents;
 - (id) initWithAllExperts;

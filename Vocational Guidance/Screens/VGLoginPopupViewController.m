@@ -10,7 +10,6 @@
 #import "VGScreenNavigator.h"
 #import "VGAppDelegate.h"
 
-static NSString* const kLogin = @"Login";
 static NSString* const kEnterAnonymously = @"Enter anonymously";
 
 @interface VGLoginPopupViewController () {

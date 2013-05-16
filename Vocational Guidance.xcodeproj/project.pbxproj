@@ -43,7 +43,6 @@
 		8496AAE016F709C4001E1184 /* VGBaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8496AADF16F709C4001E1184 /* VGBaseRequest.m */; };
 		8496AAE316F70CA1001E1184 /* VGGetPersonRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8496AAE216F70CA1001E1184 /* VGGetPersonRequest.m */; };
 		8496AAE616F70DEE001E1184 /* VGSearchPersonsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8496AAE516F70DEE001E1184 /* VGSearchPersonsRequest.m */; };
-		8496AAE916F72A6B001E1184 /* VGAddNewObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8496AAE816F72A6B001E1184 /* VGAddNewObject.m */; };
 		8496AAEC16F73884001E1184 /* VGChangeCellRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8496AAEB16F73883001E1184 /* VGChangeCellRequest.m */; };
 		849BEB3B16F3339C001868D3 /* VGRequestQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 849BEB3A16F3339C001868D3 /* VGRequestQueue.m */; };
 		849D25AE1728184D00F9EB73 /* VGSide.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D25AD1728184D00F9EB73 /* VGSide.m */; };
@@ -81,6 +80,8 @@
 		84A4F1CA1738E96700173FC8 /* VGStudentsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A4F1C91738E96700173FC8 /* VGStudentsCell.m */; };
 		84A4F1CC1738E98B00173FC8 /* VGSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A4F1CB1738E98B00173FC8 /* VGSearchCell.xib */; };
 		84A4F1D21738F04D00173FC8 /* VGPersonsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A4F1D11738F04D00173FC8 /* VGPersonsCell.m */; };
+		84A7B1081743ACF50011C9C7 /* VGEditObjectRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A7B1071743ACF50011C9C7 /* VGEditObjectRequest.m */; };
+		84A7B10B1743B90E0011C9C7 /* VGAddNewObjectRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A7B10A1743B90E0011C9C7 /* VGAddNewObjectRequest.m */; };
 		84A89EB5173D37A60029C99A /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A89EA8173D37A60029C99A /* ASIFormDataRequest.m */; };
 		84A89EB6173D37A60029C99A /* ASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A89EAA173D37A60029C99A /* ASIHTTPRequest.m */; };
 		84A89EB7173D37A60029C99A /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A89EAE173D37A60029C99A /* ASIInputStream.m */; };
@@ -92,6 +93,7 @@
 		84DB31901733A976002833A3 /* VGUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB318F1733A976002833A3 /* VGUtilities.m */; };
 		84DB31941733ADA2002833A3 /* VGResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB31921733ADA2002833A3 /* VGResultViewController.m */; };
 		84DB31951733ADA2002833A3 /* VGResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84DB31931733ADA2002833A3 /* VGResultViewController.xib */; };
+		84EDC2F61744FC33008E4D24 /* VGReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EDC2F51744FC33008E4D24 /* VGReachability.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -151,8 +153,6 @@
 		8496AAE216F70CA1001E1184 /* VGGetPersonRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGGetPersonRequest.m; path = WebServices/VGGetPersonRequest.m; sourceTree = "<group>"; };
 		8496AAE416F70DEE001E1184 /* VGSearchPersonsRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGSearchPersonsRequest.h; path = WebServices/VGSearchPersonsRequest.h; sourceTree = "<group>"; };
 		8496AAE516F70DEE001E1184 /* VGSearchPersonsRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGSearchPersonsRequest.m; path = WebServices/VGSearchPersonsRequest.m; sourceTree = "<group>"; };
-		8496AAE716F72A6B001E1184 /* VGAddNewObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGAddNewObject.h; path = WebServices/VGAddNewObject.h; sourceTree = "<group>"; };
-		8496AAE816F72A6B001E1184 /* VGAddNewObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGAddNewObject.m; path = WebServices/VGAddNewObject.m; sourceTree = "<group>"; };
 		8496AAEA16F73883001E1184 /* VGChangeCellRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGChangeCellRequest.h; path = WebServices/VGChangeCellRequest.h; sourceTree = "<group>"; };
 		8496AAEB16F73883001E1184 /* VGChangeCellRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGChangeCellRequest.m; path = WebServices/VGChangeCellRequest.m; sourceTree = "<group>"; };
 		849BEB3916F3339C001868D3 /* VGRequestQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGRequestQueue.h; path = WebServices/VGRequestQueue.h; sourceTree = "<group>"; };
@@ -203,6 +203,10 @@
 		84A4F1CB1738E98B00173FC8 /* VGSearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VGSearchCell.xib; path = "Custom Controls/VGSearchCell.xib"; sourceTree = "<group>"; };
 		84A4F1D01738F04D00173FC8 /* VGPersonsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGPersonsCell.h; path = "Custom Controls/VGPersonsCell.h"; sourceTree = "<group>"; };
 		84A4F1D11738F04D00173FC8 /* VGPersonsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGPersonsCell.m; path = "Custom Controls/VGPersonsCell.m"; sourceTree = "<group>"; };
+		84A7B1061743ACF40011C9C7 /* VGEditObjectRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGEditObjectRequest.h; path = WebServices/VGEditObjectRequest.h; sourceTree = "<group>"; };
+		84A7B1071743ACF50011C9C7 /* VGEditObjectRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGEditObjectRequest.m; path = WebServices/VGEditObjectRequest.m; sourceTree = "<group>"; };
+		84A7B1091743B90E0011C9C7 /* VGAddNewObjectRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGAddNewObjectRequest.h; path = WebServices/VGAddNewObjectRequest.h; sourceTree = "<group>"; };
+		84A7B10A1743B90E0011C9C7 /* VGAddNewObjectRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGAddNewObjectRequest.m; path = WebServices/VGAddNewObjectRequest.m; sourceTree = "<group>"; };
 		84A89EA7173D37A60029C99A /* ASIFormDataRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIFormDataRequest.h; sourceTree = "<group>"; };
 		84A89EA8173D37A60029C99A /* ASIFormDataRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIFormDataRequest.m; sourceTree = "<group>"; };
 		84A89EA9173D37A60029C99A /* ASIHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIHTTPRequest.h; sourceTree = "<group>"; };
@@ -226,6 +230,8 @@
 		84DB31911733ADA2002833A3 /* VGResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGResultViewController.h; path = Screens/VGResultViewController.h; sourceTree = "<group>"; };
 		84DB31921733ADA2002833A3 /* VGResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGResultViewController.m; path = Screens/VGResultViewController.m; sourceTree = "<group>"; };
 		84DB31931733ADA2002833A3 /* VGResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VGResultViewController.xib; path = Screens/VGResultViewController.xib; sourceTree = "<group>"; };
+		84EDC2F41744FC33008E4D24 /* VGReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VGReachability.h; sourceTree = "<group>"; };
+		84EDC2F51744FC33008E4D24 /* VGReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VGReachability.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -362,6 +368,8 @@
 			children = (
 				84C124061740D472000EEFE8 /* Reachablitiy */,
 				84A89EA4173D37A50029C99A /* ASIHttpRequest */,
+				84A7B1091743B90E0011C9C7 /* VGAddNewObjectRequest.h */,
+				84A7B10A1743B90E0011C9C7 /* VGAddNewObjectRequest.m */,
 				849BEB3916F3339C001868D3 /* VGRequestQueue.h */,
 				849BEB3A16F3339C001868D3 /* VGRequestQueue.m */,
 				8496AADE16F709C4001E1184 /* VGBaseRequest.h */,
@@ -370,10 +378,10 @@
 				8496AAE216F70CA1001E1184 /* VGGetPersonRequest.m */,
 				8496AAE416F70DEE001E1184 /* VGSearchPersonsRequest.h */,
 				8496AAE516F70DEE001E1184 /* VGSearchPersonsRequest.m */,
-				8496AAE716F72A6B001E1184 /* VGAddNewObject.h */,
-				8496AAE816F72A6B001E1184 /* VGAddNewObject.m */,
 				8496AAEA16F73883001E1184 /* VGChangeCellRequest.h */,
 				8496AAEB16F73883001E1184 /* VGChangeCellRequest.m */,
+				84A7B1061743ACF40011C9C7 /* VGEditObjectRequest.h */,
+				84A7B1071743ACF50011C9C7 /* VGEditObjectRequest.m */,
 			);
 			name = "Web Services";
 			sourceTree = "<group>";
@@ -486,6 +494,8 @@
 		84C124061740D472000EEFE8 /* Reachablitiy */ = {
 			isa = PBXGroup;
 			children = (
+				84EDC2F41744FC33008E4D24 /* VGReachability.h */,
+				84EDC2F51744FC33008E4D24 /* VGReachability.m */,
 				84C124071740D472000EEFE8 /* Reachability.h */,
 				84C124081740D472000EEFE8 /* Reachability.m */,
 			);
@@ -615,7 +625,6 @@
 				8496AAE016F709C4001E1184 /* VGBaseRequest.m in Sources */,
 				8496AAE316F70CA1001E1184 /* VGGetPersonRequest.m in Sources */,
 				8496AAE616F70DEE001E1184 /* VGSearchPersonsRequest.m in Sources */,
-				8496AAE916F72A6B001E1184 /* VGAddNewObject.m in Sources */,
 				8496AAEC16F73884001E1184 /* VGChangeCellRequest.m in Sources */,
 				849D25AE1728184D00F9EB73 /* VGSide.m in Sources */,
 				84DB318D1733A479002833A3 /* VGAlertView.m in Sources */,
@@ -629,6 +638,9 @@
 				84A89EB8173D37A60029C99A /* ASINetworkQueue.m in Sources */,
 				84A89EB9173D37A60029C99A /* ASINSStringAdditions.m in Sources */,
 				84C124091740D472000EEFE8 /* Reachability.m in Sources */,
+				84A7B1081743ACF50011C9C7 /* VGEditObjectRequest.m in Sources */,
+				84A7B10B1743B90E0011C9C7 /* VGAddNewObjectRequest.m in Sources */,
+				84EDC2F61744FC33008E4D24 /* VGReachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

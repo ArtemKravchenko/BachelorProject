@@ -13,5 +13,6 @@
 + (void) showPleaseWaitState;
 + (void) hidePleaseWaitState;
 + (BOOL) isShowing;
++ (void) showError:(NSString*)message;
 
 @end

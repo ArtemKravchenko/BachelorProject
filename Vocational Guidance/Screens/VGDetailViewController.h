@@ -7,7 +7,6 @@
 //
 
 #import "VGBaseViewController.h"
-#import "VGAppDelegate.h"
 
 @interface VGDetailViewController : VGBaseViewController
 

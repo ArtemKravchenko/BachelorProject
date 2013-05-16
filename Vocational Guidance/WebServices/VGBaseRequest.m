@@ -15,23 +15,23 @@
 {
     NSString *tmpRequestURL = VG_BASE_URL;
     tmpRequestURL = [NSString stringWithFormat:@"%@/%@", tmpRequestURL, self.params];
-    
+    DLog(@"%@", tmpRequestURL);
     NSURLRequest * urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:tmpRequestURL]];
     
     [NSURLConnection sendAsynchronousRequest:urlRequest queue:[VGRequestQueue queue].operationQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
-     {
+    {
          if (self.delegate != nil)
          {
              if (error != nil)
              {
-                 [self.delegate requestDidFinishFail:&error];
+                 [self.delegate requestDidFinishFail:error];
              }
              else
              {
                  [self.delegate requestDidFinishSuccessful:data];
              }
          }
-     }];
+    }];
 }
 
 -(void)dealloc

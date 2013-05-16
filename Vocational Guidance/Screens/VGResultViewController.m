@@ -7,8 +7,6 @@
 //
 
 #import "VGResultViewController.h"
-#import "VGAppDelegate.h"
-#import "VGUtilities.h"
 #import "VGTableView.h"
 
 static NSString* const kResult = @"Result";
@@ -79,10 +77,6 @@ static NSInteger const kTableHeight = 98;
         [self.resultsView addSubview:tableView];
         i++;
     }
-}
-
-- (void)requestDidFinishFail:(NSError **)error {
-    
 }
 
 @end

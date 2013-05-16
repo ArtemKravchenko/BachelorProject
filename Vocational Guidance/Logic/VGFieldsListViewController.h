@@ -22,5 +22,6 @@
 
 - (void) initFieldsWithFrame:(CGRect)frame;
 - (BOOL) saveDataToObject;
+- (NSDictionary*) fieldsForSearch;
 
 @end

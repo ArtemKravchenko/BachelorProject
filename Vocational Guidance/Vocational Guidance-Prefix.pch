@@ -13,8 +13,21 @@
     #import <Foundation/Foundation.h>
 #endif
 
+void breakpoint();
 
-#define PO_NAV_OPTIONS                              1001
+#ifdef DEBUG
+    #define DLog(s, ...) NSLog(@"<%@:%d> %@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__])
+    #define Assert(x) if(!(x)){breakpoint();NSAssert(x, @"");}
+    #define AssertC(x) if(!(x)){breakpoint();NSCAssert(x, @"");}
+    #define Verify(x) Assert(x)
+#else
+    #define DLog(...)
+    #define Assert(x)
+    #define AssertC(x)
+    #define Verify(x) (x)
+#endif
+
+#define PO_NAV_OPTIONS                                      1001
 
 static NSInteger const TS_ADDED_ROW                         = 1;
 static NSInteger const TS_ADDED_COL                         = 2;
@@ -57,5 +70,14 @@ static NSString* const kVacancyId                           = @"vacancyId";
 static NSString* const kAge                                 = @"age";
 static NSString* const kName                                = @"name";
 static NSString* const kDescription                         = @"description";
+static NSString* const kCardNumber                          = @"cardNumber";
+static NSString* const kPersonId                            = @"personId";
 
 static NSString* const kMainMenu                            = @"Main Menu";
+
+static NSString* const kEmployer                            = @"Employer";
+static NSString* const kExpert                              = @"Expert";
+static NSString* const kManager                             = @"Manager";
+static NSString* const kSecretar                            = @"Secretar";
+static NSString* const kLogin                               = @"Login";
+static NSString* const kPersons                             = @"persons";
