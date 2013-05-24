@@ -99,6 +99,9 @@ static NSString* const kGoToLogin = @"Go to login";
 #pragma mark - Request delegate
 
 - (void)requestDidFinishFail:(NSError *)error {
+    if ([VGAlertView isShowing]) {
+        [VGAlertView hidePleaseWaitState];
+    }
     [VGAlertView showError: [NSString stringWithFormat:@"%@", error]];
 }
 

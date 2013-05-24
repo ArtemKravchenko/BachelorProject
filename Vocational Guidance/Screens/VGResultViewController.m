@@ -8,9 +8,11 @@
 
 #import "VGResultViewController.h"
 #import "VGTableView.h"
+#import "VGResultRequest.h"
+#import "VGRequestQueue.h"
 
 static NSString* const kResult = @"Result";
-static NSInteger const kTableHeight = 98;
+static NSInteger const kTableHeight = 122;
 
 @interface VGResultViewController ()
 
@@ -53,7 +55,10 @@ static NSInteger const kTableHeight = 98;
 #pragma mark - Actions
 
 - (IBAction)clickResult:(id)sender {
-    
+    [VGAlertView showPleaseWaitState];
+    VGResultRequest* request = [[[VGResultRequest alloc] initWithCurrentPersons] autorelease];
+    request.delegate = self;
+    [[VGRequestQueue queue] addRequest:request];
 }
 
 #pragma mark - Request delegate
@@ -77,6 +82,11 @@ static NSInteger const kTableHeight = 98;
         [self.resultsView addSubview:tableView];
         i++;
     }
+    [self performSelectorOnMainThread:@selector(hideAlertView) withObject:self waitUntilDone:NO];
+}
+
+- (void) hideAlertView {
+    [VGAlertView hidePleaseWaitState];
 }
 
 @end

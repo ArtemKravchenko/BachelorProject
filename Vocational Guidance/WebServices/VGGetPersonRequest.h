@@ -13,5 +13,6 @@
 - (id)initWithLogin:(NSString*)login andPassword:(NSString*)password;
 - (id)initWithPersonId:(NSString*) personId;
 - (id)initWithStudentId:(NSString*) studentId;
+- (id)initWithAllSides;
 
 @end

@@ -7,10 +7,12 @@
 //
 
 #import "VGGetPersonRequest.h"
+#import "VGRequestQueue.h"
 
 static NSString* const kGetPersonUrlRoute =                 @"getpersonbyloginandpassword";
 static NSString* const kGetPersonByIdUrlRoute =             @"getpersonbyid";
 static NSString* const kGetStudentByIdUrlRoute =            @"getstudentbyid";
+static NSString* const kGetAllSidesRoute =                  @"getallsides";
 
 static NSString* const kLoginParameter             =                 @"login";
 static NSString* const kPasswordParameter          =                 @"password";
@@ -38,6 +40,14 @@ static NSString* const kPasswordParameter          =                 @"password"
     self = [super init];
     if (self) {
         self.params = [NSString stringWithFormat:@"%@?%@=%d", kGetStudentByIdUrlRoute, kStudentId, [studentId intValue]];
+    }
+    return self;
+}
+
+- (id)initWithAllSides {
+    self = [super init];
+    if (self) {
+        self.params = [NSString stringWithFormat:@"%@", kGetAllSidesRoute];
     }
     return self;
 }

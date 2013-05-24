@@ -14,11 +14,11 @@ static BOOL _isShowing;
 @implementation VGAlertView
 
 + (void) showPleaseWaitState {
-    _alert = [[[VGAlertView alloc] initWithTitle:@"Processing"
+    _alert = [[VGAlertView alloc] initWithTitle:@"Processing"
                                         message:@"Please Wait..."
                                        delegate:nil
                               cancelButtonTitle:nil
-                               otherButtonTitles:nil] autorelease];
+                               otherButtonTitles:nil];
     _isShowing = YES;
     [_alert show];
 }
@@ -26,6 +26,7 @@ static BOOL _isShowing;
 + (void) hidePleaseWaitState {
     _isShowing = NO;
     [_alert dismissWithClickedButtonIndex:0 animated:YES];
+    [_alert release];
 }
 
 + (BOOL) isShowing {

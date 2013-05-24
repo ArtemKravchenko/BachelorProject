@@ -12,6 +12,7 @@
 
 @interface VGUtilities : NSObject
 
++ (VGUser*)userFromJsonData:(NSDictionary*)jsonInfo andAllRows:(NSMutableArray*)allRows andAllColumns:(NSMutableArray*)allColumns andRowType:(Class)rowType andColType:(Class)colType;
 + (VGUser*)userFromJsonData:(NSDictionary*)data;
 + (NSMutableDictionary*) fieldsForCredentialType:(VGCredentilasType)credentialType;
 + (NSMutableDictionary*) fieldsFromPlistNameWithName:(NSString*) name;
@@ -19,5 +20,6 @@
 + (VGBaseDataModel*) baseDataModelFromJsonData:(NSDictionary*)jsonInfo withCredentialType:(VGCredentilasType)credentialType;
 + (id<VGTableVariable>) tableVariableFromJsonData:(NSDictionary*)jsonInfo withClassType:(Class)type;
 + (NSMutableArray*) arrayUsersFromResultData:(NSDictionary*)jsonInfo;
++ (void) fillAllArraysWithRows:(NSMutableArray*)rows andColumns:(NSMutableArray*)columns andCredential:(NSString*)credentialId;
 
 @end

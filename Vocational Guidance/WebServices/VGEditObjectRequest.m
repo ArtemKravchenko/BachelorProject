@@ -21,7 +21,7 @@ static NSString* const kEditVacancyUrlRoute =               @"changevacancydetai
 - (id) initWithStudent:(NSString*)studentId studentFirstName:(NSString*)firstName studentSecondName:(NSString*)secondName studentSideId:(NSString*)sideId studentAge:(NSString*)age studentDescription:(NSString *)description andPersonId:(NSString *)personId {
     self = [super init];
     if (self) {
-        self.params = [NSString stringWithFormat:@"%@?%@=%d&%@=%@&%@=%@&%@=%d&%@=%d&%@=%@&%@=%d", kEditStudentUrlRoute, kCardNumber, [studentId intValue], kFirstName, firstName, kSecondName, secondName, kSideId, [sideId intValue], kAge, [age intValue], kPersonId, kDescription, description, [personId intValue]];
+        self.params = [NSString stringWithFormat:@"%@?%@=%d&%@=%@&%@=%@&%@=%d&%@=%d&%@=%@&%@=%d", kEditStudentUrlRoute, kCardNumber, [studentId intValue], kFirstName, firstName, kSecondName, secondName, kSideId, [sideId intValue], kAge, [age intValue], kDescription, ([description isEqualToString:@"<null>"]) ? @"" : description , kPersonId, [personId intValue]];
     }
     return self;
 }
@@ -34,8 +34,10 @@ static NSString* const kEditVacancyUrlRoute =               @"changevacancydetai
                                                     kEditSkillUrlRoute: kEditVacancyUrlRoute,
                                                     ([objectType isSubclassOfClass: [VGSubject class]]) ?
                                                     kSubjectId : ([objectType isSubclassOfClass: [VGSkill class]]) ?
-                                                    kSkillId: kVacancyId,
-                                                    objectId, kName, name, kDescription, description, kPersonId, [personId intValue]];
+                                                    kSkillId: kVacancyId, objectId,
+                                                    kName, name,
+                                                    kDescription, ([description isEqualToString:@"<null>"]) ? @"" : description ,
+                                                    kPersonId, [personId intValue]];
     }
     return self;
 }

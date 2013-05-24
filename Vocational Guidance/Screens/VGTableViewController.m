@@ -37,10 +37,9 @@ static NSString* const kCancel = @"Cancel";
     return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    self.btnEdit.hidden = !self.editMode;
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    [self clearPresentView];
     self.tableView = [[[VGTableView alloc] initWithFrame: CGRectMake(0, 0, self.presentionView.frame.size.width, self.presentionView.frame.size.height) andUser:self.user] autorelease];
     self.tableView.bounces = NO;
     self.tableView.parentViewController = self;
@@ -52,6 +51,21 @@ static NSString* const kCancel = @"Cancel";
     [self.presentionView addSubview:self.tableView];
     self.tableView.tableDetegate = self;
     [self.presentionView addSubview:self.graphViewController.view];
+    [self editMode:NO];
+    [self performSelectorOnMainThread:@selector(goToPresentViewController) withObject:self waitUntilDone:NO];
+}
+
+- (void) goToPresentViewController {
+    if ([VGAlertView isShowing]) {
+        [VGAlertView hidePleaseWaitState];
+    }
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.btnEdit.hidden = !self.editMode;
+    // init graph view
 }
 
 - (void)dealloc {
@@ -65,6 +79,12 @@ static NSString* const kCancel = @"Cancel";
 }
 
 #pragma mark - Actions
+
+- (void) clearPresentView {
+    for (UIView* view in self.presentionView.subviews) {
+        [view removeFromSuperview];
+    }
+}
 
 - (IBAction)clickBack:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
@@ -109,7 +129,7 @@ static NSString* const kCancel = @"Cancel";
     if ([self.btnEdit.titleLabel.text isEqualToString: kCancel]) {
         [[VGAppDelegate getInstance] cancelTransaction];
         [self.tableView reloadData];
-    } 
+    }
     BOOL editMode = ([self.btnEdit.titleLabel.text isEqualToString:kEdit]) ? YES : NO;
     [self editMode:editMode];
 }
@@ -124,38 +144,37 @@ static NSString* const kCancel = @"Cancel";
 
 #pragma mark - Request delegate
 
-- (void)requestDidFinishSuccessful:(NSData *)data {
+-(void)requestDidFinishSuccessful:(NSData *)data {
     NSError* error;
     NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-    
-    // Filling current user
-    [VGAppDelegate getInstance].currentUser = [VGUtilities userFromJsonData:jsonData[kUser]];
-    
-    [self reloadInputViews];
+    if (jsonData != nil) {
+        [VGAppDelegate getInstance].currentUser = [VGUtilities userFromJsonData:jsonData];
+        [self editMode:NO];
+        [self reloadInputViews];
+        if ([VGAlertView isShowing]) {
+            [VGAlertView hidePleaseWaitState];
+        }
+    } else {
+        if ([VGAlertView isShowing]) {
+            [VGAlertView hidePleaseWaitState];
+        }
+        [VGAlertView showError:[NSString stringWithFormat:@"%@", error]];
+    }
 }
 
 #pragma mark - Send request
 
 - (void) sendSaveRequest {
+    [VGAlertView showPleaseWaitState];
+    VGChangeCellRequest* request = [[[VGChangeCellRequest alloc]
+                                     initWithPersonId:[VGAppDelegate getInstance].currentUser.objectId
+                                     andDelegate:self] autorelease];
+    [[VGRequestQueue queue] addRequest:request];
+    
     // Fake functionality
-    [[VGAppDelegate getInstance] executingTransation];
     /*
-     NSMutableDictionary* transactionList = [NSMutableDictionary dictionary];
-     NSMutableArray* transactionArray = [NSMutableArray array];
-     
-     for (NSDictionary* dictionary in [VGAppDelegate getInstance].transactionsList) {
-     NSMutableDictionary* transactionElement = [NSMutableDictionary dictionary];
-     [transactionElement setObject:[NSNumber numberWithInt:[((id<VGTableVariable>)dictionary[VG_ROW_OBJECT]).objectId intValue]] forKey:@"Row"];
-     [transactionElement setObject:[NSNumber numberWithInt:[((id<VGTableVariable>)dictionary[VG_COL_OBJECT]).objectId intValue]] forKey:@"Col"];
-     [transactionElement setObject:[NSNumber numberWithInt:[((id<VGTableVariable>)dictionary[VG_CELL_VALUE]).objectId intValue]] forKey:@"Value"];
-     [transactionArray addObject:transactionElement];
-     }
-     
-     [transactionList setObject:transactionArray forKey:@"TransactionLists"];
-     
-     VGChangeCellRequest* request = [[[VGChangeCellRequest alloc] initWithPersonId:[VGAppDelegate getInstance].currentUser.objectId andTransactionList:transactionList] autorelease];
-     [[VGRequestQueue queue] addRequest:request];
-    */
+     [[VGAppDelegate getInstance] executingTransation];
+     */
 }
 
 #pragma mark - VGTable delegate
@@ -178,8 +197,8 @@ static NSString* const kCancel = @"Cancel";
     isSomethingWasChanged = YES;
 }
 
-- (void) cellDidChangedAtRow:(id<VGTableVariable>)row andColIndex:(id<VGTableVariable>)col withValue:(NSString*)value andWithOldValue:(NSString *)oldValue {
-    self.btnSave.enabled = YES;
+- (void) cellDidChangedAtRow:(NSString*)row andColIndex:(NSString*)col withValue:(NSString*)value andWithOldValue:(NSString *)oldValue {
+    self.btnSave.enabled = YES; // TODO
     NSMutableDictionary* tmpDictionary = [NSMutableDictionary dictionary];
     [tmpDictionary setObject: [NSString stringWithFormat:@"%d", TS_CHANGED_CELL] forKey:VG_TRANSACTION_TYPE];
     [tmpDictionary setObject: row  forKey:VG_ROW_OBJECT];

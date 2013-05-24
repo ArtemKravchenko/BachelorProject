@@ -11,9 +11,9 @@
 static NSString* const kSearchExpertsUrlRoute =                 @"getexpertsforcorrespondingparameters";
 static NSString* const kSearchEmployersUrlRoute =               @"getemployersforcorrespondingparameters";
 static NSString* const kSearchStudentsUrlRoute =                @"getstudentsforcurrentcriteria";
-static NSString* const kSearchAllStudents =                     @"";
-static NSString* const kSearchAllExperts =                      @"";
-static NSString* const kSearchAllEmployers =                    @"";
+static NSString* const kSearchAllStudents =                     @"getallstudents";
+static NSString* const kSearchAllExperts =                      @"getallexperts";
+static NSString* const kSearchAllEmployers =                    @"getallemployers";
 
 @implementation VGSearchPersonsRequest
 
@@ -21,7 +21,14 @@ static NSString* const kSearchAllEmployers =                    @"";
 {
     self = [super init];
     if (self) {
-        self.params = [NSString stringWithFormat:@"%@?%@=%@&%@=%@&%@=%@", (credentialType == VGCredentilasTypeExpert) ? kSearchExpertsUrlRoute: kSearchEmployersUrlRoute, kFirstName, firstName, kSecondName, secondName, kSideId, sideId];
+        self.params = [NSString stringWithFormat:@"%@?%@=%d", (credentialType == VGCredentilasTypeExpert) ? kSearchExpertsUrlRoute: kSearchEmployersUrlRoute,
+                       kSideId, (sideId == nil) ? -1 : [sideId intValue]];
+        if (firstName != nil) {
+            self.params = [NSString stringWithFormat:@"%@&%@=%@", self.params, kFirstName, firstName];
+        }
+        if (secondName != nil) {
+            self.params = [NSString stringWithFormat:@"%@&%@=%@", self.params, kSecondName, secondName];
+        }
     }
     return self;
 }
@@ -29,7 +36,16 @@ static NSString* const kSearchAllEmployers =                    @"";
 - (id) initWithFirstName:(NSString *)firstName secondName:(NSString *)secondName sideId:(NSString *)sideId cardNumber:(NSString*) studentId age:(NSString*) age {
     self = [super init];
     if (self) {
-        self.params = [NSString stringWithFormat:@"%@?%@=%d&%@=%@&%@=%@&%@=%d&%@=%d", kSearchStudentsUrlRoute ,kCardNumber, ([studentId isEqualToString:@""]) ? -1 : [studentId intValue], kFirstName, firstName, kSecondName, secondName, kSideId, ([sideId isEqualToString:@""]) ? -1 : [sideId intValue], kAge, [age isEqualToString:@""] ? -1 : [age intValue]];
+        self.params = [NSString stringWithFormat:@"%@?%@=%d&%@=%d&%@=%d", kSearchStudentsUrlRoute ,kCardNumber,
+                       (studentId == nil) ? -1 : [studentId intValue],
+                       kSideId, (sideId == nil) ? -1 : [sideId intValue],
+                       kAge, (age == nil) ? -1 : [age intValue]];
+        if (firstName != nil) {
+            self.params = [NSString stringWithFormat:@"%@&%@=%@", self.params, kFirstName, firstName];
+        }
+        if (secondName != nil) {
+            self.params = [NSString stringWithFormat:@"%@&%@=%@", self.params, kSecondName, secondName];
+        }
     }
     return self;
 }

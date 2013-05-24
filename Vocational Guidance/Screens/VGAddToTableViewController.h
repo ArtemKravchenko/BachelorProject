@@ -14,6 +14,7 @@
 @property (nonatomic, assign) SEL method;
 @property (nonatomic, retain) NSMutableArray* allRows;
 @property (nonatomic, retain) NSMutableArray* allColumns;
+@property (nonatomic, retain) NSString* plistName;
 
 - (id)initWithExistArray:(NSMutableArray*) existArray andFlag:(BOOL)isRow andGlobalArray:(NSMutableArray*)globalArray;
 

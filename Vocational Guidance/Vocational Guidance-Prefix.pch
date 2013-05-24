@@ -40,7 +40,7 @@ static NSString* const VG_COL_OBJECT                        = @"column_object";
 static NSString* const VG_OBJECT_NAME                       = @"obj_name"; 
 static NSString* const VG_OLD_VALUE                         = @"old_value";
 
-static NSString* const VG_BASE_URL                          = @"";
+static NSString* const VG_BASE_URL                          = @"http://www.vgproject.somee.com/person";
 
 static NSString* const kObject                              = @"object";
 static NSString* const kFields                              = @"Fields";

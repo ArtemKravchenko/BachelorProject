@@ -11,10 +11,19 @@
 
 @implementation VGBaseRequest
 
+- (id)initWithDelegate:(id<VGBaseRequestDelegate>)target
+{
+    self = [super init];
+    if (self) {
+        self.delegate = target;
+    }
+    return self;
+}
+
 -(void)main
 {
     NSString *tmpRequestURL = VG_BASE_URL;
-    tmpRequestURL = [NSString stringWithFormat:@"%@/%@", tmpRequestURL, self.params];
+    tmpRequestURL = [[NSString stringWithFormat:@"%@/%@", tmpRequestURL, self.params] stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
     DLog(@"%@", tmpRequestURL);
     NSURLRequest * urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:tmpRequestURL]];
     

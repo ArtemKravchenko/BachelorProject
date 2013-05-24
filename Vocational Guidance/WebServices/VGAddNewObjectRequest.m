@@ -8,12 +8,12 @@
 
 #import "VGAddNewObjectRequest.h"
 
-static NSString* const kAddNewStudentToSecretarUrlRoute =               @"";
-static NSString* const kAddNewSubjectToSecretarUrlRoute =               @"";
-static NSString* const kAddNewSubjectToExpertUrlRoute =                 @"";
-static NSString* const kAddNewSkillToExpertUrlRoute =                   @"";
-static NSString* const kAddNewSkillToEmploerUrlRoute =                  @"";
-static NSString* const kAddNewVacancyToEmploerUrlRoute =                @"";
+static NSString* const kAddNewStudentToSecretarUrlRoute =               @"addnewstudenttosecretardata";
+static NSString* const kAddNewSubjectToSecretarUrlRoute =               @"addnewsubjecttosecretardata";
+static NSString* const kAddNewSubjectToExpertUrlRoute =                 @"addnewsubjecttoexpertdata";
+static NSString* const kAddNewSkillToExpertUrlRoute =                   @"addnewskilltoexpertdata";
+static NSString* const kAddNewSkillToEmploerUrlRoute =                  @"addnewskilltoemployerdata";
+static NSString* const kAddNewVacancyToEmploerUrlRoute =                @"addnewvacancytoemployerdata";
 
 static NSString* const kAddExistStudentToSecretarUrlRoute =             @"addexiststudenttosecretardata";
 static NSString* const kAddExistSubjectToSecretarUrlRoute =             @"addexistsubjecttosecretardata";
@@ -29,7 +29,7 @@ static NSString* const kAddExistVacancyToEmploerUrlRoute =              @"addexi
 - (id)initWithNewStudentToSecretarData:(NSString*)studentId firstName:(NSString*)firstName secondName:(NSString*)secondName side:(NSString*)sideId age:(NSString*)age studentDescription:(NSString*)description andPersonId:(NSString*) personId {
     self = [super init];
     if (self) {
-        self.params = [NSString stringWithFormat:@"%@?%@=%d&%@=%@&%@=%@&%@=%d&%@=%d&%@=%@&%@=%d", kAddNewStudentToSecretarUrlRoute, kStudentId, [studentId intValue], kFirstName, firstName, kSecondName, secondName, kSideId, [sideId intValue], kAge, [age intValue], kDescription, description, kPersonId, [personId intValue]];
+        self.params = [NSString stringWithFormat:@"%@?%@=%d&%@=%@&%@=%@&%@=%d&%@=%d&%@=%@&%@=%d", kAddNewStudentToSecretarUrlRoute, kCardNumber, [studentId intValue], kFirstName, firstName, kSecondName, secondName, kSideId, [sideId intValue], kAge, [age intValue], kDescription, description, kPersonId, [personId intValue]];
     }
     return self;
 }
@@ -79,7 +79,7 @@ static NSString* const kAddExistVacancyToEmploerUrlRoute =              @"addexi
 - (id)initWithExistStudentToSecretarData:(NSString*)studentId andPersonId:(NSString*) personId {
     self = [super init];
     if (self) {
-        self.params = [NSString stringWithFormat:@"%@?%@=%d&%@=%d", kAddExistStudentToSecretarUrlRoute, kStudentId, [studentId intValue], kPersonId, [personId intValue]];
+        self.params = [NSString stringWithFormat:@"%@?%@=%d&%@=%d", kAddExistStudentToSecretarUrlRoute, kCardNumber, [studentId intValue], kPersonId, [personId intValue]];
     }
     return self;
 }

@@ -46,7 +46,7 @@ static NSString* const kSaveChanges = @"Save changes";
 {
     self = [super initWithNibName:@"VGDetailViewController" bundle:[NSBundle mainBundle]];
     if (self) {
-        self.initMethod = ([self.navigationController.viewControllers[self.navigationController.viewControllers.count - 1] isKindOfClass:[VGSearchViewController class]]) ? @selector(initForCurrentUserState) : @selector(initForChooseState);
+        self.initMethod = ([self.navigationController.viewControllers[self.navigationController.viewControllers.count - 1] isKindOfClass:[VGSearchViewController class]]) ? @selector(initForChooseState): @selector(initForCurrentUserState);
     }
     return self;
 }
@@ -78,10 +78,26 @@ static NSString* const kSaveChanges = @"Save changes";
     return self;
 }
 
+- (id) initWithAddState:(Class)classValue {
+    self = [super initWithNibName:@"VGDetailViewController" bundle:[NSBundle mainBundle]];
+    if (self) {
+        self.initMethod = @selector(initForAddState);
+        self.classValue = classValue;
+    }
+    return self;
+}
+
 - (void) initForViewState {
     self.btnAdd.hidden = YES;
     self.btnEdit.hidden = YES;
     self.btnBack.hidden = NO;
+}
+
+- (void) initForAddState {
+    self.btnAdd.hidden = NO;
+    self.btnBack.hidden = NO;
+    self.btnEdit.hidden = YES;
+    self.btnViewTable.hidden = YES;
 }
 
 - (void) intitForEditState {
@@ -160,7 +176,7 @@ static NSString* const kSaveChanges = @"Save changes";
 #pragma mark - Actions
 
 - (IBAction)clickViewTable:(id)sender {
-    self.tableViewController = [[[VGTableViewController alloc] initWithUser:(id<VGPerson>)self.object andEditMode:(self.initMethod == @selector(intitForEditState))] autorelease];
+    self.tableViewController = [[[VGTableViewController alloc] initWithUser:(id<VGPerson>)self.object andEditMode:(self.initMethod == @selector(intitForEditState) || (self.initMethod == @selector(initForCurrentUserState)))] autorelease];
     [self.navigationController pushViewController:self.tableViewController animated:YES];
 }
 
@@ -194,55 +210,57 @@ static NSString* const kSaveChanges = @"Save changes";
 - (IBAction)clickAdd:(id)sender {
     if ([self.btnAdd.titleLabel.text isEqualToString:kAdd]) {
         if ([self.fieldsViewController saveDataToObject]) {
-            VGTableViewController* parentViewController = [self.navigationController viewControllers][[self.navigationController viewControllers].count - 2];
-            if ([parentViewController.tableView respondsToSelector:@selector(addToTableMethod:)]) {
-                
-                [parentViewController.tableView performSelector:@selector(addToTableMethod:) withObject:self.fieldsViewController.object];
-                [self.navigationController popViewControllerAnimated:YES];
-                /*
-                 VGAddNewObjectRequest* request = nil;
-                 
-                 if (self.object != nil) {
-                 if ([self.object isKindOfClass:[VGStudent class]]) {
-                 request = [[[VGAddNewObjectRequest alloc] initWithExistSubjectToSecretarData:self.object.objectId andPersonId:[VGAppDelegate getInstance].currentUser.objectId] autorelease];
-                 } else if ([self.object isKindOfClass:[VGSubject class]]) {
-                 request = ([VGAppDelegate getInstance].currentUser.credential == VGCredentilasTypeSecretar) ?
-                 [[[VGAddNewObjectRequest alloc] initWithExistSubjectToSecretarData:self.object.objectId andPersonId:[VGAppDelegate getInstance].currentUser.objectId] autorelease] : [[[VGAddNewObjectRequest alloc] initWithExistSubjectToExpertData:self.object.objectId andPersonId:[VGAppDelegate getInstance].currentUser.objectId] autorelease];
-                 } else if ([self.object isKindOfClass:[VGSkill class]]) {
-                 request = ([VGAppDelegate getInstance].currentUser.credential == VGCredentilasTypeExpert) ?
-                 [[[VGAddNewObjectRequest alloc] initWithExistSkillToExpertData:self.object.objectId andPersonId:[VGAppDelegate getInstance].currentUser.objectId] autorelease] : [[[VGAddNewObjectRequest alloc] initWithExistSkillToEmployerData:self.object.objectId andPersonId:[VGAppDelegate getInstance].currentUser.objectId] autorelease];
-                 } else if ([self.object isKindOfClass:[VGJob class]]) {
-                 request = [[[VGAddNewObjectRequest alloc] initWithExistVacancyToEmployerData:self.object.objectId andPersonId:[VGAppDelegate getInstance].currentUser.objectId] autorelease];
-                 } else {
-                 [VGAlertView showError:[NSString stringWithFormat: @"(VGDetailViewController) Error: wrong type of object : %@", [self.object class]]];
-                 NSLog(@"(VGDetailViewController) Error: wrong type of object : %@", [self.object class]);
-                 }
-                 } else {
-                 if ([self.object isKindOfClass:[VGStudent class]]) {
-                 request = [[[VGAddNewObjectRequest alloc] initWithNewStudentToSecretarData:((VGStudent*)self.fieldsViewController.object).objectId
-                 firstName:((VGStudent*)self.fieldsViewController.object).firstName secondName:((VGStudent*)self.fieldsViewController.object).secondName side:((VGStudent*)self.fieldsViewController.object).side.objectId age:((VGStudent*)self.fieldsViewController.object).age andPersonId:[VGAppDelegate getInstance].currentUser.objectId] autorelease];
-                 } else if ([self.object isKindOfClass:[VGSubject class]]) {
-                 request = ([VGAppDelegate getInstance].currentUser.credential == VGCredentilasTypeSecretar) ?
-                 [[VGAddNewObjectRequest alloc] initWithNewSubjectToSecretarData:self.object.name description:self.object.description andPersonId:[VGAppDelegate getInstance].currentUser.objectId] :
-                 [[VGAddNewObjectRequest alloc] initWithNewSubjectToExpertData:self.object.name description:self.object.description andPersonId:[VGAppDelegate getInstance].currentUser.objectId];
-                 } else if ([self.object isKindOfClass:[VGSkill class]]) {
-                 request = ([VGAppDelegate getInstance].currentUser.credential == VGCredentilasTypeExpert) ?
-                 [[[VGAddNewObjectRequest alloc] initWithNewSkillToExpertData:self.object.name description:self.object.description andPersonId:[VGAppDelegate getInstance].currentUser.objectId] autorelease] :
-                 [[[VGAddNewObjectRequest alloc] initWithNewSkillToEmployerData:self.object.name description:self.object.description andPersonId:[VGAppDelegate getInstance].currentUser.objectId] autorelease];
-                 } else if ([self.object isKindOfClass:[VGJob class]]) {
-                 request = [[[VGAddNewObjectRequest alloc] initWithNewSkillToExpertData:self.object.name description:self.object.description andPersonId:[VGAppDelegate getInstance].currentUser.objectId] autorelease];
-                 } else {
-                 [VGAlertView showError:[NSString stringWithFormat: @"(VGDetailViewController) Error: wrong type of object : %@", [self.object class]]];
-                 NSLog(@"(VGDetailViewController) Error: wrong type of object : %@", [self.object class]);
-                 }
-                 }
-                 
-                 [[VGRequestQueue queue] addRequest: request];
-                 */
+            /*
+             VGTableViewController* parentViewController = [self.navigationController viewControllers][[self.navigationController viewControllers].count - 2];
+             if ([parentViewController.tableView respondsToSelector:@selector(addToTableMethod:)]) {
+             
+             [parentViewController.tableView performSelector:@selector(addToTableMethod:) withObject:self.fieldsViewController.object];
+             [self.navigationController popViewControllerAnimated:YES];
+             
+             } else {
+             [VGAlertView showError:@"Error: parentViewController can't respond selector(addToTableMethod:)"];
+             NSLog(@"Error: parentViewController can't respond selector(addToTableMethod:)");
+             }
+             */
+            [VGAlertView showPleaseWaitState];
+            VGAddNewObjectRequest* request = nil;
+            
+            if (self.object != nil) {
+                if ([self.object isKindOfClass:[VGStudent class]]) {
+                    request = [[[VGAddNewObjectRequest alloc] initWithExistStudentToSecretarData:self.object.objectId andPersonId:[VGAppDelegate getInstance].currentUser.objectId] autorelease];
+                } else if ([self.object isKindOfClass:[VGSubject class]]) {
+                    request = ([VGAppDelegate getInstance].currentUser.credential == VGCredentilasTypeSecretar) ?
+                    [[[VGAddNewObjectRequest alloc] initWithExistSubjectToSecretarData:self.object.objectId andPersonId:[VGAppDelegate getInstance].currentUser.objectId] autorelease] : [[[VGAddNewObjectRequest alloc] initWithExistSubjectToExpertData:self.object.objectId andPersonId:[VGAppDelegate getInstance].currentUser.objectId] autorelease];
+                } else if ([self.object isKindOfClass:[VGSkill class]]) {
+                    request = ([VGAppDelegate getInstance].currentUser.credential == VGCredentilasTypeExpert) ?
+                    [[[VGAddNewObjectRequest alloc] initWithExistSkillToExpertData:self.object.objectId andPersonId:[VGAppDelegate getInstance].currentUser.objectId] autorelease] : [[[VGAddNewObjectRequest alloc] initWithExistSkillToEmployerData:self.object.objectId andPersonId:[VGAppDelegate getInstance].currentUser.objectId] autorelease];
+                } else if ([self.object isKindOfClass:[VGJob class]]) {
+                    request = [[[VGAddNewObjectRequest alloc] initWithExistVacancyToEmployerData:self.object.objectId andPersonId:[VGAppDelegate getInstance].currentUser.objectId] autorelease];
+                } else {
+                    [VGAlertView showError:[NSString stringWithFormat: @"(VGDetailViewController) Error: wrong type of object : %@", [self.object class]]];
+                    NSLog(@"(VGDetailViewController) Error: wrong type of object : %@", [self.object class]);
+                }
             } else {
-                [VGAlertView showError:@"Error: parentViewController can't respond selector(addToTableMethod:)"];
-                NSLog(@"Error: parentViewController can't respond selector(addToTableMethod:)");
+                if ([[self.classValue class] isSubclassOfClass:[VGStudent class]]) {
+                    request = [[[VGAddNewObjectRequest alloc] initWithNewStudentToSecretarData:((VGStudent*)self.fieldsViewController.object).objectId
+                                                                                     firstName:((VGStudent*)self.fieldsViewController.object).firstName secondName:((VGStudent*)self.fieldsViewController.object).secondName side:((VGStudent*)self.fieldsViewController.object).side.objectId age:((VGStudent*)self.fieldsViewController.object).age studentDescription:(((VGStudent*)self.fieldsViewController.object).description != nil) ? self.fieldsViewController.object.description : @"" andPersonId:[VGAppDelegate getInstance].currentUser.objectId] autorelease];
+                } else if ([[self.classValue class] isSubclassOfClass:[VGSubject class]]) {
+                    request = ([VGAppDelegate getInstance].currentUser.credential == VGCredentilasTypeSecretar) ?
+                    [[VGAddNewObjectRequest alloc] initWithNewSubjectToSecretarData:self.fieldsViewController.object.name description:self.fieldsViewController.object.description andPersonId:[VGAppDelegate getInstance].currentUser.objectId] :
+                    [[VGAddNewObjectRequest alloc] initWithNewSubjectToExpertData:self.fieldsViewController.object.name description:self.fieldsViewController.object.description andPersonId:[VGAppDelegate getInstance].currentUser.objectId];
+                } else if ([[self.classValue class] isSubclassOfClass:[VGSkill class]]) {
+                    request = ([VGAppDelegate getInstance].currentUser.credential == VGCredentilasTypeExpert) ?
+                    [[[VGAddNewObjectRequest alloc] initWithNewSkillToExpertData:self.fieldsViewController.object.name description:self.fieldsViewController.object.description andPersonId:[VGAppDelegate getInstance].currentUser.objectId] autorelease] :
+                    [[[VGAddNewObjectRequest alloc] initWithNewSkillToEmployerData:self.fieldsViewController.object.name description:self.fieldsViewController.object.description andPersonId:[VGAppDelegate getInstance].currentUser.objectId] autorelease];
+                } else if ([[self.classValue class] isSubclassOfClass:[VGJob class]]) {
+                    request = [[[VGAddNewObjectRequest alloc] initWithNewVacancyToEmployerData:self.fieldsViewController.object.name description:self.fieldsViewController.object.description andPersonId:[VGAppDelegate getInstance].currentUser.objectId] autorelease];
+                } else {
+                    [VGAlertView showError:[NSString stringWithFormat: @"(VGDetailViewController) Error: wrong type of object : %@", [self.object class]]];
+                    NSLog(@"(VGDetailViewController) Error: wrong type of object : %@", [self.classValue class]);
+                }
             }
+            request.delegate = self;
+            [[VGRequestQueue queue] addRequest: request];
         } else {
             [VGAlertView showError:@"(VGDetailViewContoller) Error: object is nill"];
             NSLog(@"(VGDetailViewContoller) Error: object is nill");
@@ -270,31 +288,35 @@ static NSString* const kSaveChanges = @"Save changes";
         [[VGAppDelegate getInstance] checkoutSession];
     } else if ([self.btnAdd.titleLabel.text isEqualToString:kSaveChanges]) {
         if ([self.fieldsViewController saveDataToObject]) {
+            
+            VGEditObjectRequest* request = nil;
+            
+            request = ([self.fieldsViewController.object isKindOfClass:[VGStudent class]]) ?
+            [[[VGEditObjectRequest alloc] initWithStudent:((VGStudent*)self.fieldsViewController.object).objectId
+                                         studentFirstName:((VGStudent*)self.fieldsViewController.object).firstName
+                                        studentSecondName:((VGStudent*)self.fieldsViewController.object).secondName
+                                            studentSideId:((VGStudent*)self.fieldsViewController.object).side.objectId
+                                               studentAge:((VGStudent*)self.fieldsViewController.object).age
+                                       studentDescription:((VGStudent*)self.fieldsViewController.object).description
+                                              andPersonId:[VGAppDelegate getInstance].currentUser.objectId] autorelease] :
+            [[VGEditObjectRequest alloc] initWithTableObjectId:self.fieldsViewController.object.objectId
+                                                    objectName:self.fieldsViewController.object.name
+                                             objectDescription:self.fieldsViewController.object.description
+                                                    objectType:[self.fieldsViewController.object class] andPersonId:[VGAppDelegate getInstance].currentUser.objectId];
+            
+            request.delegate = self;
+            [[VGRequestQueue queue] addRequest:request];
+            /*
             VGTableViewController* parentViewController = [self.navigationController viewControllers][[self.navigationController viewControllers].count - 2];
             if ([parentViewController.tableView respondsToSelector:@selector(editObjectInTableMethod:)]) {
                 [parentViewController.tableView performSelector:@selector(editObjectInTableMethod:) withObject:self.fieldsViewController.object];
                 [self.navigationController popViewControllerAnimated:YES];
-                /*
-                 VGEditObjectRequest* request = nil;
-                 
-                 request = ([self.fieldsViewController.object isKindOfClass:[VGStudent class]]) ?
-                 [[[VGEditObjectRequest alloc] initWithStudent:((VGStudent*)self.fieldsViewController.object).objectId
-                 studentFirstName:((VGStudent*)self.fieldsViewController.object).firstName
-                 studentSecondName:((VGStudent*)self.fieldsViewController.object).secondName
-                 studentSideId:((VGStudent*)self.fieldsViewController.object).side.objectId
-                 studentAge:((VGStudent*)self.fieldsViewController.object).age] autorelease] :
-                 [[VGEditObjectRequest alloc] initWithTableObjectId:self.fieldsViewController.object.objectId
-                 objectName:self.fieldsViewController.object.name
-                 objectDescription:self.fieldsViewController.object.description
-                 objectType:[self.fieldsViewController.object class]];
-                 
-                 
-                 [[VGRequestQueue queue] addRequest:request];
-                 */
+                
             } else {
                 [VGAlertView showError:@"(VGDetailViewContoller) Error: parentViewController can't respond selector(editObjectInTableMethod:)"];
                 NSLog(@"(VGDetailViewContoller) Error: parentViewController can't respond selector(editObjectInTableMethod:)");
             }
+             */
         } else {
             [VGAlertView showError:@"(VGDetailViewContoller) Error: object is nill"];
             NSLog(@"(VGDetailViewContoller) Error: object is nill");
@@ -311,11 +333,26 @@ static NSString* const kSaveChanges = @"Save changes";
     NSError* error;
     NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     
-    //((VGTableViewController*)self.parentViewController).user = [VGUtilities userFromJsonData:jsonData];
-    [VGAppDelegate getInstance].currentUser = [VGUtilities userFromJsonData:jsonData];
-    [self.navigationController popViewControllerAnimated:YES];
-    // TODO
     
-    [self reloadInputViews];
+    if (self.object == nil) {
+        [VGAppDelegate getInstance].allSides = [NSMutableArray array];
+        
+        for (NSDictionary* data in jsonData[@"all sides"]) {
+            [[VGAppDelegate getInstance].allSides addObject:[VGUtilities tableVariableFromJsonData:data withClassType:[VGSide class]]];
+        }
+        
+        [VGUtilities fillAllArraysWithRows:((NSMutableArray*)jsonData[@"all rows"])
+                                andColumns:((NSMutableArray*)jsonData[@"all columns"])
+                             andCredential:[NSString stringWithFormat:@"%@", ((NSDictionary*)jsonData[kUser])[@"PersonCredentialId"]]];
+        [VGAppDelegate getInstance].currentUser = [VGUtilities userFromJsonData:jsonData[kUser]];
+        NSInteger numberOfTableViewController = self.navigationController.viewControllers.count - 2;
+        ((VGTableViewController*)self.navigationController.viewControllers[numberOfTableViewController]).user = [VGAppDelegate getInstance].currentUser;
+    } else {
+        [VGAppDelegate getInstance].currentUser = [VGUtilities userFromJsonData:jsonData];
+        NSInteger numberOfTableViewController = self.navigationController.viewControllers.count - 2;
+        ((VGTableViewController*)self.navigationController.viewControllers[numberOfTableViewController]).user = [VGAppDelegate getInstance].currentUser;
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 @end

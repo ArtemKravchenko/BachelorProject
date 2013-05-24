@@ -22,4 +22,7 @@
 @property (nonatomic, retain) NSString* params;
 @property (nonatomic, assign) id<VGBaseRequestDelegate> delegate;
 
+-(void)main;
+-(id)initWithDelegate:(id<VGBaseRequestDelegate>)target;
+
 @end

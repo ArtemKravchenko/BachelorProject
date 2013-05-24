@@ -25,7 +25,7 @@ enum VGButtonClickedType : NSInteger {
 @optional
 - (void) rowDidAddWithName:(id<VGTableVariable>)object;
 - (void) colDidAddWithName:(id<VGTableVariable>)object;
-- (void) cellDidChangedAtRow:(id<VGTableVariable>)row andColIndex:(id<VGTableVariable>)col withValue:(NSString*)value  andWithOldValue:(NSString*)oldValue;
+- (void) cellDidChangedAtRow:(NSString*)row andColIndex:(NSString*)col withValue:(NSString*)value  andWithOldValue:(NSString*)oldValue;
 - (void) cellWillChanging;
 - (void) objectWillAdding;
 

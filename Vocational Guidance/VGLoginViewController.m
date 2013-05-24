@@ -11,10 +11,14 @@
 #import "VGPresentViewController.h"
 #import "VGGetPersonRequest.h"
 #import "VGRequestQueue.h"
+#import "VGSubject.h"
+#import "VGSkill.h"
+#import "VGJob.h"
 
-@interface VGLoginViewController () {
-    VGLoginPopupViewController *popup;
-}
+@interface VGLoginViewController ()
+
+@property (nonatomic, retain) VGLoginPopupViewController *popup;
+@property (nonatomic, assign) BOOL isAnonymous;
 
 @end
 
@@ -34,18 +38,13 @@
     return  right;
 }
 
-#pragma mark - Login popup delegate
+#pragma mark Mock function
 
-- (void) popupDidCloseWithLogin:(NSString *)login andPassword:(NSString *)password {
-    /*
-    VGGetPersonRequest* request = [[[VGGetPersonRequest alloc] initWithLogin:login andPassword:password] autorelease];
-    [[VGRequestQueue queue] addRequest:request];
-    */
+- (void) mockUser:(NSString*)login password:(NSString*)password {
+    [self.popup dismissViewControllerAnimated:YES completion:nil];
     if ([login isEqualToString:@""] && [password isEqualToString:@""]) {
-        [popup dismissViewControllerAnimated:YES completion:nil];
         [VGAppDelegate getInstance].isLogin = NO;
     } else {
-        [popup dismissViewControllerAnimated:YES completion:nil];
         [VGAppDelegate getInstance].isLogin = YES;
         
         // ----------- TEMPORARY -----------------
@@ -70,7 +69,6 @@
             return;
         }
     }
-    [VGAlertView showPleaseWaitState];
     
     [VGAppDelegate getInstance].allStudents = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"students"]];
     [VGAppDelegate getInstance].allSubjects = [NSMutableArray arrayWithArray:[[VGAppDelegate getInstance].mockData objectForKey:@"subjects"]];
@@ -84,65 +82,64 @@
     [[VGAppDelegate getInstance].navigationController pushViewController:presentVC animated:YES];
 }
 
+#pragma mark - Login popup delegate
+
+- (void) popupDidCloseWithLogin:(NSString *)login andPassword:(NSString *)password {
+    
+    [VGAlertView showPleaseWaitState];
+    if ([login isEqualToString:@""] && [password isEqualToString:@""]) {
+        VGGetPersonRequest* request = [[[VGGetPersonRequest alloc] initWithAllSides] autorelease];
+        request.delegate = self;
+        [[VGRequestQueue queue] addRequest:request];
+        self.isAnonymous = YES;
+    } else {
+        VGGetPersonRequest* request = [[[VGGetPersonRequest alloc] initWithLogin:login andPassword:password] autorelease];
+        request.delegate = self;
+        [[VGRequestQueue queue] addRequest:request];
+        self.isAnonymous = NO;
+    }
+    /*
+     [self mockUser:login password:password];
+     */
+}
+
 #pragma mark - Request delegate
 
 - (void) requestDidFinishSuccessful:(NSData *)data {
     NSError* error;
     NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     
-    if (jsonData[kUser] != nil) {
-        
-        [VGScreenNavigator initStartScreenMapping];
-        
-        // Filling all array side
-        [VGAppDelegate getInstance].allSides = [NSMutableArray array];
-        
-        for (NSDictionary* data in jsonData[@"all sides"]) {
-            [[VGAppDelegate getInstance].allSides addObject:[VGUtilities tableVariableFromJsonData:data withClassType:[VGSide class]]];
-        }
+    // Filling all array side
+    [VGAppDelegate getInstance].allSides = [NSMutableArray array];
+    
+    for (NSDictionary* data in jsonData[@"all sides"]) {
+        [[VGAppDelegate getInstance].allSides addObject:[VGUtilities tableVariableFromJsonData:data withClassType:[VGSide class]]];
+    }
+    
+    if (!self.isAnonymous) {
+        [VGAppDelegate getInstance].isLogin = YES;
         
         // Filling all rows and all columns
         //
         
-        NSString* credentilId = ((NSDictionary*)jsonData[kUser])[@"PersonCredentialId"];
-        VGCredentilasType credential = ([credentilId isEqualToString:@"2"]) ? VGCredentilasTypeSecretar: ([credentilId isEqualToString:@"3"]) ? VGCredentilasTypeExpert: VGCredentilasTypeEmployer;
         
-        NSMutableArray* allRows = nil;
-        NSMutableArray* allColumns = nil;
-        
-        if([credentilId isEqualToString:@"2"]) {
-            [VGAppDelegate getInstance].allStudents = [NSMutableArray array];
-            [VGAppDelegate getInstance].allSubjects = [NSMutableArray array];
-            allRows = [VGAppDelegate getInstance].allStudents;
-            allColumns = [VGAppDelegate getInstance].allSubjects;
-        } else if ([credentilId isEqualToString:@"3"]) {
-            [VGAppDelegate getInstance].allSubjects = [NSMutableArray array];
-            [VGAppDelegate getInstance].allSkills = [NSMutableArray array];
-            allRows = [VGAppDelegate getInstance].allSubjects;
-            allColumns = [VGAppDelegate getInstance].allSkills;
-        } else if ([credentilId isEqualToString:@"4"]) {
-            [VGAppDelegate getInstance].allSkills = [NSMutableArray array];
-            [VGAppDelegate getInstance].allVacancies = [NSMutableArray array];
-            allRows = [VGAppDelegate getInstance].allVacancies;
-            allColumns = [VGAppDelegate getInstance].allSkills;
-        } else {
-            NSLog(@"(VGUtilities) Error : Wrong user credentials");
-        }
-        
-        for (NSDictionary* row in ((NSMutableArray*)jsonData[@"all rows"])) {
-            [allRows addObject:[VGUtilities baseDataModelFromJsonData:row withCredentialType:credential]];
-        }
-        
-        for (NSDictionary* col in ((NSMutableArray*)jsonData[@"all columns"])) {
-            [allColumns addObject:[VGUtilities baseDataModelFromJsonData:col withCredentialType:credential]];
-        }
+        [VGUtilities fillAllArraysWithRows:((NSMutableArray*)jsonData[@"all rows"])
+                                andColumns:((NSMutableArray*)jsonData[@"all columns"])
+                                andCredential:[NSString stringWithFormat:@"%@", ((NSDictionary*)jsonData[kUser])[@"PersonCredentialId"]]];
         
         // Filling current user
+        //[VGAppDelegate getInstance].currentUser = [VGUtilities userFromJsonData:jsonData[kUser] andAllRows:allRows andAllColumns:allColumns andRowType:[rowClass class] andColType:[colClass class]];
         [VGAppDelegate getInstance].currentUser = [VGUtilities userFromJsonData:jsonData[kUser]];
-        
-        VGPresentViewController *presentVC = [[VGPresentViewController new] autorelease];
-        [[VGAppDelegate getInstance].navigationController pushViewController:presentVC animated:YES];
     }
+    [VGScreenNavigator initStartScreenMapping];
+    
+    [self performSelectorOnMainThread:@selector(goToPresentViewController) withObject:self waitUntilDone:NO];
+}
+
+- (void) goToPresentViewController {
+    [self.popup dismissViewControllerAnimated:YES completion:nil];
+    VGPresentViewController *presentVC = [[VGPresentViewController new] autorelease];
+    [[VGAppDelegate getInstance].navigationController pushViewController:presentVC animated:YES];
 }
 
 #pragma mark - View controller life cycle
@@ -155,21 +152,21 @@
 #pragma mark Actions
 
 - (void) clickRightBarButton{
-    popup = [[[VGLoginPopupViewController alloc] init] autorelease];
-    popup.delegate = self;
+    self.popup = [[[VGLoginPopupViewController alloc] init] autorelease];
+    self.popup.delegate = self;
     UIViewController *vc = [VGAppDelegate getInstance].navigationController.viewControllers[0];
     
-	popup.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-	popup.modalPresentationStyle = UIModalPresentationPageSheet;
+	self.popup.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+	self.popup.modalPresentationStyle = UIModalPresentationPageSheet;
     
-    [vc presentViewController:popup animated:YES completion:nil];
+    [vc presentViewController:self.popup animated:YES completion:nil];
     
-    popup.view.superview.frame = CGRectMake(0, 0, 500, 350);
-    popup.view.superview.center = CGPointMake(self.view.center.x, self.view.center.y);
+    self.popup.view.superview.frame = CGRectMake(0, 0, 500, 350);
+    self.popup.view.superview.center = CGPointMake(self.view.center.x, self.view.center.y);
 }
 
 - (void)dealloc {
-    [popup release];
+    self.popup = nil;
     [super dealloc];
 }
 @end

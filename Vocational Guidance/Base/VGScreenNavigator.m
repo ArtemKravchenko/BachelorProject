@@ -101,7 +101,7 @@ static NSMutableDictionary *screenMapping = nil;
     screenInfo.classValue = [VGResultViewController class];
     screenInfo.title = kResults;
     NSMutableDictionary* params = [NSMutableDictionary dictionary];
-    // TODO
+    
     if ([VGAppDelegate getInstance].results == nil) {
         [VGAppDelegate getInstance].results = [NSDictionary dictionary];
     }

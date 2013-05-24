@@ -76,7 +76,10 @@ static NSString * CellIdentifier = @"AddToTableCell";
 #pragma mark - Table delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.target performSelector:self.method withObject: self.tableData[indexPath.row]];
+    if ([self.target respondsToSelector:@selector(presentExistingObject:)]) {
+        [self.target performSelector:self.method withObject: self.tableData[indexPath.row]];;
+    }
+    
 }
 
 #pragma mark - Actions
@@ -89,6 +92,7 @@ static NSString * CellIdentifier = @"AddToTableCell";
 
 - (void)dealloc {
     [_tableView release];
+    self.plistName = nil;
     [super dealloc];
 }
 @end

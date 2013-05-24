@@ -125,7 +125,7 @@
         NSString *stringType = (NSString*)[transactionItem objectForKey:VG_TRANSACTION_TYPE];
         NSInteger type = [stringType integerValue];
         if (type == TS_CHANGED_CELL) {
-            [self returnOldValue:(NSString*)[transactionItem objectForKey: VG_OLD_VALUE] forRowIndex:((id<VGTableVariable>)[transactionItem objectForKey: VG_ROW_OBJECT]) andColIndex:((id<VGTableVariable>)[transactionItem objectForKey: VG_COL_OBJECT])];
+            [self returnOldValue:(NSString*)[transactionItem objectForKey: VG_OLD_VALUE] forRowIndex:((NSString*)[transactionItem objectForKey: VG_ROW_OBJECT]) andColIndex:((NSString*)[transactionItem objectForKey: VG_COL_OBJECT])];
         } else {
             [self removeObject:type withObject:[transactionItem objectForKey: VG_OBJECT_NAME]];
         }
@@ -151,9 +151,9 @@
     _stringValues = nil;
 }
 
-- (void) returnOldValue:(NSString*)value forRowIndex:(id<VGTableVariable>)rowIndex andColIndex:(id<VGTableVariable>)colIndex {
+- (void) returnOldValue:(NSString*)value forRowIndex:(NSString*)rowIndex andColIndex:(NSString*)colIndex {
     for (VGBaseDataModel* cell in self.currentUser.dataSet) {
-        if (rowIndex.objectId == cell.row.objectId && colIndex.objectId == cell.col.objectId) {
+        if (rowIndex == cell.row.objectId && colIndex == cell.col.objectId) {
             cell.value = value;
         }
     }

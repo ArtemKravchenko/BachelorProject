@@ -62,36 +62,45 @@ static NSString* const kJob             = @"Job";
             // init columns plist name
             switch (self.user.credential) {
                 case VGCredentilasTypeEmployer:
-                    self.colPlistName = kJob;
+                    self.colPlistName = kSkill;
                     break;
                     
                 case VGCredentilasTypeExpert:
-                    self.colPlistName = kSubject;
+                    self.colPlistName = kSkill;
                     break;
                     
                 case VGCredentilasTypeSecretar:
-                    self.colPlistName = kStudent;
+                    self.colPlistName = kSubject;
                     break;
+                
+                case VGCredentilasTypeStudent:
+                    self.colPlistName = kSubject;
                     
                 default:
+                    self.colPlistName = kJob;
                     break;
             }
             
             // init rows plist name
             switch (self.user.credential) {
                 case VGCredentilasTypeEmployer:
-                    self.rowPlistName = kSkill;
+                    self.rowPlistName = kJob;
                     break;
                     
                 case VGCredentilasTypeExpert:
-                    self.rowPlistName = kSkill;
-                    break;
-                    
-                case VGCredentilasTypeSecretar:
                     self.rowPlistName = kSubject;
                     break;
                     
+                case VGCredentilasTypeSecretar:
+                    self.rowPlistName = kStudent;
+                    break;
+                    
+                case VGCredentilasTypeStudent:
+                    self.rowPlistName = kStudent;
+                    break;
+                    
                 default:
+                    self.rowPlistName = kStudent;
                     break;
             }
         } else {
@@ -181,9 +190,12 @@ static NSString* const kJob             = @"Job";
         // init cells
         for (NSInteger j = 0; j < self.user.columns.count; j++) {
             UITextField *cell = [self textFieldWithFrame:CGRectMake(cellWidth + cellWidth * j + offsetX, cellHeight * i + offsetY + cellHeight, cellWidth, cellHeight) andTag:i * self.user.columns.count + j];
+            //NSLog(@"%@", )
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K LIKE %@ AND %K LIKE %@", @"row.objectId", ((id<VGTableVariable>)self.user.rows[i]).objectId, @"col.objectId", ((id<VGTableVariable>)self.user.columns[j]).objectId];
             NSMutableArray *tmpValue = [NSMutableArray arrayWithArray:self.user.dataSet];
+            //NSMutableArray *tmpValue = [NSMutableArray array];
             [tmpValue filterUsingPredicate:predicate];
+            //
             if (tmpValue.count) {
                 cell.text = [NSString stringWithFormat:@"%@", ((VGBaseDataModel*)tmpValue[0]).value];
             } else {
@@ -245,7 +257,7 @@ static NSString* const kJob             = @"Job";
     if (self.tableDetegate != nil) {
         NSInteger rowIndex = textField.tag / self.user.columns.count;
         NSInteger colIndex = textField.tag % self.user.columns.count;
-        [self.tableDetegate cellDidChangedAtRow:self.user.rows[rowIndex] andColIndex:self.user.columns[colIndex] withValue:textField.text andWithOldValue: self.temporaryString];
+        [self.tableDetegate cellDidChangedAtRow:((id<VGTableVariable>)self.user.rows[rowIndex]).objectId andColIndex:((id<VGTableVariable>)self.user.columns[colIndex]).objectId withValue:textField.text andWithOldValue: self.temporaryString];
     }
     
     return YES;
@@ -290,9 +302,15 @@ static NSString* const kJob             = @"Job";
 
 - (void) detailWithPushingForExistObject:(id<VGTableVariable>) object andPlistName:(NSString*) name {
     NSMutableDictionary* allFields = [VGUtilities fieldsFromPlistNameWithName: name];
-    self.detailViewController = ([self.parentViewController.navigationController.viewControllers[1] isKindOfClass:[VGDetailViewController class]]) ?
-                                [[[VGDetailViewController alloc] initWithEditState:[object class]] autorelease] :
-                                [[[VGDetailViewController alloc] initWithViewState:[object class]] autorelease];
+    UIViewController* viewController = self.parentViewController.navigationController.viewControllers[1];
+    if (self.popover != nil) {
+        self.detailViewController = [[[VGDetailViewController alloc] initWithAddState:[object class]] autorelease];
+        self.popover = nil;
+    } else {
+        self.detailViewController = ([viewController isKindOfClass:[VGDetailViewController class]]) ?
+        [[[VGDetailViewController alloc] initWithEditState:[object class]] autorelease]:
+        [[[VGDetailViewController alloc] initWithViewState:[object class]] autorelease];
+    }
     self.detailViewController.object = object;
     self.detailViewController.fields = allFields[kFields];
     self.detailViewController.imageName = allFields[kIcons][name];
@@ -328,11 +346,7 @@ static NSString* const kJob             = @"Job";
 
 - (void) presentExistingObject:(id<VGTableVariable>)object {
     [self.popover dismissPopoverAnimated:YES];
-    if (self.buttonClickedType == VGButtonClickedTypeRow) {
-        [self detailWithPushingForExistObject:object andPlistName:self.rowPlistName];
-    } else {
-        [self detailWithPushingForExistObject:object  andPlistName: self.colPlistName];
-    }
+    [self detailWithPushingForExistObject:object andPlistName: (self.buttonClickedType == VGButtonClickedTypeRow) ? self.rowPlistName : self.colPlistName];
 }
 
 - (void) clickAddRow {
@@ -353,11 +367,11 @@ static NSString* const kJob             = @"Job";
     
     switch (self.user.credential) {
         case VGCredentilasTypeSecretar:
-            globaleArray = (self.buttonClickedType == VGButtonClickedTypeRow) ? [NSMutableArray arrayWithArray: [VGAppDelegate getInstance].allSubjects] : [NSMutableArray arrayWithArray: [VGAppDelegate getInstance].allStudents];
+            globaleArray = (self.buttonClickedType == VGButtonClickedTypeRow) ? [NSMutableArray arrayWithArray: [VGAppDelegate getInstance].allStudents] : [NSMutableArray arrayWithArray: [VGAppDelegate getInstance].allSubjects] ;
             break;
             
         case VGCredentilasTypeExpert:
-            globaleArray = (self.buttonClickedType == VGButtonClickedTypeRow) ? [NSMutableArray arrayWithArray:[VGAppDelegate getInstance].allSkills] : [NSMutableArray arrayWithArray:[VGAppDelegate getInstance].allSubjects];
+            globaleArray = (self.buttonClickedType == VGButtonClickedTypeRow) ? [NSMutableArray arrayWithArray:[VGAppDelegate getInstance].allSubjects] : [NSMutableArray arrayWithArray:[VGAppDelegate getInstance].allSkills] ;
             break;
             
         case VGCredentilasTypeEmployer:
@@ -371,6 +385,8 @@ static NSString* const kJob             = @"Job";
     self.insideViewController = [[[VGAddToTableViewController alloc] initWithExistArray:(self.buttonClickedType == VGButtonClickedTypeRow) ? self.user.rows : self.user.columns
                                                                                 andFlag:(self.buttonClickedType == VGButtonClickedTypeRow) ? YES : NO andGlobalArray:globaleArray] autorelease];
     self.insideViewController.target = self;
+    self.insideViewController.method = @selector(presentExistingObject:);
+    self.insideViewController.plistName = (clickedType == VGButtonClickedTypeRow) ? self.rowPlistName: self.colPlistName;
     self.popover = [[[UIPopoverController alloc] initWithContentViewController:self.insideViewController] autorelease];
     [self.popover setPopoverContentSize:CGSizeMake(320, 480)];
     [self.popover presentPopoverFromRect: (self.buttonClickedType == VGButtonClickedTypeRow) ? CGRectMake(25, 55, 1, 1) : CGRectMake(90, 15, 1, 1)

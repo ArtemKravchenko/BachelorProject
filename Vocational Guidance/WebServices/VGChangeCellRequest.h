@@ -8,10 +8,9 @@
 
 #import "VGBaseRequest.h"
 #import "VGAppDelegate.h"
-#import "ASIFormDataRequest.h"
 
-@interface VGChangeCellRequest : ASIFormDataRequest
+@interface VGChangeCellRequest : VGBaseRequest <VGBaseRequestDelegate>
 
-- (id)initWithPersonId:(NSString*)personId andTransactionList:(NSDictionary*)transactionList;
+- (id)initWithPersonId:(NSString*)personId andDelegate:(id<VGBaseRequestDelegate>)target;
 
 @end

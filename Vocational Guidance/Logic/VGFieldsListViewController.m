@@ -140,17 +140,40 @@ static const NSInteger cellValueTag             = 300;
 - (NSDictionary*) fieldsForSearch {
     NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
     
+    for (NSInteger i = 0; i < self.fields.count; i++) {
+        NSString* property = [NSString stringWithString:([((NSDictionary*)self.fields[i]) objectForKey:@"property name"])];
+        NSString* clearProperty = [NSString stringWithString:property];
+        NSArray* propertyArray = [property componentsSeparatedByString:@"."];
+        if (propertyArray.count == 1) {
+            NSString* firstCapitalString = [[property substringToIndex:1] uppercaseString];
+            property = [property stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:firstCapitalString];
+            property = [NSString stringWithFormat:@"set%@:", property];
+            NSString* value = ((UITextField*)[self.fieldsView viewWithTag:cellValueTag + i]).text;
+            if (![value isEqualToString:@""] && (value != nil)) {
+                [dictionary setObject:value forKey:clearProperty];
+            }
+        } else {
+            NSObject* firstObject = [self.object performSelector:NSSelectorFromString(propertyArray[0])];
+            NSObject* lastObject = firstObject;
+            for (int i =  1; i < propertyArray.count; i++) {
+                lastObject = [lastObject performSelector:NSSelectorFromString(propertyArray[i])];
+            }
+            if (lastObject != nil) {
+                [dictionary setObject:[NSString stringWithFormat:@"%@", lastObject] forKey:clearProperty];
+            }
+        }
+    }
+    
     return dictionary;
 }
 
 - (BOOL) saveDataToObject {
-    // Tmp
+    
     if (self.object == nil) {
         self.object = [[self.classValue new] autorelease];
         if ([self.object isKindOfClass:[VGStudent class]]) {
             ((VGStudent*)self.object).side = self.userSide;
         }
-        self.object.objectId = [NSString stringWithFormat:@"tmp%d", ++[VGAppDelegate getInstance].tmpGlobalId];
     }
     
     for (NSInteger i = 0; i < self.fields.count; i++) {
