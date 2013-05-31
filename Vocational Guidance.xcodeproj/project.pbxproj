@@ -70,6 +70,19 @@
 		849FF1A016E89BD0006984AC /* Job.plist in Resources */ = {isa = PBXBuildFile; fileRef = 849FF19F16E89BD0006984AC /* Job.plist */; };
 		849FF1A216E89CB1006984AC /* Student.plist in Resources */ = {isa = PBXBuildFile; fileRef = 849FF1A116E89CB1006984AC /* Student.plist */; };
 		849FF1A716E8DBFA006984AC /* User.plist in Resources */ = {isa = PBXBuildFile; fileRef = 849FF1A616E8DBFA006984AC /* User.plist */; };
+		84A0CF901757473B002F809D /* MainBackgraund.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A0CF8F1757473B002F809D /* MainBackgraund.png */; };
+		84A0CF9417574899002F809D /* forTableScrin2.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A0CF9317574899002F809D /* forTableScrin2.png */; };
+		84A0CF961757492F002F809D /* forTabelScrin1.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A0CF951757492F002F809D /* forTabelScrin1.png */; };
+		84A0CF9817574D2B002F809D /* CloseButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A0CF9717574D2B002F809D /* CloseButton.png */; };
+		84A0CF9A17574E0E002F809D /* LoginButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A0CF9917574E0E002F809D /* LoginButton.png */; };
+		84A0CF9C17574FA4002F809D /* ResultBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A0CF9B17574FA4002F809D /* ResultBackground.png */; };
+		84A0CF9E17575068002F809D /* ListLabelCell.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A0CF9D17575068002F809D /* ListLabelCell.png */; };
+		84A0CFA017575333002F809D /* BaseButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A0CF9F17575333002F809D /* BaseButton.png */; };
+		84A0CFA417575BFF002F809D /* MainBackground2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84A0CFA117575BFF002F809D /* MainBackground2.jpg */; };
+		84A0CFA517575BFF002F809D /* MainBackground3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84A0CFA217575BFF002F809D /* MainBackground3.jpg */; };
+		84A0CFA617575BFF002F809D /* MainBackground4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84A0CFA317575BFF002F809D /* MainBackground4.jpg */; };
+		84A0CFA917575F15002F809D /* MainBackground5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84A0CFA717575F15002F809D /* MainBackground5.jpg */; };
+		84A0CFAA17575F15002F809D /* MainBackround6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84A0CFA817575F15002F809D /* MainBackround6.jpg */; };
 		84A2C86C16F873EF00DA12D5 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A2C86B16F873EF00DA12D5 /* CFNetwork.framework */; };
 		84A2C86E16F873FC00DA12D5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A2C86D16F873FC00DA12D5 /* SystemConfiguration.framework */; };
 		84A2C87016F8740600DA12D5 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A2C86F16F8740600DA12D5 /* MobileCoreServices.framework */; };
@@ -186,6 +199,19 @@
 		849FF19F16E89BD0006984AC /* Job.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Job.plist; sourceTree = "<group>"; };
 		849FF1A116E89CB1006984AC /* Student.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Student.plist; sourceTree = "<group>"; };
 		849FF1A616E8DBFA006984AC /* User.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = User.plist; sourceTree = "<group>"; };
+		84A0CF8F1757473B002F809D /* MainBackgraund.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MainBackgraund.png; path = Design/MainBackgraund.png; sourceTree = "<group>"; };
+		84A0CF9317574899002F809D /* forTableScrin2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = forTableScrin2.png; path = Design/forTableScrin2.png; sourceTree = "<group>"; };
+		84A0CF951757492F002F809D /* forTabelScrin1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = forTabelScrin1.png; path = Design/forTabelScrin1.png; sourceTree = "<group>"; };
+		84A0CF9717574D2B002F809D /* CloseButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CloseButton.png; path = Design/CloseButton.png; sourceTree = "<group>"; };
+		84A0CF9917574E0E002F809D /* LoginButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LoginButton.png; path = Design/LoginButton.png; sourceTree = "<group>"; };
+		84A0CF9B17574FA4002F809D /* ResultBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ResultBackground.png; path = Design/ResultBackground.png; sourceTree = "<group>"; };
+		84A0CF9D17575068002F809D /* ListLabelCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ListLabelCell.png; path = Design/ListLabelCell.png; sourceTree = "<group>"; };
+		84A0CF9F17575333002F809D /* BaseButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BaseButton.png; path = Design/BaseButton.png; sourceTree = "<group>"; };
+		84A0CFA117575BFF002F809D /* MainBackground2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = MainBackground2.jpg; path = Design/MainBackground2.jpg; sourceTree = "<group>"; };
+		84A0CFA217575BFF002F809D /* MainBackground3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = MainBackground3.jpg; path = Design/MainBackground3.jpg; sourceTree = "<group>"; };
+		84A0CFA317575BFF002F809D /* MainBackground4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = MainBackground4.jpg; path = Design/MainBackground4.jpg; sourceTree = "<group>"; };
+		84A0CFA717575F15002F809D /* MainBackground5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = MainBackground5.jpg; path = Design/MainBackground5.jpg; sourceTree = "<group>"; };
+		84A0CFA817575F15002F809D /* MainBackround6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = MainBackround6.jpg; path = Design/MainBackround6.jpg; sourceTree = "<group>"; };
 		84A2C86B16F873EF00DA12D5 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		84A2C86D16F873FC00DA12D5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		84A2C86F16F8740600DA12D5 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -332,6 +358,7 @@
 		841AF4DA16DCAF23008FCA42 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				84A0CF8E17574704002F809D /* Design */,
 				849FF19116E89908006984AC /* anonumous-icon.png */,
 				849FF19216E89908006984AC /* job-icon.jpg */,
 				849FF19316E89908006984AC /* manager-icon.jpg */,
@@ -436,6 +463,26 @@
 				8413304A16E63C5E0098D7F8 /* VGFieldsListViewController.m */,
 			);
 			name = Logic;
+			sourceTree = "<group>";
+		};
+		84A0CF8E17574704002F809D /* Design */ = {
+			isa = PBXGroup;
+			children = (
+				84A0CFA717575F15002F809D /* MainBackground5.jpg */,
+				84A0CFA817575F15002F809D /* MainBackround6.jpg */,
+				84A0CFA117575BFF002F809D /* MainBackground2.jpg */,
+				84A0CFA217575BFF002F809D /* MainBackground3.jpg */,
+				84A0CFA317575BFF002F809D /* MainBackground4.jpg */,
+				84A0CF9F17575333002F809D /* BaseButton.png */,
+				84A0CF9D17575068002F809D /* ListLabelCell.png */,
+				84A0CF9B17574FA4002F809D /* ResultBackground.png */,
+				84A0CF9917574E0E002F809D /* LoginButton.png */,
+				84A0CF9717574D2B002F809D /* CloseButton.png */,
+				84A0CF951757492F002F809D /* forTabelScrin1.png */,
+				84A0CF9317574899002F809D /* forTableScrin2.png */,
+				84A0CF8F1757473B002F809D /* MainBackgraund.png */,
+			);
+			name = Design;
 			sourceTree = "<group>";
 		};
 		84A47E3C16DE332600A78089 /* Custom Controls */ = {
@@ -553,6 +600,19 @@
 				849FF1A716E8DBFA006984AC /* User.plist in Resources */,
 				84DB31951733ADA2002833A3 /* VGResultViewController.xib in Resources */,
 				84A4F1CC1738E98B00173FC8 /* VGSearchCell.xib in Resources */,
+				84A0CF901757473B002F809D /* MainBackgraund.png in Resources */,
+				84A0CF9417574899002F809D /* forTableScrin2.png in Resources */,
+				84A0CF961757492F002F809D /* forTabelScrin1.png in Resources */,
+				84A0CF9817574D2B002F809D /* CloseButton.png in Resources */,
+				84A0CF9A17574E0E002F809D /* LoginButton.png in Resources */,
+				84A0CF9C17574FA4002F809D /* ResultBackground.png in Resources */,
+				84A0CF9E17575068002F809D /* ListLabelCell.png in Resources */,
+				84A0CFA017575333002F809D /* BaseButton.png in Resources */,
+				84A0CFA417575BFF002F809D /* MainBackground2.jpg in Resources */,
+				84A0CFA517575BFF002F809D /* MainBackground3.jpg in Resources */,
+				84A0CFA617575BFF002F809D /* MainBackground4.jpg in Resources */,
+				84A0CFA917575F15002F809D /* MainBackground5.jpg in Resources */,
+				84A0CFAA17575F15002F809D /* MainBackround6.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

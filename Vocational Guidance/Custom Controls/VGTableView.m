@@ -29,6 +29,7 @@ static NSString* const kJob             = @"Job";
 @property (nonatomic, retain) VGDetailViewController* detailViewController;
 @property (nonatomic, retain) NSString* rowPlistName;
 @property (nonatomic, retain) NSString* colPlistName;
+@property (nonatomic, retain) UIImageView* backgroundView;
 
 @end
 
@@ -47,6 +48,7 @@ static NSString* const kJob             = @"Job";
     self.detailViewController = nil;
     self.rowPlistName = nil;
     self.colPlistName = nil;
+    self.backgroundView = nil;
     [super dealloc];
 }
 
@@ -57,6 +59,8 @@ static NSString* const kJob             = @"Job";
     if (self) {
         self.canEdit = NO;
         self.user = user;
+        self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MainBackground2.jpg"]];
+        self.backgroundView.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
         
         if (self.user != nil) {
             // init columns plist name
@@ -121,6 +125,7 @@ static NSString* const kJob             = @"Job";
             }
         }
     }
+    [self.backgroundView removeFromSuperview];
 }
 
 - (void) addObjectOnTableWithFrame:(CGRect) frame andTag:(NSInteger) tag andTitle:(NSString*) title andSelector:(SEL)method {
@@ -130,7 +135,7 @@ static NSString* const kJob             = @"Job";
     [btnObjectHeader setBackgroundColor:[UIColor yellowColor]];
     [btnObjectHeader setTintColor:[UIColor whiteColor]];
     [btnObjectHeader.titleLabel setFont:[UIFont systemFontOfSize:13]];
-    [btnObjectHeader setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [btnObjectHeader setTitleColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"MainBackground2.png"]] forState:UIControlStateNormal];
     [btnObjectHeader setTitle: title forState:UIControlStateNormal];
     [btnObjectHeader addTarget:self action:method forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:btnObjectHeader];
@@ -147,19 +152,23 @@ static NSString* const kJob             = @"Job";
 
 - (UITextField*) textFieldWithFrame:(CGRect)frame andTag:(NSInteger)tag {
     UITextField *cell = [[[UITextField alloc] initWithFrame: frame] autorelease];
-    cell.backgroundColor = (self.canEdit) ? [UIColor whiteColor] : [UIColor grayColor];
+    cell.backgroundColor = (self.canEdit) ? [UIColor whiteColor] : [UIColor clearColor];
     cell.textAlignment = NSTextAlignmentCenter;
     cell.enabled = self.canEdit;
     cell.tag = tag;
     cell.delegate = self;
     cell.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    [cell setTextColor:[UIColor whiteColor]];
     return cell;
 }
 
 - (void) reloadData {
     [self removeAllFromView];
     
-    self.backgroundColor = [UIColor whiteColor];
+    [self addSubview:self.backgroundView];
+//    UIView* tmp = [[[UIView alloc] initWithFrame:self.frame] autorelease];
+//    tmp.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"MainBackground2.png"]];
+//    [self addSubview:tmp];
     NSInteger offsetX = 2;
     NSInteger offsetY = 2;
     
@@ -281,7 +290,8 @@ static NSString* const kJob             = @"Job";
     for (UIView * textField in self.subviews) {
         if ([textField isKindOfClass: [UITextField class]]) {
             ((UITextField*)textField).enabled = self.canEdit;
-            ((UITextField*)textField).backgroundColor = (self.canEdit) ? [UIColor whiteColor] : [UIColor grayColor];
+            ((UITextField*)textField).backgroundColor = (self.canEdit) ? [UIColor whiteColor] : [UIColor clearColor];
+            ((UITextField*)textField).textColor = (self.canEdit) ? [UIColor blackColor] : [UIColor whiteColor];
         }
     }
     self.btnAddCol.enabled = self.canEdit;

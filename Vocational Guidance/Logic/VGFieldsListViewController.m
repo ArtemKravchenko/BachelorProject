@@ -64,7 +64,7 @@ static const NSInteger cellValueTag             = 300;
         self.view.frame = frame;
     }
     
-    [self.view setBackgroundColor:[UIColor redColor]];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"MainBackground2.png"]]];
     [self.fieldsView setContentSize:CGSizeMake(frame.size.width, frame.size.height+1)];
     [self.fieldsView setBounces:YES];
     
@@ -77,7 +77,7 @@ static const NSInteger cellValueTag             = 300;
         if (![self isFieldCanBeEmpty:property]) {
             NSArray* propertyArray = [property componentsSeparatedByString:@"."];
             // Create cell view
-            UIView* cellView = [self cellViewWithWidth:self.cellWidth andOriginY:originY];
+            UIView* cellView = [self cellViewWithWidth:self.cellWidth andOriginY:originY + 2 * i];
             cellView.tag = 100 + i;
             // Create cell label
             UILabel* cellPropertyLabel = [self cellLabelWithValue:field andWidth:cellLabelWidth andOriginX:cellLabelOriginX andOriginY:0];
@@ -262,7 +262,7 @@ static const NSInteger cellValueTag             = 300;
 - (UIView*) cellViewWithWidth:(NSInteger)cellWidth andOriginY:(NSInteger)originY {
     UIView* newCellView = [[UIView new] autorelease];
     [newCellView setFrame:CGRectMake(0, originY, cellWidth, cellHeight)];
-    [newCellView setBackgroundColor:[UIColor greenColor]];
+    [newCellView setBackgroundColor:[UIColor clearColor]];
     return newCellView;
 }
 
@@ -271,6 +271,7 @@ static const NSInteger cellValueTag             = 300;
     [newCellLabel setFrame:CGRectMake(originX, originY, width, cellHeight)];
     [newCellLabel setText:value];
     [newCellLabel setFont:[UIFont systemFontOfSize:17]];
+    [newCellLabel setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"ListLabelCell.png"]]];
     return newCellLabel;
 }
 
@@ -279,6 +280,7 @@ static const NSInteger cellValueTag             = 300;
     [newCellEmptyTextField setFrame:CGRectMake(cellLabelWidth, originY, self.cellWidth - cellLabelWidth, cellHeight)];
     [newCellEmptyTextField setBackgroundColor:[UIColor yellowColor]];
     [newCellEmptyTextField setContentVerticalAlignment: UIControlContentVerticalAlignmentCenter];
+    [newCellEmptyTextField setTextAlignment:NSTextAlignmentCenter];
     if (value != nil) {
         [newCellEmptyTextField setText:value];
     }

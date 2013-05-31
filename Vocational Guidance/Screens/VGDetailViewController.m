@@ -185,10 +185,11 @@ static NSString* const kSaveChanges = @"Save changes";
         for (UIView* field in view.subviews) {
             if ([field isKindOfClass:[UITextField class]]) {
                 ((UITextField*)field).enabled = editMode;
+                field.backgroundColor = (editMode) ? [UIColor whiteColor] : [UIColor yellowColor];
             } else if ([field isKindOfClass:[UIButton class]]) {
                 ((UIButton*)field).enabled = editMode;
+                field.backgroundColor = (editMode) ? [UIColor whiteColor] : [UIColor yellowColor];
             }
-            field.backgroundColor = (editMode) ? [UIColor whiteColor] : [UIColor yellowColor];
         }
     }
     [self.btnEdit setTitle: (editMode) ? kSave : kEdit forState:UIControlStateNormal];

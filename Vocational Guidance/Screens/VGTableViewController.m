@@ -42,6 +42,7 @@ static NSString* const kCancel = @"Cancel";
     [self clearPresentView];
     self.tableView = [[[VGTableView alloc] initWithFrame: CGRectMake(0, 0, self.presentionView.frame.size.width, self.presentionView.frame.size.height) andUser:self.user] autorelease];
     self.tableView.bounces = NO;
+    [self.tableView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"MainBackground2.png"]]];
     self.tableView.parentViewController = self;
     // init graph view
     self.graphViewController = [[VGGraphViewController new] autorelease];
