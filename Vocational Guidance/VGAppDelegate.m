@@ -24,6 +24,7 @@
 @implementation VGAppDelegate
 
 - (void)dealloc {
+    self.token = nil;
     self.mockData = nil;
     self.allStudents = nil;
     self.allSubjects = nil;

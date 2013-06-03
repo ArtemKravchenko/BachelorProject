@@ -29,7 +29,7 @@ static NSString* const kAddExistVacancyToEmploerUrlRoute =              @"addexi
 - (id)initWithNewStudentToSecretarData:(NSString*)studentId firstName:(NSString*)firstName secondName:(NSString*)secondName side:(NSString*)sideId age:(NSString*)age studentDescription:(NSString*)description andPersonId:(NSString*) personId {
     self = [super init];
     if (self) {
-        self.params = [NSString stringWithFormat:@"%@?%@=%d&%@=%@&%@=%@&%@=%d&%@=%d&%@=%@&%@=%d", kAddNewStudentToSecretarUrlRoute, kCardNumber, [studentId intValue], kFirstName, firstName, kSecondName, secondName, kSideId, [sideId intValue], kAge, [age intValue], kDescription, description, kPersonId, [personId intValue]];
+        self.params = [NSString stringWithFormat:@"%@?%@=%d&%@=%@&%@=%@&%@=%d&%@=%d&%@=%@&%@=%d&%@=%@", kAddNewStudentToSecretarUrlRoute, kCardNumber, [studentId intValue], kFirstName, firstName, kSecondName, secondName, kSideId, [sideId intValue], kAge, [age intValue], kDescription, description, kPersonId, [personId intValue], kToken, [VGAppDelegate getInstance].token];
     }
     return self;
 }
@@ -37,7 +37,7 @@ static NSString* const kAddExistVacancyToEmploerUrlRoute =              @"addexi
 - (id)initWithNewSubjectToSecretarData:(NSString*)name description:(NSString*)description andPersonId:(NSString*) personId {
     self = [super init];
     if (self) {
-        self.params = [NSString stringWithFormat:@"%@?%@=%@&%@=%@&%@=%d", kAddNewSubjectToSecretarUrlRoute, kName, name, kDescription, description, kPersonId, [personId intValue]];
+        self.params = [NSString stringWithFormat:@"%@?%@=%@&%@=%@&%@=%d&%@=%@", kAddNewSubjectToSecretarUrlRoute, kName, name, kDescription, description, kPersonId, [personId intValue], kToken, [VGAppDelegate getInstance].token];
     }
     return self;
 }
@@ -45,7 +45,7 @@ static NSString* const kAddExistVacancyToEmploerUrlRoute =              @"addexi
 - (id)initWithNewSubjectToExpertData:(NSString*)name description:(NSString*)description andPersonId:(NSString*) personId {
     self = [super init];
     if (self) {
-        self.params = [NSString stringWithFormat:@"%@?%@=%@&%@=%@&%@=%d", kAddNewSubjectToExpertUrlRoute, kName, name, kDescription, description, kPersonId, [personId intValue]];
+        self.params = [NSString stringWithFormat:@"%@?%@=%@&%@=%@&%@=%d&%@=%@", kAddNewSubjectToExpertUrlRoute, kName, name, kDescription, description, kPersonId, [personId intValue], kToken, [VGAppDelegate getInstance].token];
     }
     return self;
 }
@@ -53,7 +53,7 @@ static NSString* const kAddExistVacancyToEmploerUrlRoute =              @"addexi
 - (id)initWithNewSkillToExpertData:(NSString*)name description:(NSString*)description andPersonId:(NSString*) personId {
     self = [super init];
     if (self) {
-        self.params = [NSString stringWithFormat:@"%@?%@=%@&%@=%@&%@=%d", kAddNewSkillToExpertUrlRoute, kName, name, kDescription, description, kPersonId, [personId intValue]];
+        self.params = [NSString stringWithFormat:@"%@?%@=%@&%@=%@&%@=%d&%@=%@", kAddNewSkillToExpertUrlRoute, kName, name, kDescription, description, kPersonId, [personId intValue], kToken, [VGAppDelegate getInstance].token];
     }
     return self;
 }
@@ -61,7 +61,7 @@ static NSString* const kAddExistVacancyToEmploerUrlRoute =              @"addexi
 - (id)initWithNewSkillToEmployerData:(NSString*)name description:(NSString*)description andPersonId:(NSString*) personId {
     self = [super init];
     if (self) {
-        self.params = [NSString stringWithFormat:@"%@?%@=%@&%@=%@&%@=%d", kAddNewSkillToEmploerUrlRoute, kName, name, kDescription, description, kPersonId, [personId intValue]];
+        self.params = [NSString stringWithFormat:@"%@?%@=%@&%@=%@&%@=%d&%@=%@", kAddNewSkillToEmploerUrlRoute, kName, name, kDescription, description, kPersonId, [personId intValue], kToken, [VGAppDelegate getInstance].token];
     }
     return self;
 }
@@ -69,7 +69,7 @@ static NSString* const kAddExistVacancyToEmploerUrlRoute =              @"addexi
 - (id)initWithNewVacancyToEmployerData:(NSString*)name description:(NSString*)description andPersonId:(NSString*) personId {
     self = [super init];
     if (self) {
-        self.params = [NSString stringWithFormat:@"%@?%@=%@&%@=%@&%@=%d", kAddNewVacancyToEmploerUrlRoute, kName, name, kDescription, description, kPersonId, [personId intValue]];
+        self.params = [NSString stringWithFormat:@"%@?%@=%@&%@=%@&%@=%d&%@=%@", kAddNewVacancyToEmploerUrlRoute, kName, name, kDescription, description, kPersonId, [personId intValue], kToken, [VGAppDelegate getInstance].token];
     }
     return self;
 }
@@ -79,7 +79,7 @@ static NSString* const kAddExistVacancyToEmploerUrlRoute =              @"addexi
 - (id)initWithExistStudentToSecretarData:(NSString*)studentId andPersonId:(NSString*) personId {
     self = [super init];
     if (self) {
-        self.params = [NSString stringWithFormat:@"%@?%@=%d&%@=%d", kAddExistStudentToSecretarUrlRoute, kCardNumber, [studentId intValue], kPersonId, [personId intValue]];
+        self.params = [NSString stringWithFormat:@"%@?%@=%d&%@=%d&%@=%@", kAddExistStudentToSecretarUrlRoute, kCardNumber, [studentId intValue], kPersonId, [personId intValue], kToken, [VGAppDelegate getInstance].token];
     }
     return self;
 }
@@ -87,7 +87,7 @@ static NSString* const kAddExistVacancyToEmploerUrlRoute =              @"addexi
 - (id)initWithExistSubjectToSecretarData:(NSString*)subjectId andPersonId:(NSString*) personId {
     self = [super init];
     if (self) {
-        self.params = [NSString stringWithFormat:@"%@?%@=%d&%@=%d", kAddExistSubjectToSecretarUrlRoute, kSubjectId, [subjectId intValue], kPersonId, [personId intValue]];
+        self.params = [NSString stringWithFormat:@"%@?%@=%d&%@=%d&%@=%@", kAddExistSubjectToSecretarUrlRoute, kSubjectId, [subjectId intValue], kPersonId, [personId intValue], kToken, [VGAppDelegate getInstance].token];
     }
     return self;
 }
@@ -95,7 +95,7 @@ static NSString* const kAddExistVacancyToEmploerUrlRoute =              @"addexi
 - (id)initWithExistSubjectToExpertData:(NSString*)subjectId andPersonId:(NSString*) personId {
     self = [super init];
     if (self) {
-        self.params = [NSString stringWithFormat:@"%@?%@=%d&%@=%d", kAddExistSubjectToExpertUrlRoute, kSubjectId, [subjectId intValue], kPersonId, [personId intValue]];
+        self.params = [NSString stringWithFormat:@"%@?%@=%d&%@=%d&%@=%@", kAddExistSubjectToExpertUrlRoute, kSubjectId, [subjectId intValue], kPersonId, [personId intValue], kToken, [VGAppDelegate getInstance].token];
     }
     return self;
 }
@@ -103,7 +103,7 @@ static NSString* const kAddExistVacancyToEmploerUrlRoute =              @"addexi
 - (id)initWithExistSkillToExpertData:(NSString*)skillId andPersonId:(NSString*) personId {
     self = [super init];
     if (self) {
-        self.params = [NSString stringWithFormat:@"%@?%@=%d&%@=%d", kAddExistSkillToExpertUrlRoute, kSkillId, [skillId intValue], kPersonId, [personId intValue]];
+        self.params = [NSString stringWithFormat:@"%@?%@=%d&%@=%d&%@=%@", kAddExistSkillToExpertUrlRoute, kSkillId, [skillId intValue], kPersonId, [personId intValue], kToken, [VGAppDelegate getInstance].token];
     }
     return self;
 }
@@ -111,7 +111,7 @@ static NSString* const kAddExistVacancyToEmploerUrlRoute =              @"addexi
 - (id)initWithExistSkillToEmployerData:(NSString*)skillId andPersonId:(NSString*) personId { 
     self = [super init];
     if (self) {
-        self.params = [NSString stringWithFormat:@"%@?%@=%d&%@=%d", kAddExistSkillToEmploerUrlRoute, kSkillId, [skillId intValue], kPersonId, [personId intValue]];
+        self.params = [NSString stringWithFormat:@"%@?%@=%d&%@=%d&%@=%@", kAddExistSkillToEmploerUrlRoute, kSkillId, [skillId intValue], kPersonId, [personId intValue], kToken, [VGAppDelegate getInstance].token];
     }
     return self;
 }
@@ -119,7 +119,7 @@ static NSString* const kAddExistVacancyToEmploerUrlRoute =              @"addexi
 - (id)initWithExistVacancyToEmployerData:(NSString*)vacancyId andPersonId:(NSString*) personId {
     self = [super init];
     if (self) {
-        self.params = [NSString stringWithFormat:@"%@?%@=%d&%@=%d", kAddExistVacancyToEmploerUrlRoute, kVacancyId, [vacancyId intValue], kPersonId, [personId intValue]];
+        self.params = [NSString stringWithFormat:@"%@?%@=%d&%@=%d&%@=%@", kAddExistVacancyToEmploerUrlRoute, kVacancyId, [vacancyId intValue], kPersonId, [personId intValue], kToken, [VGAppDelegate getInstance].token];
     }
     return self;
 }

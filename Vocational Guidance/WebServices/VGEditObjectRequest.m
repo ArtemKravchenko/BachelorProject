@@ -21,7 +21,7 @@ static NSString* const kEditVacancyUrlRoute =               @"changevacancydetai
 - (id) initWithStudent:(NSString*)studentId studentFirstName:(NSString*)firstName studentSecondName:(NSString*)secondName studentSideId:(NSString*)sideId studentAge:(NSString*)age studentDescription:(NSString *)description andPersonId:(NSString *)personId {
     self = [super init];
     if (self) {
-        self.params = [NSString stringWithFormat:@"%@?%@=%d&%@=%@&%@=%@&%@=%d&%@=%d&%@=%@&%@=%d", kEditStudentUrlRoute, kCardNumber, [studentId intValue], kFirstName, firstName, kSecondName, secondName, kSideId, [sideId intValue], kAge, [age intValue], kDescription, ([description isEqualToString:@"<null>"]) ? @"" : description , kPersonId, [personId intValue]];
+        self.params = [NSString stringWithFormat:@"%@?%@=%d&%@=%@&%@=%@&%@=%d&%@=%d&%@=%@&%@=%d&%@=%@", kEditStudentUrlRoute, kCardNumber, [studentId intValue], kFirstName, firstName, kSecondName, secondName, kSideId, [sideId intValue], kAge, [age intValue], kDescription, ([description isEqualToString:@"<null>"]) ? @"" : description , kPersonId, [personId intValue], kToken, [VGAppDelegate getInstance].token];
     }
     return self;
 }
@@ -29,7 +29,7 @@ static NSString* const kEditVacancyUrlRoute =               @"changevacancydetai
 - (id) initWithTableObjectId:(NSString*)objectId objectName:(NSString*)name objectDescription:(NSString*) description objectType:(Class)objectType andPersonId:(NSString*) personId {
     self = [super init];
     if (self) {
-        self.params = [NSString stringWithFormat:@"%@?%@=%@&%@=%@&%@=%@&%@=%d", ([objectType isSubclassOfClass: [VGSubject class]]) ?
+        self.params = [NSString stringWithFormat:@"%@?%@=%@&%@=%@&%@=%@&%@=%d&%@=%@", ([objectType isSubclassOfClass: [VGSubject class]]) ?
                                                     kEditSubjectUrlRoute : ([objectType isSubclassOfClass: [VGSkill class]]) ?
                                                     kEditSkillUrlRoute: kEditVacancyUrlRoute,
                                                     ([objectType isSubclassOfClass: [VGSubject class]]) ?
@@ -37,7 +37,7 @@ static NSString* const kEditVacancyUrlRoute =               @"changevacancydetai
                                                     kSkillId: kVacancyId, objectId,
                                                     kName, name,
                                                     kDescription, ([description isEqualToString:@"<null>"]) ? @"" : description ,
-                                                    kPersonId, [personId intValue]];
+                                                    kPersonId, [personId intValue], kToken, [VGAppDelegate getInstance].token];
     }
     return self;
 }

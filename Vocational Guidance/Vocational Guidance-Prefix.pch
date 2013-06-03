@@ -33,6 +33,7 @@ static NSInteger const TS_ADDED_ROW                         = 1;
 static NSInteger const TS_ADDED_COL                         = 2;
 static NSInteger const TS_CHANGED_CELL                      = 3;
 
+static NSString* const kToken                               = @"token";
 static NSString* const VG_TRANSACTION_TYPE                  = @"transaction_type";
 static NSString* const VG_CELL_VALUE                        = @"cell_value";
 static NSString* const VG_ROW_OBJECT                        = @"row_object";

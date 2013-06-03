@@ -127,6 +127,8 @@
                                 andColumns:((NSMutableArray*)jsonData[@"all columns"])
                                 andCredential:[NSString stringWithFormat:@"%@", ((NSDictionary*)jsonData[kUser])[@"PersonCredentialId"]]];
         
+        [VGAppDelegate getInstance].token = jsonData[@"token"];
+        
         // Filling current user
         //[VGAppDelegate getInstance].currentUser = [VGUtilities userFromJsonData:jsonData[kUser] andAllRows:allRows andAllColumns:allColumns andRowType:[rowClass class] andColType:[colClass class]];
         [VGAppDelegate getInstance].currentUser = [VGUtilities userFromJsonData:jsonData[kUser]];

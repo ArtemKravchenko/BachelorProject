@@ -22,6 +22,7 @@
 
 #pragma mark - Session values
 
+@property (nonatomic, retain) NSString* token;
 @property (nonatomic, retain) VGUser* currentUser;
 @property (nonatomic, retain) VGStudent* currentStudent;
 @property (nonatomic, retain) VGUser* currentExpert;
