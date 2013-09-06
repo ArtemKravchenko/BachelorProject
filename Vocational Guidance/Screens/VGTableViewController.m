@@ -92,8 +92,8 @@ static NSString* const kCancel = @"Cancel";
 }
 
 - (IBAction)clickViewTransition:(id)sender {
-    self.btnEdit.hidden = (((UIButton*)sender).tag == 12) ? YES : NO;
-    [self presentionViewTransition: (((UIButton*)sender).tag == 11) ? YES : NO];
+    self.btnEdit.hidden = (((UIButton*)sender).tag == 12) ? YES : !self.editMode;
+    [self presentionViewTransition: (((UIButton*)sender).tag == 11)];
 }
 
 
@@ -118,20 +118,12 @@ static NSString* const kCancel = @"Cancel";
     [UIView commitAnimations];
 }
 
-#pragma mark - Edit-Save-Cancel logic
-
-- (void) editMode:(BOOL)canEdit {
-    self.btnSave.hidden = !canEdit;
-    [self.btnEdit setTitle:(canEdit) ? kCancel : kEdit forState:UIControlStateNormal];
-    [self.tableView edtiMode:canEdit];
-}
-
 - (IBAction)clickEdit:(id)sender {
     if ([self.btnEdit.titleLabel.text isEqualToString: kCancel]) {
         [[VGAppDelegate getInstance] cancelTransaction];
         [self.tableView reloadData];
     }
-    BOOL editMode = ([self.btnEdit.titleLabel.text isEqualToString:kEdit]) ? YES : NO;
+    BOOL editMode = ([self.btnEdit.titleLabel.text isEqualToString:kEdit]);
     [self editMode:editMode];
 }
 
@@ -143,6 +135,14 @@ static NSString* const kCancel = @"Cancel";
     [self editMode:NO];
 }
 
+#pragma mark - Edit-Save-Cancel logic
+
+- (void) editMode:(BOOL)canEdit {
+    self.btnSave.hidden = !canEdit;
+    [self.btnEdit setTitle:(canEdit) ? kCancel : kEdit forState:UIControlStateNormal];
+    [self.tableView edtiMode:canEdit];
+}
+
 #pragma mark - Request delegate
 
 -(void)requestDidFinishSuccessful:(NSData *)data {
@@ -150,6 +150,7 @@ static NSString* const kCancel = @"Cancel";
     NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     if (jsonData != nil) {
         [VGAppDelegate getInstance].currentUser = [VGUtilities userFromJsonData:jsonData];
+        ((VGDetailViewController*)self.navigationController.viewControllers[self.navigationController.viewControllers.count - 2]).object = [VGAppDelegate getInstance].currentUser;
         [self editMode:NO];
         [self reloadInputViews];
         if ([VGAlertView isShowing]) {
@@ -166,7 +167,10 @@ static NSString* const kCancel = @"Cancel";
 #pragma mark - Send request
 
 - (void) sendSaveRequest {
-    [VGAlertView showPleaseWaitState];
+    if (![VGAlertView isShowing]) {
+        [VGAlertView showPleaseWaitState];
+    }
+    
     VGChangeCellRequest* request = [[[VGChangeCellRequest alloc]
                                      initWithPersonId:[VGAppDelegate getInstance].currentUser.objectId
                                      andDelegate:self] autorelease];

@@ -268,6 +268,7 @@ static NSString* const kJob             = @"Job";
         NSInteger colIndex = textField.tag % self.user.columns.count;
         [self.tableDetegate cellDidChangedAtRow:((id<VGTableVariable>)self.user.rows[rowIndex]).objectId andColIndex:((id<VGTableVariable>)self.user.columns[colIndex]).objectId withValue:textField.text andWithOldValue: self.temporaryString];
     }
+    [textField resignFirstResponder];
     
     return YES;
 }

@@ -86,7 +86,10 @@
 
 - (void) popupDidCloseWithLogin:(NSString *)login andPassword:(NSString *)password {
     
-    [VGAlertView showPleaseWaitState];
+    if (![VGAlertView isShowing]) {
+        [VGAlertView showPleaseWaitState];
+    }
+    
     if ([login isEqualToString:@""] && [password isEqualToString:@""]) {
         VGGetPersonRequest* request = [[[VGGetPersonRequest alloc] initWithAllSides] autorelease];
         request.delegate = self;

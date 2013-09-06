@@ -223,7 +223,9 @@ static NSString* const kSaveChanges = @"Save changes";
              NSLog(@"Error: parentViewController can't respond selector(addToTableMethod:)");
              }
              */
-            [VGAlertView showPleaseWaitState];
+            if (![VGAlertView isShowing]) {
+                [VGAlertView showPleaseWaitState];
+            }
             VGAddNewObjectRequest* request = nil;
             
             if (self.object != nil) {

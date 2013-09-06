@@ -68,7 +68,7 @@ static NSString* const kPersonCellIdentifier = @"Persons_Cell";
         [self.headersView addSubview: self.personsHeadersView];
     } else {
         [VGAlertView showError:@"(SearchViewConrtroller) Error: Wrong object type"];
-        NSLog(@"(SearchViewConrtroller) Error: Wrong object type");
+        //NSLog(@"(SearchViewConrtroller) Error: Wrong object type");
     }
     // init fields view controller
     self.fieldsViewController = [[VGFieldsListViewController new] autorelease];
@@ -112,7 +112,10 @@ static NSString* const kPersonCellIdentifier = @"Persons_Cell";
     
     NSString* personId = ((id<VGPerson>)self.objectsList[indexPath.row]).objectId;
     
-    [VGAlertView showPleaseWaitState];
+    if (![VGAlertView isShowing]) {
+        [VGAlertView showPleaseWaitState];
+    }
+    
     VGGetPersonRequest* request = (self.objectsType == [VGStudent class]) ? [[[VGGetPersonRequest alloc] initWithStudentId: personId] autorelease]: [[[VGGetPersonRequest alloc] initWithPersonId: personId] autorelease];
     request.delegate = self;
     [[VGRequestQueue queue] addRequest:request];
@@ -180,7 +183,10 @@ static NSString* const kPersonCellIdentifier = @"Persons_Cell";
     /*
     [self mockViewAll];
     */
-    [VGAlertView showPleaseWaitState];
+    if (![VGAlertView isShowing]) {
+        [VGAlertView showPleaseWaitState];
+    }
+    
     VGSearchPersonsRequest* request = ([self.objectsType isSubclassOfClass:[VGStudent class]]) ? [[[VGSearchPersonsRequest alloc] initWithAllStudents] autorelease] :
     ([[VGAppDelegate getInstance].currentScreen isEqualToString:kExpertList]) ? [[[VGSearchPersonsRequest alloc] initWithAllExperts] autorelease] :
     [[[VGSearchPersonsRequest alloc] initWithAllEmployers] autorelease];
